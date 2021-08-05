@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 public class Asteroid : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
-    private float _maxSpeed = 5.0f;
+    private float _maxSpeed = 3.0f;
     private void Start()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody2D>();

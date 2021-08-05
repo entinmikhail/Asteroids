@@ -1,11 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class VerticalTeleporter : MonoBehaviour
+namespace Asteroids.Core.Teleporter
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    public class VerticalTeleporter : BaseTeleporter
     {
-        other.transform.SetPositionAndRotation(other.transform.position * new Vector2(1, -1), other.transform.rotation);
-    }
+        VerticalTeleporter()
+        {
+            _teleportDirection = new Vector2(1, -1);
+            _teleportIndent = new Vector3(0, 1);
+        }
+
+        protected override Vector3 GetTeleportIndent(Collider2D other)
+        {
+            return other.transform.position.y < 0 ? _teleportIndent : -_teleportIndent;
+        }
+    }   
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShipInfo
   m_EditorClassIdentifier: 
   _movementSpeed: 100
-  _maxMovementSpeed: 2
+  _maxMovementSpeed: 10
   _rotationSpeed: 200
   _maxHealth: 1
   _health: 1
