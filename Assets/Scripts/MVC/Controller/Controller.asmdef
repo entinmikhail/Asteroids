@@ -1,0 +1,24 @@
+{
+    "name": "Controlle",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2ba91e809298f664e9dc41645b3ee802",
+        "GUID:109b508f54ad5064a8e6defbedf2ba07",
+        "GUID:a0de9be2a70bda749abbb82bf4cd308c",
+        "GUID:cda01d2d41b674c4fac56f47db942d19",
+        "GUID:d92f55b7dbeb4b94ea40b09266ea6e4c",
+        "GUID:18d56625f2ca7dc48ae5abc08c5ae1d0",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:45989e9a0832a884f85cf3ba5d2058b2",
+        "GUID:8ed4b8d50d9ef4546b50026c355c4cbc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
