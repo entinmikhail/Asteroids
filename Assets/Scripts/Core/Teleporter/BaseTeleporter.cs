@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace Asteroids.Core.Teleporter
@@ -11,14 +10,14 @@ namespace Asteroids.Core.Teleporter
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.transform == null)
+                return;
             
-            other.transform.SetPositionAndRotation((other.transform.position + GetTeleportIndent(other))  * _teleportDirection,
-                other.transform.rotation);
+            other.transform.SetPositionAndRotation((other.transform.position + GetTeleportPosition(other)) 
+                                                   * _teleportDirection, other.transform.rotation);
         }
+        
 
-        protected virtual Vector3 GetTeleportIndent(Collider2D other)
-        {
-            return new Vector3();
-        }
+        protected abstract Vector3 GetTeleportPosition(Collider2D other);
     }
 }

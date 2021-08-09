@@ -1,5 +1,6 @@
 using System;
 using Asteroids.Abstraction;
+using Asteroids.ScriptableObjects;
 using UnityEngine;
 
 namespace Asteroids.View
@@ -15,11 +16,23 @@ namespace Asteroids.View
         public Collider2D Collider2D => _collider;
         [SerializeField] private Collider2D _collider;
 
-        public event Action<ILevelObjectView> OnLevelObjectContact;
+        public LevelObjectType LevelObjectType => levelObjectType;
+        [SerializeField] private LevelObjectType levelObjectType;
+        
+        public event Action<ILevelObjectView, ILevelObjectView> OnLevelObjectContact;
+        public event Action<GameObject> OnGameObjectContact;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            OnLevelObjectContact?.Invoke(collision.gameObject.GetComponent<LevelObjectView>());
+            if(collision.gameObject == null)
+                return;
+            
+            if (collision.gameObject.TryGetComponent<LevelObjectView>(out var objView))
+            {
+                OnLevelObjectContact?.Invoke(this, objView);
+            }
+
+            OnGameObjectContact?.Invoke(collision.gameObject);
         }
     }
 }

@@ -14,5 +14,8 @@ namespace Asteroids.ScriptableObjects
     
         public int MaxСharges => _maxСharges;
         [SerializeField] private int _maxСharges;
+        
+        public float DamageValue => _damageValue;
+        [SerializeField] private float _damageValue;
     }   
 }

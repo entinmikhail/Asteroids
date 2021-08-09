@@ -6,7 +6,7 @@ namespace Asteroids.Abstraction
     
     public interface IHealthModel
     {
-        public event Action PlayerDied;
+        public event Action Died;
     
         public event HealthChangeHandler HealthIsChanged;
         

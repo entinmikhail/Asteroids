@@ -38,6 +38,5 @@ namespace Asteroids.Controller
         {
            return Mathf.Min(Mathf.Abs(curVelocity), _shipInfo.MaxMovementSpeed) * Mathf.Sign(curVelocity);
         }
-        
     }
 }

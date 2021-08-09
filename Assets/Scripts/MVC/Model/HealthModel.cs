@@ -1,6 +1,5 @@
 ﻿using System;
 using Asteroids.Abstraction;
-using Asteroids.ScriptableObjects;
 
 namespace Asteroids.Model
 {
@@ -9,13 +8,13 @@ namespace Asteroids.Model
         private float _currentHealth;
         private readonly float _maxHealth;
 
-        public event Action PlayerDied;
+        public event Action Died;
         public event HealthChangeHandler HealthIsChanged;
 
-        public HealthModel(ShipInfo shipInfo)
+        public HealthModel(IHealth health)
         {
-            _currentHealth = shipInfo.Health;
-            _maxHealth = shipInfo.MaxHealth;
+            _currentHealth = health.Health;
+            _maxHealth = health.MaxHealth;
         }
 
         public float GetCurrentHealth() => _currentHealth;
@@ -25,9 +24,8 @@ namespace Asteroids.Model
             var prevValue = _currentHealth;
 
             _currentHealth = Math.Min(_currentHealth + changeValue, _maxHealth);
-
             if (_currentHealth <= 0)
-                PlayerDied?.Invoke();
+                Died?.Invoke();
 
             HealthIsChanged?.Invoke(_currentHealth, prevValue);
         }

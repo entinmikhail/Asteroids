@@ -1,18 +1,14 @@
 using Asteroids.Abstraction;
 using UnityEngine;
 
-
 namespace Asteroids.ScriptableObjects
 {
-    [CreateAssetMenu(menuName = "Gameplay/ShipInfo", fileName = "ShipInfo")]
-    public class ShipInfo : ScriptableObject, IHealth
+    [CreateAssetMenu(menuName = "Gameplay/EnemyInfo", fileName = "EnemyInfo")]
+    public class EnemyInfo : ScriptableObject, IHealth
     {
         public float MovementSpeed => _movementSpeed;
         [SerializeField] private float _movementSpeed;
-        
-        public float MaxMovementSpeed => _maxMovementSpeed;
-        [SerializeField] private float _maxMovementSpeed;
-    
+
         public float RotationSpeed => _rotationSpeed;
         [SerializeField] private float _rotationSpeed;
     
@@ -21,5 +17,5 @@ namespace Asteroids.ScriptableObjects
     
         public int Health => _health;
         [SerializeField] private int _health;
-    }
+    }   
 }

@@ -1,10 +1,10 @@
 {
-    "name": "Core",
+    "name": "Utils",
     "rootNamespace": "",
     "references": [
-        "GUID:2ba91e809298f664e9dc41645b3ee802",
         "GUID:109b508f54ad5064a8e6defbedf2ba07",
-        "GUID:d92f55b7dbeb4b94ea40b09266ea6e4c"
+        "GUID:d92f55b7dbeb4b94ea40b09266ea6e4c",
+        "GUID:211df9d300adeeb4eb73a7e7a3baf41b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

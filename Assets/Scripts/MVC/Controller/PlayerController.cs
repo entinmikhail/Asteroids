@@ -64,11 +64,23 @@ public class PlayerController
     {
         _input.Enable();
         
+        _input.Player.Enable();
+        _input.Player.Fire1.Enable();
+        _input.Player.Fire2.Enable();
+        _input.Player.Move.Enable();
+        _input.Player.Rotation.Enable();
+        
         _input.Player.Fire1.performed += _ => _weaponController.OnAttackClicked();
         _input.Player.Fire2.performed += _ => _secondWeapon.ProduceFire();
-        _healthModel.PlayerDied += Dispose;
+        
+        _healthModel.Died += OnPlayerDied;
     }
 
+    private void OnPlayerDied()
+    {
+        Dispose();
+    }
+    
     private void OnDisable()
     {
         _input.Disable();
