@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Asteroids.Controller;
-
+using Asteroids.Model;
+using Asteroids.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
@@ -10,24 +13,39 @@ public class EnemySpawner : MonoBehaviour
     private GameObject _asteroid;
     private IList<EnemyController> _controllers = new List<EnemyController>();
     
+    private HealthModel _pointModel; //)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+    
     private int _maxEnemyOnMap = 5;
     private int _curEnemyOnMap;
 
+    [SerializeField] private Text _scoreCounter;
+    
+    public Action<float> EnemyIsDeaded;
+
+    public Action<float, float> asd; //
+    
     private void Start()
     {
-        _asteroid = Resources.Load<GameObject>("Asteroid");
+        _pointModel = new HealthModel(Resources.Load<ShipInfo>("ShipInfo"));
         
+        EnemyIsDeaded += _pointModel.ChangeHealth;
+        
+        _pointModel.HealthIsChanged += ChangePoints; //
+        
+        _asteroid = Resources.Load<GameObject>("Asteroid");
+
         for (int i = 0; i < _maxEnemyOnMap; i++)
         {
             SpawnAsteroid();
             _curEnemyOnMap++;
         }
+    }
+
+    private Action<float, float> ChangePoints(float curvalue, float prevvalue) //
+    { ;
+        _scoreCounter.text = $"Score: {curvalue}"; 
         
-        for (int i = 0; i < _controllers.Count; i++)
-        {
-            _controllers[i].Init();
-            _controllers[i].EnemyDestroyed += () => _curEnemyOnMap--;
-        }
+        return asd;
     }
 
     private void Update()
@@ -58,6 +76,8 @@ public class EnemySpawner : MonoBehaviour
         if (go.TryGetComponent<EnemyController>(out var enemyController))
         {
             _controllers.Add(enemyController);
+            enemyController.Init();
+            enemyController.EnemyDestroyed += DestroyEnemy;
         }
        
     }
@@ -66,6 +86,16 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(1.0f, 4.0f));
         SpawnAsteroid();
+    }
+
+    private void DestroyEnemy(GameObject enemyGO)
+    {
+        _controllers?.Remove(enemyGO.GetComponent<EnemyController>());
         
+        EnemyIsDeaded?.Invoke(10.0f); //
+        
+        Destroy(enemyGO);
+        
+        _curEnemyOnMap--;
     }
 }

@@ -18,7 +18,7 @@ public class PlayerController
     private WeaponSystem _weaponSystem;
     private HealthModel _healthModel;
     private WeaponModel _weapon;
-    
+
     private IWeapon _firstWeapon;
     private IWeapon _secondWeapon;
     

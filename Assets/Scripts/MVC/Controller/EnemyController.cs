@@ -19,7 +19,7 @@ namespace Asteroids.Controller
         private IEnemy _enemy;
 
         public event Action<LevelObjectView> OnShellColision;
-        public event Action EnemyDestroyed;
+        public event Action<GameObject> EnemyDestroyed;
             
         public void Init()
         {
@@ -51,8 +51,7 @@ namespace Asteroids.Controller
 
         private void Dispose()
         {
-            EnemyDestroyed?.Invoke();
-            Destroy(gameObject); //
+            EnemyDestroyed?.Invoke(gameObject);
             _enemyView.OnGameObjectContact -= OnCollision;
             _healthModel.Died -= Dispose;
         }
