@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: DefoultWeaponInfo
   m_EditorClassIdentifier: 
   _attackSpeed: 300
-  _cooldown: 1
-  "_max\u0421harges": 3
+  _cooldown: 0
+  "_max\u0421harges": 1
+  _damageValue: 1

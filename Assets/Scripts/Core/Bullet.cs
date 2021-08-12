@@ -19,7 +19,10 @@ namespace Asteroids.Core
         {
             /*var a = obj.GetComponent<Asteroid>();
             a.ChangeHealth(-1.0f);*/
-            DestroyShell();
+            if (obj.CompareTag("Enemy"))
+            {
+                DestroyShell(); 
+            }
         }
 
         public void Fire(Vector2 direction)
@@ -36,7 +39,7 @@ namespace Asteroids.Core
             DestroyShell();
         }
 
-        private void DestroyShell()
+        private void DestroyShell()//
         {
             Destroy(gameObject);
         }

@@ -1,3 +1,4 @@
+using System;
 using Asteroids.Abstraction;
 using Asteroids.Controller;
 using Asteroids.Core;
@@ -8,6 +9,7 @@ using Asteroids.ScriptableObjects;
 using Asteroids.System;
 using Asteroids.View;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class PlayerController
 {
@@ -16,12 +18,13 @@ public class PlayerController
     private MovementController _movementController;
     private WeaponController _weaponController;
     private WeaponSystem _weaponSystem;
-    private HealthModel _healthModel;
+    public HealthModel _healthModel;//
     private WeaponModel _weapon;
 
     private IWeapon _firstWeapon;
     private IWeapon _secondWeapon;
-    
+
+    public Action PlayerDead;
     public PlayerController(PlayerView playerView)
     {
         _playerView = playerView;
@@ -54,16 +57,12 @@ public class PlayerController
         _movementController.Move(_input.Player.Move.ReadValue<float>());
         _movementController.Rotate(_input.Player.Rotation.ReadValue<float>());
     }
-
-    private void Dispose()
-    {
-        OnDisable();
-        Object.Destroy(_playerView);
-    }
+    
     private void OnAwake()
     {
-        _input.Enable();
-        
+
+        OnEnable();
+            
         _input.Player.Enable();
         _input.Player.Fire1.Enable();
         _input.Player.Fire2.Enable();
@@ -74,15 +73,36 @@ public class PlayerController
         _input.Player.Fire2.performed += _ => _secondWeapon.ProduceFire();
         
         _healthModel.Died += OnPlayerDied;
+        _playerView.OnGameObjectContact += OnCollision;
     }
 
+    private void Dispose()
+    {
+        OnDisable();
+        /*Object.Destroy(_playerView);*/
+    }
+    
     private void OnPlayerDied()
     {
         Dispose();
+        PlayerDead?.Invoke();
     }
     
-    private void OnDisable()
+    public void OnDisable()
     {
         _input.Disable();
+    }
+
+    public void OnEnable()
+    {
+        _input.Enable();
+    }
+    private void OnCollision(GameObject obj)
+    {
+        if (obj.CompareTag("Enemy"))
+        {
+            _healthModel.ChangeHealth(-1.0f);
+            Debug.Log(_healthModel.GetCurrentHealth());
+        }
     }
 }

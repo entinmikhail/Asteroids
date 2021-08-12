@@ -10,21 +10,23 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private Text _scoreCounter;
+    
     private GameObject _asteroid;
     private IList<EnemyController> _controllers = new List<EnemyController>();
-    
-    private HealthModel _pointModel; //)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+    private IList<GameObject> _enemies = new List<GameObject>();
+    private HealthModel _pointModel; //
     
     private int _maxEnemyOnMap = 5;
     private int _curEnemyOnMap;
 
-    [SerializeField] private Text _scoreCounter;
+    private int _REMOVED = 0;
     
     public Action<float> EnemyIsDeaded;
 
     public Action<float, float> asd; //
     
-    private void Start()
+    public void SpawnerStart()
     {
         _pointModel = new HealthModel(Resources.Load<ShipInfo>("ShipInfo"));
         
@@ -48,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
         return asd;
     }
 
-    private void Update()
+    public void SpawnerUpdate()
     {
         for (int i = 0; i < _controllers.Count; i++)
         {
@@ -75,7 +77,9 @@ public class EnemySpawner : MonoBehaviour
         
         if (go.TryGetComponent<EnemyController>(out var enemyController))
         {
+            _enemies.Add(go);
             _controllers.Add(enemyController);
+            
             enemyController.Init();
             enemyController.EnemyDestroyed += DestroyEnemy;
         }
@@ -88,14 +92,28 @@ public class EnemySpawner : MonoBehaviour
         SpawnAsteroid();
     }
 
-    private void DestroyEnemy(GameObject enemyGO)
+    private void DestroyEnemy(GameObject enemy)
     {
-        _controllers?.Remove(enemyGO.GetComponent<EnemyController>());
-        
-        EnemyIsDeaded?.Invoke(10.0f); //
-        
-        Destroy(enemyGO);
+        var enemyController = enemy.GetComponent<EnemyController>();
         
         _curEnemyOnMap--;
+        _REMOVED++;
+        
+        _enemies?.Remove(enemy);
+        _controllers?.Remove(enemyController);
+        
+        enemyController.EnemyDestroyed -= DestroyEnemy;
+        
+        EnemyIsDeaded?.Invoke(10.0f); // поинты
+        
+        Destroy(enemy);
+    }
+
+    public void DestroyAllEnemies()
+    {
+        for (var i = _enemies.Count - 1; i > -1; i--)
+        {
+            DestroyEnemy(_enemies[i]);
+        }
     }
 }

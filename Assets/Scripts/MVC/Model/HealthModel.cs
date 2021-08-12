@@ -23,11 +23,16 @@ namespace Asteroids.Model
         public void ChangeHealth(float changeValue)
         {
             var prevValue = _currentHealth;
-            
+
             _currentHealth = Math.Min(_currentHealth + changeValue, _maxHealth);
             if (_currentHealth <= 0)
                 Died?.Invoke();
             HealthIsChanged?.Invoke(_currentHealth, prevValue);
+        }
+
+        public void SetHealth(float healthsValue)
+        {
+            _currentHealth = healthsValue;
         }
     }
 }

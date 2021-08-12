@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1d7ce66f88446e853f9f2e55296031, type: 3}
   m_Name: ObjectsInfos
   m_EditorClassIdentifier: 
-  _objectInfos: []
+  _objectInfos:
+  - LevelObjectType: 4
+    WeaponInfo: {fileID: 11400000, guid: 6b335229ff4a8714a9c016e8b4b60c1e, type: 2}
+  - LevelObjectType: 3
+    WeaponInfo: {fileID: 11400000, guid: 05800abd3b7754544bb50e8a4ee9cd6e, type: 2}

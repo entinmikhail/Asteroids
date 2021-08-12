@@ -35,7 +35,7 @@ namespace Asteroids.Controller
 
         public void SelfUpdate()
         {
-            /*_enemy.DoSomeThingOnUpdate();*/
+            _enemy.DoSomeThingOnUpdate();
         }
 
         private void OnCollision(GameObject obj)

@@ -15,5 +15,5 @@ MonoBehaviour:
   _movementSpeed: 100
   _maxMovementSpeed: 10
   _rotationSpeed: 200
-  _maxHealth: 1
-  _health: 1
+  _maxHealth: 10000
+  _health: 3
