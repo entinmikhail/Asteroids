@@ -10,6 +10,8 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public float CurrentPoints;
+    
     [SerializeField] private Text _scoreCounter;
     
     private GameObject _asteroid;
@@ -19,8 +21,6 @@ public class EnemySpawner : MonoBehaviour
     
     private int _maxEnemyOnMap = 5;
     private int _curEnemyOnMap;
-
-    private int _REMOVED = 0;
     
     public Action<float> EnemyIsDeaded;
 
@@ -44,9 +44,9 @@ public class EnemySpawner : MonoBehaviour
     }
 
     private Action<float, float> ChangePoints(float curvalue, float prevvalue) //
-    { ;
-        _scoreCounter.text = $"Score: {curvalue}"; 
-        
+    { 
+        _scoreCounter.text = $"Score: {curvalue}";
+        CurrentPoints = curvalue;
         return asd;
     }
 
@@ -97,8 +97,7 @@ public class EnemySpawner : MonoBehaviour
         var enemyController = enemy.GetComponent<EnemyController>();
         
         _curEnemyOnMap--;
-        _REMOVED++;
-        
+
         _enemies?.Remove(enemy);
         _controllers?.Remove(enemyController);
         
