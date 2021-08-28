@@ -45,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
 
     private Action<float, float> ChangePoints(float curvalue, float prevvalue) //
     { 
-        _scoreCounter.text = $"Score: {curvalue}";
+        _scoreCounter.text = curvalue.ToString();
         CurrentPoints = curvalue;
         return asd;
     }

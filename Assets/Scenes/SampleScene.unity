@@ -250,7 +250,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.2370563
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -297,7 +297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &578327331
 RectTransform:
   m_ObjectHideFlags: 0
@@ -324,7 +324,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578327330}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
@@ -603,8 +603,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerView: {fileID: 0}
   _enemySpawner: {fileID: 1229677389}
-  _restartButton: {fileID: 0}
-  _totalScore: {fileID: 0}
+  _restartButton: {fileID: 1740832780}
+  _totalScore: {fileID: 578327330}
+  _inGameScore: {fileID: 726809509}
 --- !u!4 &1229677388
 Transform:
   m_ObjectHideFlags: 0
@@ -631,6 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec0a8b924ef84a409136783072fdd89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentPoints: 0
   _scoreCounter: {fileID: 726809511}
 --- !u!1 &1661412431
 GameObject:
@@ -676,7 +678,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.020894527, y: 5.6813664}
+  m_Offset: {x: 0.08349705, y: 6.8266745}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -687,7 +689,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 17.882149, y: 0.21376324}
+  m_Size: {x: 22.098986, y: 0.43543625}
   m_EdgeRadius: 0
 --- !u!61 &1661412434
 BoxCollider2D:
@@ -702,7 +704,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.034288883, y: -5.751193}
+  m_Offset: {x: 0.045135498, y: -6.9072657}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -713,7 +715,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 17.937637, y: 0.13646889}
+  m_Size: {x: 22.067532, y: 0.5098381}
   m_EdgeRadius: 0
 --- !u!4 &1661412435
 Transform:
@@ -773,7 +775,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -18.719433, y: -0.003507197}
+  m_Offset: {x: -20.454922, y: -0.0032176077}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -784,7 +786,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3485775, y: 0.96906924}
+  m_Size: {x: 0.47361755, y: 1.1234305}
   m_EdgeRadius: 0
 --- !u!4 &1730986173
 Transform:
@@ -813,7 +815,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.846696, y: -0.006052941}
+  m_Offset: {x: 1.1714184, y: -0.0018424392}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -824,7 +826,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.973435}
+  m_Size: {x: 0.48904037, y: 1.1412162}
   m_EdgeRadius: 0
 --- !u!1 &1740832780
 GameObject:
@@ -844,7 +846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1740832781
 RectTransform:
   m_ObjectHideFlags: 0
@@ -872,7 +874,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740832780}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -928,7 +930,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740832780}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
