@@ -55,7 +55,7 @@ public class Main : MonoBehaviour
         _playerController.PlayerDead += OnPlayerDead;
         
         _playerController.OnEnable();
-        _playerController._healthModel.SetHealth(1);
+        _playerController._healthModel.SetResourceValue(1);
         
         _playerGameObject.transform.SetPositionAndRotation(_defoultPlayerPosition, _defoultRotation);
     }

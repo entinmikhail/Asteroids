@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
     private GameObject _asteroid;
     private IList<EnemyController> _controllers = new List<EnemyController>();
     private IList<GameObject> _enemies = new List<GameObject>();
-    private HealthModel _pointModel; //
+    private ResourceModel _pointModel; //
     
     private int _maxEnemyOnMap = 5;
     private int _curEnemyOnMap;
@@ -28,11 +28,11 @@ public class EnemySpawner : MonoBehaviour
     
     public void SpawnerStart()
     {
-        _pointModel = new HealthModel(Resources.Load<ShipInfo>("ShipInfo"));
+        _pointModel = new ResourceModel(0.0f);
         
-        EnemyIsDeaded += _pointModel.ChangeHealth;
+        EnemyIsDeaded += _pointModel.ChangeResource;
         
-        _pointModel.HealthIsChanged += ChangePoints; //
+        _pointModel.ResourceValueChanged += ChangePoints; //
         
         _asteroid = Resources.Load<GameObject>("Asteroid");
 

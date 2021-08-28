@@ -3,19 +3,19 @@ using Asteroids.Abstraction;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Asteroid : MonoBehaviour, IHealthModel
+public class Asteroid : MonoBehaviour, IResourceModel
 {
     private Rigidbody2D _rigidbody;
     private float _maxSpeed = 3.0f;
     private float _curHealth = 1.0f;
-    public event Action Died;
-    public event HealthChangeHandler HealthIsChanged;
+    public event Action ResourceEnded;
+    public event ResourceChangeHandler ResourceValueChanged;
     private void Start()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody2D>();
         AddImpulse();
         
-        Died += Destroy;
+        ResourceEnded += Destroy;
     }
 
     private void AddImpulse()
@@ -28,21 +28,21 @@ public class Asteroid : MonoBehaviour, IHealthModel
         Debug.Log("pbuh");
         Destroy(gameObject);
         
-        Died -= Destroy;
+        ResourceEnded -= Destroy;
     }
     
-    public float GetCurrentHealth() => _curHealth;
+    public float GetCurrentResourceValue() => _curHealth;
   
 
-    public void ChangeHealth(float changeValue)
+    public void ChangeResource(float changeValue)
     {
         var prevValue = _curHealth;
         Debug.Log("zxc");
         _curHealth += changeValue;
         
         if(_curHealth <= 0)
-            Died?.Invoke();
+            ResourceEnded?.Invoke();
         
-        HealthIsChanged?.Invoke(_curHealth, prevValue);
+        ResourceValueChanged?.Invoke(_curHealth, prevValue);
     }
 }
