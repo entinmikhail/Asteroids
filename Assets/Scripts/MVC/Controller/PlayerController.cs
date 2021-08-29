@@ -9,25 +9,26 @@ using Asteroids.ScriptableObjects;
 using Asteroids.System;
 using Asteroids.View;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 public class PlayerController
 {
+    private HealthModel _healthModel;
+    
     private PlayerView _playerView;
     private PlayerInput _input;
     private MovementController _movementController;
     private WeaponController _weaponController;
     private WeaponSystem _weaponSystem;
-    public ResourceModel _healthModel;//
     private WeaponModel _weapon;
 
     private IWeapon _firstWeapon;
     private IWeapon _secondWeapon;
 
     public Action PlayerDead;
-    public PlayerController(PlayerView playerView)
+    public PlayerController(PlayerView playerView, HealthModel healthModel)
     {
         _playerView = playerView;
+        _healthModel = healthModel;
     }
 
     public void Awake()
@@ -35,7 +36,7 @@ public class PlayerController
         var shipInfo = Resources.Load<ShipInfo>("ShipInfo");
         
         _weaponSystem = new WeaponSystem();
-        _healthModel = new ResourceModel(shipInfo.Health, shipInfo.MaxHealth);
+        
         
         _movementController = new MovementController(_playerView);
         var weaponFactory = new WeaponFactory(_playerView.SpawnPoint);
@@ -102,7 +103,6 @@ public class PlayerController
         if (obj.CompareTag("Enemy"))
         {
             _healthModel.ChangeResource(-1.0f);
-            Debug.Log(_healthModel.GetCurrentResourceValue());
         }
     }
 }

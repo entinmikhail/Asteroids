@@ -3,37 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using Asteroids.Controller;
 using Asteroids.Model;
-using Asteroids.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.UI;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public float CurrentPoints;
-    
-    [SerializeField] private Text _scoreCounter;
+    [Inject] private PointModel _pointModel;
     
     private GameObject _asteroid;
     private IList<EnemyController> _controllers = new List<EnemyController>();
     private IList<GameObject> _enemies = new List<GameObject>();
-    private ResourceModel _pointModel; //
+   
     
     private int _maxEnemyOnMap = 5;
     private int _curEnemyOnMap;
     
-    public Action<float> EnemyIsDeaded;
-
-    public Action<float, float> asd; //
+    public Action<float> EnemyDeaded;
     
     public void SpawnerStart()
     {
-        _pointModel = new ResourceModel(0.0f);
-        
-        EnemyIsDeaded += _pointModel.ChangeResource;
-        
-        _pointModel.ResourceValueChanged += ChangePoints; //
-        
+
+        EnemyDeaded += _pointModel.ChangeResource;
+
         _asteroid = Resources.Load<GameObject>("Asteroid");
 
         for (int i = 0; i < _maxEnemyOnMap; i++)
@@ -41,13 +33,6 @@ public class EnemySpawner : MonoBehaviour
             SpawnAsteroid();
             _curEnemyOnMap++;
         }
-    }
-
-    private Action<float, float> ChangePoints(float curvalue, float prevvalue) //
-    { 
-        _scoreCounter.text = curvalue.ToString();
-        CurrentPoints = curvalue;
-        return asd;
     }
 
     public void SpawnerUpdate()
@@ -60,6 +45,11 @@ public class EnemySpawner : MonoBehaviour
         AddEnemy();
     }
 
+    private void SpawnerDetach()
+    {
+        EnemyDeaded -= _pointModel.ChangeResource;   
+    }
+    
     private void AddEnemy()
     {
         if (_curEnemyOnMap < _maxEnemyOnMap)
@@ -103,7 +93,7 @@ public class EnemySpawner : MonoBehaviour
         
         enemyController.EnemyDestroyed -= DestroyEnemy;
         
-        EnemyIsDeaded?.Invoke(10.0f); // поинты
+        EnemyDeaded?.Invoke(10.0f); // поинты
         
         Destroy(enemy);
     }
@@ -113,6 +103,7 @@ public class EnemySpawner : MonoBehaviour
         for (var i = _enemies.Count - 1; i > -1; i--)
         {
             DestroyEnemy(_enemies[i]);
+            EnemyDeaded?.Invoke(-10.0f);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Asteroids.Abstraction;
+using UnityEngine;
 
 namespace Asteroids.Model
 {
@@ -9,7 +10,7 @@ namespace Asteroids.Model
         private readonly float _maxResourceValue;
 
         public event Action ResourceEnded;
-        public event ResourceChangeHandler ResourceValueChanged;
+        public event Action<float, float> ResourceValueChanged;
         
         public ResourceModel(float currentResourceValue, float maxResourceValue)
         {
@@ -25,6 +26,12 @@ namespace Asteroids.Model
 
         public float GetCurrentResourceValue() => _currentResourceValue;
 
+        public void ResetValue()
+        {
+            _currentResourceValue = 0;
+            ResourceValueChanged?.Invoke(_currentResourceValue, 0);
+        }
+        
         public void ChangeResource(float changeValue)
         {
             var prevValue = _currentResourceValue;

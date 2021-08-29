@@ -2,13 +2,11 @@
 
 namespace Asteroids.Abstraction
 {
-    public delegate Action<float, float> ResourceChangeHandler(float curValue, float prevValue);
-    
     public interface IResourceModel
     {
         public event Action ResourceEnded;
     
-        public event ResourceChangeHandler ResourceValueChanged;
+        public event Action<float, float> ResourceValueChanged;
         
         float GetCurrentResourceValue();
         

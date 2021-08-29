@@ -9,7 +9,8 @@ public class Asteroid : MonoBehaviour, IResourceModel
     private float _maxSpeed = 3.0f;
     private float _curHealth = 1.0f;
     public event Action ResourceEnded;
-    public event ResourceChangeHandler ResourceValueChanged;
+    public event Action<float, float> ResourceValueChanged;
+
     private void Start()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody2D>();
@@ -25,7 +26,6 @@ public class Asteroid : MonoBehaviour, IResourceModel
 
     public void Destroy()
     {
-        Debug.Log("pbuh");
         Destroy(gameObject);
         
         ResourceEnded -= Destroy;
@@ -37,7 +37,6 @@ public class Asteroid : MonoBehaviour, IResourceModel
     public void ChangeResource(float changeValue)
     {
         var prevValue = _curHealth;
-        Debug.Log("zxc");
         _curHealth += changeValue;
         
         if(_curHealth <= 0)
