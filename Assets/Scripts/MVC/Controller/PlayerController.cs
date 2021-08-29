@@ -9,37 +9,38 @@ using Asteroids.ScriptableObjects;
 using Asteroids.System;
 using Asteroids.View;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 public class PlayerController
 {
+    private HealthModel _healthModel;
+    
     private PlayerView _playerView;
     private PlayerInput _input;
     private MovementController _movementController;
     private WeaponController _weaponController;
     private WeaponSystem _weaponSystem;
-    public HealthModel _healthModel;//
     private WeaponModel _weapon;
 
     private IWeapon _firstWeapon;
     private IWeapon _secondWeapon;
 
     public Action PlayerDead;
-    public PlayerController(PlayerView playerView)
+    public PlayerController(PlayerView playerView, HealthModel healthModel)
     {
         _playerView = playerView;
+        _healthModel = healthModel;
     }
 
     public void Awake()
     {
+        var shipInfo = Resources.Load<ShipInfo>("ShipInfo");
+        
         _weaponSystem = new WeaponSystem();
-        _healthModel = new HealthModel(Resources.Load<ShipInfo>("ShipInfo"));
-        /*_weaponController = new WeaponController(_weaponSystem, _playerView, _secondWeapon);*/
+        
         
         _movementController = new MovementController(_playerView);
         var weaponFactory = new WeaponFactory(_playerView.SpawnPoint);
-                
-        /*_firstWeapon = weaponFactory.CreateDefoultWeapon();*/
+        
         _secondWeapon = weaponFactory.CreateDefoultWeapon();
         
         _weapon = new WeaponModel(Resources.Load<WeaponInfo>("DefoultWeaponInfo"));
@@ -60,29 +61,29 @@ public class PlayerController
     
     private void OnAwake()
     {
-
         OnEnable();
             
         _input.Player.Enable();
+        
         _input.Player.Fire1.Enable();
         _input.Player.Fire2.Enable();
+        
         _input.Player.Move.Enable();
         _input.Player.Rotation.Enable();
         
         _input.Player.Fire1.performed += _ => _weaponController.OnAttackClicked();
         _input.Player.Fire2.performed += _ => _secondWeapon.ProduceFire();
         
-        _healthModel.Died += OnPlayerDied;
+        _healthModel.ResourceEnded += OnPlayerResourceEnded;
         _playerView.OnGameObjectContact += OnCollision;
     }
 
     private void Dispose()
     {
         OnDisable();
-        /*Object.Destroy(_playerView);*/
     }
     
-    private void OnPlayerDied()
+    private void OnPlayerResourceEnded()
     {
         Dispose();
         PlayerDead?.Invoke();
@@ -101,8 +102,7 @@ public class PlayerController
     {
         if (obj.CompareTag("Enemy"))
         {
-            _healthModel.ChangeHealth(-1.0f);
-            Debug.Log(_healthModel.GetCurrentHealth());
+            _healthModel.ChangeResource(-1.0f);
         }
     }
 }

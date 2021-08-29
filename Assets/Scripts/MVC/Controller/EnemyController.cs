@@ -13,7 +13,7 @@ namespace Asteroids.Controller
     {
         [SerializeField] private EnemyInfo _enemyInfo; 
         
-        private HealthModel _healthModel;
+        private ResourceModel _healthModel;
         private LevelObjectView _enemyView;
         private Rigidbody2D _rigidbody;
         private IEnemy _enemy;
@@ -26,11 +26,13 @@ namespace Asteroids.Controller
             _enemyView = gameObject.GetComponent<LevelObjectView>();
 
             _enemy = new AsteroidEnemy(_enemyView, _enemyInfo);
-            _healthModel = new HealthModel(_enemyInfo);
+            _healthModel = new ResourceModel(_enemyInfo.Health, _enemyInfo.MaxHealth);
             
             _enemy.DoSomeThingOnStart();
+            
             _enemyView.OnGameObjectContact += OnCollision;
-            _healthModel.Died += Dispose;
+            
+            _healthModel.ResourceEnded += Dispose;
         }
 
         public void SelfUpdate()
@@ -44,16 +46,20 @@ namespace Asteroids.Controller
             {
                 var shellView = obj.GetComponent<LevelObjectView>();
                 var shellInfo = Resources.Load<ObjectsInfos>("ObjectsInfos").GetInfo(shellView.LevelObjectType); //
+                
                 OnShellColision?.Invoke(shellView);
-                _healthModel.ChangeHealth(-shellInfo.DamageValue);
+                
+                _healthModel.ChangeResource(-shellInfo.DamageValue);
             }
         }
 
         private void Dispose()
         {
             EnemyDestroyed?.Invoke(gameObject);
+            
             _enemyView.OnGameObjectContact -= OnCollision;
-            _healthModel.Died -= Dispose;
+            
+            _healthModel.ResourceEnded -= Dispose;
         }
     }
 }

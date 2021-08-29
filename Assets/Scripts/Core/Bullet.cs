@@ -35,7 +35,7 @@ namespace Asteroids.Core
 
         private IEnumerator DestroyBullet()
         {
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(2.0f);
             DestroyShell();
         }
 

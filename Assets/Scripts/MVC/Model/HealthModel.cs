@@ -1,38 +1,20 @@
-﻿using System;
-using Asteroids.Abstraction;
-using UnityEngine;
+﻿using Asteroids.Abstraction;
 
 namespace Asteroids.Model
 {
-    public class HealthModel : IHealthModel
+    public class HealthModel : ResourceModel, IHealthModel
+
     {
-        private float _currentHealth;
-        private readonly float _maxHealth;
-
-        public event Action Died;
-        public event HealthChangeHandler HealthIsChanged;
-
-        public HealthModel(IHealth health)
+        private readonly bool _isPlayerLife;
+        
+        public HealthModel(float currentResourceValue, float maxResourceValue) : base(currentResourceValue, maxResourceValue)
         {
-            _currentHealth = health.Health;
-            _maxHealth = health.MaxHealth;
+            
         }
 
-        public float GetCurrentHealth() => _currentHealth;
-
-        public void ChangeHealth(float changeValue)
+        public HealthModel(float currentResourceValue) : base(currentResourceValue)
         {
-            var prevValue = _currentHealth;
-
-            _currentHealth = Math.Min(_currentHealth + changeValue, _maxHealth);
-            if (_currentHealth <= 0)
-                Died?.Invoke();
-            HealthIsChanged?.Invoke(_currentHealth, prevValue);
-        }
-
-        public void SetHealth(float healthsValue)
-        {
-            _currentHealth = healthsValue;
+            
         }
     }
 }

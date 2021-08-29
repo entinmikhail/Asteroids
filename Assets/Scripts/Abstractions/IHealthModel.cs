@@ -2,16 +2,14 @@
 
 namespace Asteroids.Abstraction
 {
-    public delegate Action<float, float> HealthChangeHandler(float curValue, float prevValue);
-    
     public interface IHealthModel
     {
-        public event Action Died;
-    
-        public event HealthChangeHandler HealthIsChanged;
+        public event Action ResourceEnded;
+
+        void SetResourceValue(float resourceValue);
+         
+        float GetCurrentResourceValue();
         
-        float GetCurrentHealth();
-        
-        void ChangeHealth(float changeValue);
+        void ChangeResource(float changeValue);
     }
 }

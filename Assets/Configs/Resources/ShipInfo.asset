@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57543ad18d1688940b08eed57f942844, type: 3}
   m_Name: ShipInfo
   m_EditorClassIdentifier: 
-  _movementSpeed: 100
-  _maxMovementSpeed: 10
+  _movementSpeed: 50
+  _maxMovementSpeed: 5
   _rotationSpeed: 200
   _maxHealth: 10000
-  _health: 3
+  _health: 1
