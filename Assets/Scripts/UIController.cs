@@ -21,16 +21,12 @@ public class UIController : MonoBehaviour
             _gameModel.GameRestarted += Attach;
             _pointModel.ResourceValueChanged += ChangePoints;
             _gameModel.GameEnded += OnGameEnd;
+            
             _scoreTextCounter = _guiScore.GetComponent<Text>();
             
             Attach();
         }
-
-        public void Update()
-        {
-
-        }
-
+        
         private void OnGameEnd()
         {
             _gameModel.GameRestarted -= Attach;

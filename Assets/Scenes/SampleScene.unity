@@ -585,6 +585,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 911184467}
+  - component: {fileID: 911184466}
   m_Layer: 0
   m_Name: ControllersInstaller
   m_TagString: Untagged
@@ -592,6 +593,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &911184466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911184465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad8b75445614fb4a82e94e82bb64a10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &911184467
 Transform:
   m_ObjectHideFlags: 0
@@ -638,9 +651,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemySpawner: {fileID: 1229677389}
-  _restartButton: {fileID: 1740832780}
-  _totalScore: {fileID: 578327330}
-  _inGameScore: {fileID: 726809509}
 --- !u!4 &1229677388
 Transform:
   m_ObjectHideFlags: 0
@@ -681,7 +691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _restartButton: {fileID: 1740832780}
   _totalScore: {fileID: 578327330}
-  _inGameScore: {fileID: 726809509}
+  _guiScore: {fileID: 726809509}
 --- !u!1 &1294037679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,7 +1308,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 911184466}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:

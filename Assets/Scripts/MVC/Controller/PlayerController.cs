@@ -14,21 +14,23 @@ public class PlayerController
 {
     private HealthModel _healthModel;
     
-    private PlayerView _playerView;
+    private readonly PlayerView _playerView;
     private PlayerInput _input;
     private MovementController _movementController;
     private WeaponController _weaponController;
     private WeaponSystem _weaponSystem;
     private WeaponModel _weapon;
-
+    private GameModel _gameModel;
+    
     private IWeapon _firstWeapon;
     private IWeapon _secondWeapon;
 
     public Action PlayerDead;
-    public PlayerController(PlayerView playerView, HealthModel healthModel)
+    public PlayerController(PlayerView playerView, HealthModel healthModel, GameModel gameModel)
     {
         _playerView = playerView;
         _healthModel = healthModel;
+        _gameModel = gameModel;
     }
 
     public void Awake()
@@ -44,7 +46,7 @@ public class PlayerController
         _secondWeapon = weaponFactory.CreateDefoultWeapon();
         
         _weapon = new WeaponModel(Resources.Load<WeaponInfo>("DefoultWeaponInfo"));
-        _weaponController = new WeaponController(_weaponSystem, _playerView, _weapon, Resources.Load<Bullet>("Bullet"));
+        _weaponController = new WeaponController(_weaponSystem, _playerView, _weapon, Resources.Load<Bullet>("Bullet"), _gameModel);
         
         _input = new PlayerInput();
         
@@ -61,6 +63,7 @@ public class PlayerController
     
     private void OnAwake()
     {
+        _weaponController.Init();
         OnEnable();
             
         _input.Player.Enable();
