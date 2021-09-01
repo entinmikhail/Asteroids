@@ -136,8 +136,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 4437745429068403748}
   _rigidbody: {fileID: 4437745429068403750}
-  _collider: {fileID: 0}
-  levelObjectType: 0
+  _collider: {fileID: 5277131376100059953}
+  levelObjectType: 1
 --- !u!114 &2871282275413135592
 MonoBehaviour:
   m_ObjectHideFlags: 0

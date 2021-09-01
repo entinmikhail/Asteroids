@@ -17,9 +17,10 @@ namespace Asteroids.Controller
         private LevelObjectView _enemyView;
         private Rigidbody2D _rigidbody;
         private IEnemy _enemy;
+        private LevelObjectView _lastCollision;
 
         public event Action<LevelObjectView> OnShellColision;
-        public event Action<GameObject> EnemyDestroyed;
+        public event Action<GameObject, LevelObjectView> EnemyDestroyed;
             
         public void Init()
         {
@@ -31,7 +32,6 @@ namespace Asteroids.Controller
             _enemy.DoSomeThingOnStart();
             
             _enemyView.OnGameObjectContact += OnCollision;
-            
             _healthModel.ResourceEnded += Dispose;
         }
 
@@ -47,18 +47,18 @@ namespace Asteroids.Controller
                 var shellView = obj.GetComponent<LevelObjectView>();
                 var shellInfo = Resources.Load<ObjectsInfos>("ObjectsInfos").GetInfo(shellView.LevelObjectType); //
                 
-                OnShellColision?.Invoke(shellView);
-                
+                _lastCollision = shellView;
                 _healthModel.ChangeResource(-shellInfo.DamageValue);
+                
+                OnShellColision?.Invoke(shellView);
             }
         }
 
         private void Dispose()
         {
-            EnemyDestroyed?.Invoke(gameObject);
+            EnemyDestroyed?.Invoke(gameObject, _lastCollision);
             
             _enemyView.OnGameObjectContact -= OnCollision;
-            
             _healthModel.ResourceEnded -= Dispose;
         }
     }
