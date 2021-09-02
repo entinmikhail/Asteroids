@@ -7,7 +7,7 @@ namespace Asteroids.ScriptableObjects
     {
         Ship,
         Asteroid,
-        MiniAsteroid,
+        MiniAsteroid,   
         UFO,
         Laser,
         Bullet

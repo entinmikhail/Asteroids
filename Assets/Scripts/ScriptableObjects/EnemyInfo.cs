@@ -17,5 +17,7 @@ namespace Asteroids.ScriptableObjects
     
         public int Health => _health;
         [SerializeField] private int _health;
+        public BaseEnemyMoveBehavior EnemyMoveBehavior => _enemyMoveBehavior;
+        [SerializeField] private BaseEnemyMoveBehavior _enemyMoveBehavior;
     }   
 }

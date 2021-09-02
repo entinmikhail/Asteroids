@@ -48,7 +48,7 @@ namespace Asteroids.Controller
                 
                 bullet.Fire(_weaponView.SpawnPoint.up);
                 
-                bullet.ShellDesroyed += RemoveShell;
+                bullet.ShellDestroyed += RemoveShell;
                     
                 _weapon.ProduceFire();
             }
@@ -56,7 +56,7 @@ namespace Asteroids.Controller
         
         private void RemoveShell(BaseShell shell)
         { 
-            shell.ShellDesroyed -= RemoveShell;
+            shell.ShellDestroyed -= RemoveShell;
             
             _shellList.Remove(shell);
             

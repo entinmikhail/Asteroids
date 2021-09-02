@@ -5,18 +5,20 @@ using Asteroids.Model;
 using Asteroids.ScriptableObjects;
 using Asteroids.View;
 using UnityEngine;
+using Zenject;
 
 namespace Asteroids.Controller
 {
     public class EnemyController : MonoBehaviour
 
     {
-        [SerializeField] private EnemyInfo _enemyInfo; 
+        [SerializeField] private EnemyInfo _enemyInfo;
+        [Inject] private PlayerView _playerView;
         
         private ResourceModel _healthModel;
         private LevelObjectView _enemyView;
         private Rigidbody2D _rigidbody;
-        private IEnemy _enemy;
+        private BaseEnemyMoveBehavior _enemyBehevior;
         private LevelObjectView _lastCollision;
 
         public event Action<LevelObjectView> OnShellColision;
@@ -26,10 +28,11 @@ namespace Asteroids.Controller
         {
             _enemyView = gameObject.GetComponent<LevelObjectView>();
 
-            _enemy = new AsteroidEnemy(_enemyView, _enemyInfo);
+            _enemyBehevior = _enemyInfo.EnemyMoveBehavior;
+            
             _healthModel = new ResourceModel(_enemyInfo.Health, _enemyInfo.MaxHealth);
             
-            _enemy.DoSomeThingOnStart();
+            _enemyBehevior.Init(_enemyView, _playerView, _enemyInfo.MovementSpeed);
             
             _enemyView.OnGameObjectContact += OnCollision;
             _healthModel.ResourceEnded += Dispose;
@@ -37,7 +40,7 @@ namespace Asteroids.Controller
 
         public void SelfUpdate()
         {
-            _enemy.DoSomeThingOnUpdate();
+            _enemyBehevior.OnUpdate(_enemyView, _playerView, _enemyInfo.MovementSpeed);
         }
 
         private void OnCollision(GameObject obj)

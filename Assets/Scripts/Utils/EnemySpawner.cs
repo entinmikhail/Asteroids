@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
    
     
     private int _maxEnemyOnMap = 5;
-    private int _maxAsteroidsOnMap = 5;
+    private int _maxAsteroidsOnMap;
     private int _curEnemyOnMap;
     
     private int _countOfMiniAsteroids = 4;
@@ -47,6 +47,7 @@ public class EnemySpawner : MonoBehaviour
         {
             _controllers[i].SelfUpdate();
         }
+        
         AddEnemy();
     }
 
@@ -94,14 +95,13 @@ public class EnemySpawner : MonoBehaviour
                 {
                     var y = 360 / _countOfMiniAsteroids * (i + 1);
                     
-                    SpawnEnemy(localPosition, _miniAsteroid, Quaternion.Euler(0, y,0)); 
+                    SpawnEnemy(localPosition, _miniAsteroid, Quaternion.Euler(0, 0,0));
                 }
             } 
         }
         
         _curEnemyOnMap--;
-        Debug.Log(_curEnemyOnMap);
-        
+
         _enemies?.Remove(enemy);
         _controllers?.Remove(enemyController);
         

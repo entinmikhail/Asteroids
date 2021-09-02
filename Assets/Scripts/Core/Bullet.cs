@@ -11,7 +11,7 @@ namespace Asteroids.Core
         [SerializeField] private LevelObjectView _view;
         
         private Rigidbody2D _rigidbody;
-        public override event Action<BaseShell> ShellDesroyed;
+        public override event Action<BaseShell> ShellDestroyed;
         
         private void Awake()
         {
@@ -47,7 +47,7 @@ namespace Asteroids.Core
 
         private void DestroyShell()
         {
-            ShellDesroyed?.Invoke(this);
+            ShellDestroyed?.Invoke(this);
         }
     } 
 }

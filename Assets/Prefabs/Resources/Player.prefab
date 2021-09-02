@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7009120208877503350}
   - component: {fileID: 7009120208877503351}
   - component: {fileID: 7009120208877503337}
+  - component: {fileID: 4131368326838431826}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -88,6 +89,24 @@ MonoBehaviour:
   _collider: {fileID: 7009120208877503351}
   levelObjectType: 0
   _spawnPoint: {fileID: 7009120209094129403}
+--- !u!114 &4131368326838431826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009120208877503348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 7009120208877503337}
+  _identifier: 
+  _useSceneContext: 1
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &7009120209094129400
 GameObject:
   m_ObjectHideFlags: 0

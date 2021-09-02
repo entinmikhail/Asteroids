@@ -37,6 +37,7 @@ public class Asteroid : MonoBehaviour, IResourceModel
     public void ChangeResource(float changeValue)
     {
         var prevValue = _curHealth;
+        
         _curHealth += changeValue;
         
         if(_curHealth <= 0)

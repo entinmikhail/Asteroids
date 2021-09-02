@@ -12,8 +12,13 @@ namespace Asteroids.Factories
         {
             var asteroid = Resources.Load<GameObject>("Asteroid");
             
-            return new AsteroidEnemy(asteroid.GetComponent<LevelObjectView>(),
+            return new AsteroidEnemyController(asteroid.GetComponent<LevelObjectView>(),
                 Resources.Load<EnemyInfo>("AsteroidEnemyInfo"));
         }
+
+        /*public static IEnemy CreateUFOEnemy()
+        {
+            
+        }*/
     }
 }
