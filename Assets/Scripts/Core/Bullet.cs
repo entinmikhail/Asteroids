@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class Bullet : BaseShell, IShell
+    public class Bullet : BaseShell
     {
         [SerializeField] private LevelObjectView _view;
         

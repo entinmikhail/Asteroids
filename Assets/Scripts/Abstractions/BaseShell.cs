@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Asteroids.Abstraction
 {
-    public abstract class BaseShell : MonoBehaviour, IShell
+    public abstract class BaseShell : MonoBehaviour
 
     {
         public abstract event Action<BaseShell> ShellDestroyed;

@@ -1,6 +1,5 @@
 ﻿using System;
 using Asteroids.Abstraction;
-using Asteroids.Core.Teleporter;
 using Asteroids.Model;
 using Asteroids.ScriptableObjects;
 using Asteroids.View;
@@ -13,7 +12,7 @@ namespace Asteroids.Controller
 
     {
         [SerializeField] private EnemyInfo _enemyInfo;
-        [Inject] private PlayerView _playerView;
+        private PlayerView _playerView;
         
         private ResourceModel _healthModel;
         private LevelObjectView _enemyView;
@@ -26,6 +25,8 @@ namespace Asteroids.Controller
             
         public void Init()
         {
+            _playerView = GameObject.FindWithTag("Player").GetComponent<PlayerView>();
+            
             _enemyView = gameObject.GetComponent<LevelObjectView>();
 
             _enemyBehevior = _enemyInfo.EnemyMoveBehavior;

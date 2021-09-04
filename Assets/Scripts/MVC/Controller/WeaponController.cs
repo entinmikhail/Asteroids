@@ -15,17 +15,15 @@ namespace Asteroids.Controller
         private readonly WeaponSystem _weaponSystem;
         private List<BaseShell> _shellList = new List<BaseShell>();
         private BaseShell _shellComponent;
-        private IShell _bullet;
-
-        public WeaponController(WeaponSystem weaponSystem, IPlayerView view, IWeapon weapon, IShell bullet, GameModel gameModel)
+        
+        public WeaponController(WeaponSystem weaponSystem, IPlayerView view, IWeapon weapon, BaseShell shell, GameModel gameModel)
         {
             _weaponSystem = weaponSystem;
             _weapon = weapon;
             _weaponView = view;
-            _bullet = bullet;
+            _shellComponent = shell;
             _gameModel = gameModel;
-            _shellComponent = _bullet.GetGameObject().GetComponent<BaseShell>();
-            
+
             if (weapon is IWeapon updWeapon)
             {
                 _weaponSystem.Add(updWeapon);

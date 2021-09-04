@@ -18,8 +18,9 @@ public class PlayerController
     private PlayerInput _input;
     private MovementController _movementController;
     private WeaponController _weaponController;
+    private WeaponController _laserWeponController;
     private WeaponSystem _weaponSystem;
-    private WeaponModel _weapon;
+    private WeaponModel _weaponModel;
     private GameModel _gameModel;
     
     private IWeapon _firstWeapon;
@@ -35,18 +36,17 @@ public class PlayerController
 
     public void Awake()
     {
-        var shipInfo = Resources.Load<ShipInfo>("ShipInfo");
-        
         _weaponSystem = new WeaponSystem();
-        
         
         _movementController = new MovementController(_playerView);
         var weaponFactory = new WeaponFactory(_playerView.SpawnPoint);
         
         _secondWeapon = weaponFactory.CreateDefoultWeapon();
         
-        _weapon = new WeaponModel(Resources.Load<WeaponInfo>("DefoultWeaponInfo"));
-        _weaponController = new WeaponController(_weaponSystem, _playerView, _weapon, Resources.Load<Bullet>("Bullet"), _gameModel);
+        _weaponModel = new WeaponModel(Resources.Load<WeaponInfo>("DefoultWeaponInfo"));
+        // _weaponController = new WeaponController(_weaponSystem, _playerView, _weapon, Resources.Load<Bullet>("Bullet").GetComponent<BaseShell>(), _gameModel);
+        
+        _weaponController = new WeaponController(_weaponSystem, _playerView, _weaponModel, Resources.Load<LaserShell>("Laser").GetComponent<BaseShell>(), _gameModel);
         
         _input = new PlayerInput();
         

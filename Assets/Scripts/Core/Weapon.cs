@@ -8,14 +8,14 @@ namespace Asteroids.Core
     public class Weapon : IWeapon
     {
         private WeaponInfo _weaponInfo;
-        private Bullet _bullet;
+        private BaseShell _bullet;
         private Transform _spawnPoint;
 
         private int _remainingCharges;
         private float _currentChargeTime = 0f;
         private float _nextChargeTime;
 
-        public Weapon(WeaponInfo weaponInfo, Bullet bullet, Transform spawnPoint)
+        public Weapon(WeaponInfo weaponInfo, BaseShell bullet, Transform spawnPoint)
         {
             _weaponInfo = weaponInfo;
             _bullet = bullet;

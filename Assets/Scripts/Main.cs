@@ -11,11 +11,12 @@ public class Main : MonoBehaviour
     [Inject] private HealthModel _healthModel;
     [Inject] private GameModel _gameModel;
     [Inject] private PointModel _pointModel;
-    
+
     private GameObject _playerGameObject;
     private PlayerController _playerController;
 
     private GameObject[] _bulletsList;
+    
     private Vector3 _defoultPlayerPosition = new Vector3(0, 0);
     private Quaternion _defoultRotation = new Quaternion();
 
@@ -40,7 +41,9 @@ public class Main : MonoBehaviour
 
     private void Awake()
     {
+        
         CreatePlayer();
+        
         
         _playerController.Awake();
         _enemySpawner.SpawnerStart();
