@@ -44,9 +44,9 @@ public class PlayerController
         _secondWeapon = weaponFactory.CreateDefoultWeapon();
         
         _weaponModel = new WeaponModel(Resources.Load<WeaponInfo>("DefoultWeaponInfo"));
-        // _weaponController = new WeaponController(_weaponSystem, _playerView, _weapon, Resources.Load<Bullet>("Bullet").GetComponent<BaseShell>(), _gameModel);
+        _weaponController = new WeaponController(_weaponSystem, _playerView, _weaponModel, Resources.Load<Bullet>("Bullet").GetComponent<BaseShell>(), _gameModel);
         
-        _weaponController = new WeaponController(_weaponSystem, _playerView, _weaponModel, Resources.Load<LaserShell>("Laser").GetComponent<BaseShell>(), _gameModel);
+        _laserWeponController = new WeaponController(_weaponSystem, _playerView, _weaponModel, Resources.Load<LaserShell>("Laser").GetComponent<BaseShell>(), _gameModel);
         
         _input = new PlayerInput();
         
@@ -75,7 +75,7 @@ public class PlayerController
         _input.Player.Rotation.Enable();
         
         _input.Player.Fire1.performed += _ => _weaponController.OnAttackClicked();
-        _input.Player.Fire2.performed += _ => _secondWeapon.ProduceFire();
+        _input.Player.Fire2.performed += _ => _laserWeponController.OnAttackClicked();
         
         _healthModel.ResourceEnded += OnPlayerResourceEnded;
         _playerView.OnGameObjectContact += OnCollision;
