@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Asteroids.Controller;
 using Asteroids.Model;
+using Asteroids.ScriptableObjects;
+using Asteroids.View;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -12,12 +14,21 @@ public class EnemySpawner : MonoBehaviour
     [Inject] private PointModel _pointModel;
     
     private GameObject _asteroid;
+    private GameObject _ufo;
+    private GameObject _miniAsteroid;
     private IList<EnemyController> _controllers = new List<EnemyController>();
     private IList<GameObject> _enemies = new List<GameObject>();
    
     
     private int _maxEnemyOnMap = 5;
     private int _curEnemyOnMap;
+    
+    private int _maxAsteroidsOnMap;
+    
+    private int _curUFOOnMap;
+    private int _maxUFOOnMap = 1;
+    
+    private int _countOfMiniAsteroids = 4;
     
     public Action<float> EnemyDeaded;
     
@@ -26,12 +37,13 @@ public class EnemySpawner : MonoBehaviour
 
         EnemyDeaded += _pointModel.ChangeResource;
 
+        _ufo = Resources.Load<GameObject>("UFO");
         _asteroid = Resources.Load<GameObject>("Asteroid");
+        _miniAsteroid = Resources.Load<GameObject>("MiniAsteroid");
 
         for (int i = 0; i < _maxEnemyOnMap; i++)
         {
-            SpawnAsteroid();
-            _curEnemyOnMap++;
+            SpawnEnemy(new Vector3(Random.Range(-9.0f, 9.0f), Random.Range(-5.0f, 5.0f), 0), _asteroid, new Quaternion());
         }
     }
 
@@ -54,16 +66,21 @@ public class EnemySpawner : MonoBehaviour
     {
         if (_curEnemyOnMap < _maxEnemyOnMap)
         {
-            _curEnemyOnMap++;
-            StartCoroutine(SpawnAfterDelay());
+            SpawnEnemy(new Vector3(Random.Range(-9.0f, 9.0f), Random.Range(-5.0f, 5.0f), 0), _asteroid, new Quaternion());
+        }
+
+        if (_curUFOOnMap < _maxUFOOnMap)
+        {
+            SpawnEnemy(new Vector3(Random.Range(-9.0f, 9.0f), Random.Range(-5.0f, 5.0f), 0), _ufo, new Quaternion());
+            _curUFOOnMap++;
         }
     }
     
-    private void SpawnAsteroid()
+    private void SpawnEnemy(Vector3 spawnPosition, GameObject enemy, Quaternion spawnDerection)
     {
-        var position = new Vector3(Random.Range(-9.0f, 9.0f), Random.Range(-5.0f, 5.0f), 0);
-         
-        var go = Instantiate(_asteroid, position, new Quaternion());
+        _curEnemyOnMap++;
+        
+        var go = Instantiate(enemy, spawnPosition, spawnDerection);
         
         if (go.TryGetComponent<EnemyController>(out var enemyController))
         {
@@ -73,18 +90,32 @@ public class EnemySpawner : MonoBehaviour
             enemyController.Init();
             enemyController.EnemyDestroyed += DestroyEnemy;
         }
-       
     }
 
-    private IEnumerator SpawnAfterDelay()
+    private void DestroyEnemy(GameObject enemy, LevelObjectView lastCollision)
     {
-        yield return new WaitForSeconds(Random.Range(1.0f, 4.0f));
-        SpawnAsteroid();
-    }
-
-    private void DestroyEnemy(GameObject enemy)
-    {
+        var levelObject = enemy.GetComponent<LevelObjectView>();
         var enemyController = enemy.GetComponent<EnemyController>();
+        
+        if (lastCollision != null && lastCollision.gameObject.CompareTag("Shell"))
+        {
+            if (levelObject.LevelObjectType == LevelObjectType.Asteroid)
+            {
+                var localPosition = enemy.transform.localPosition;
+                
+                for (int i = 0; i < _countOfMiniAsteroids; i++)
+                {
+                    var y = 360 / _countOfMiniAsteroids * (i + 1);
+                    
+                    SpawnEnemy(localPosition, _miniAsteroid, Quaternion.Euler(0, 0,0));
+                }
+            } 
+        }
+
+        if (enemy.GetComponent<LevelObjectView>().LevelObjectType == LevelObjectType.UFO)
+        {
+            _curUFOOnMap--;
+        }
         
         _curEnemyOnMap--;
 
@@ -102,7 +133,7 @@ public class EnemySpawner : MonoBehaviour
     {
         for (var i = _enemies.Count - 1; i > -1; i--)
         {
-            DestroyEnemy(_enemies[i]);
+            DestroyEnemy(_enemies[i], null);
             EnemyDeaded?.Invoke(-10.0f);
         }
     }

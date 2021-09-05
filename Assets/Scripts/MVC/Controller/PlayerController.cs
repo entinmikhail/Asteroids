@@ -14,37 +14,39 @@ public class PlayerController
 {
     private HealthModel _healthModel;
     
-    private PlayerView _playerView;
+    private readonly PlayerView _playerView;
     private PlayerInput _input;
     private MovementController _movementController;
     private WeaponController _weaponController;
+    private WeaponController _laserWeponController;
     private WeaponSystem _weaponSystem;
-    private WeaponModel _weapon;
-
+    private WeaponModel _weaponModel;
+    private GameModel _gameModel;
+    
     private IWeapon _firstWeapon;
     private IWeapon _secondWeapon;
 
     public Action PlayerDead;
-    public PlayerController(PlayerView playerView, HealthModel healthModel)
+    public PlayerController(PlayerView playerView, HealthModel healthModel, GameModel gameModel)
     {
         _playerView = playerView;
         _healthModel = healthModel;
+        _gameModel = gameModel;
     }
 
     public void Awake()
     {
-        var shipInfo = Resources.Load<ShipInfo>("ShipInfo");
-        
         _weaponSystem = new WeaponSystem();
-        
         
         _movementController = new MovementController(_playerView);
         var weaponFactory = new WeaponFactory(_playerView.SpawnPoint);
         
         _secondWeapon = weaponFactory.CreateDefoultWeapon();
         
-        _weapon = new WeaponModel(Resources.Load<WeaponInfo>("DefoultWeaponInfo"));
-        _weaponController = new WeaponController(_weaponSystem, _playerView, _weapon, Resources.Load<Bullet>("Bullet"));
+        _weaponModel = new WeaponModel(Resources.Load<WeaponInfo>("DefoultWeaponInfo"));
+        _weaponController = new WeaponController(_weaponSystem, _playerView, _weaponModel, Resources.Load<Bullet>("Bullet").GetComponent<BaseShell>(), _gameModel);
+        
+        _laserWeponController = new WeaponController(_weaponSystem, _playerView, _weaponModel, Resources.Load<LaserShell>("Laser").GetComponent<BaseShell>(), _gameModel);
         
         _input = new PlayerInput();
         
@@ -61,6 +63,7 @@ public class PlayerController
     
     private void OnAwake()
     {
+        _weaponController.Init();
         OnEnable();
             
         _input.Player.Enable();
@@ -72,7 +75,7 @@ public class PlayerController
         _input.Player.Rotation.Enable();
         
         _input.Player.Fire1.performed += _ => _weaponController.OnAttackClicked();
-        _input.Player.Fire2.performed += _ => _secondWeapon.ProduceFire();
+        _input.Player.Fire2.performed += _ => _laserWeponController.OnAttackClicked();
         
         _healthModel.ResourceEnded += OnPlayerResourceEnded;
         _playerView.OnGameObjectContact += OnCollision;

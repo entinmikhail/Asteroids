@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57543ad18d1688940b08eed57f942844, type: 3}
-  m_Name: ShipInfo
+  m_Script: {fileID: 11500000, guid: e1b51f4cb96e6414d963d8a3c3f5b920, type: 3}
+  m_Name: AsteroidEnemyInfo
   m_EditorClassIdentifier: 
-  _movementSpeed: 50
-  _maxMovementSpeed: 5
-  _rotationSpeed: 200
-  _maxHealth: 10000
-  _health: 1222
+  _movementSpeed: 2
+  _rotationSpeed: 0
+  _maxHealth: 1
+  _health: 1
+  _enemyMoveBehavior: {fileID: 11400000, guid: cdab5eef890fc2a40b678239b88bd162, type: 2}

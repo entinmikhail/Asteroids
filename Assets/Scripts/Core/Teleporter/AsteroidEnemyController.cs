@@ -3,18 +3,20 @@ using Asteroids.Abstraction;
 using Asteroids.ScriptableObjects;
 using Asteroids.View;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Asteroids.Core.Teleporter
 {
-    public class AsteroidEnemy : IEnemy
+    public class AsteroidEnemyController : IEnemy
 
     {
         private LevelObjectView _view;
         private EnemyInfo _enemyInfo;
+
         private float _maxSpeed;
 
-        public AsteroidEnemy(LevelObjectView view, EnemyInfo enemyInfo)
+        public AsteroidEnemyController(LevelObjectView view, EnemyInfo enemyInfo)
         {
             _view = view;
             _enemyInfo = enemyInfo;
@@ -28,7 +30,7 @@ namespace Asteroids.Core.Teleporter
 
         public void DoSomeThingOnUpdate()
         {
-            /*hui*/
+            
         }
         
         private void AddImpulse()

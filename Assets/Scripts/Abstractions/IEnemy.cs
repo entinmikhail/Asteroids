@@ -1,4 +1,6 @@
-﻿namespace Asteroids.Abstraction
+﻿using UnityEngine;
+
+namespace Asteroids.Abstraction
 {
     public interface IEnemy
     {

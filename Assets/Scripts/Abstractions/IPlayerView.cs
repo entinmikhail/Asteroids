@@ -2,7 +2,7 @@
 
 namespace Asteroids.Abstraction
 {
-    public interface IPlayerView: ILevelObjectView
+    public interface IPlayerView : ILevelObjectView
     {
     Transform SpawnPoint { get; }
     }

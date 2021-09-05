@@ -16,7 +16,7 @@ namespace Asteroids.Factories
 
         public IWeapon CreateDefoultWeapon()
         {
-            return new Weapon(Resources.Load<WeaponInfo>("DefoultWeaponInfo"), Resources.Load<Bullet>("Bullet"), _spawnPoint);
+            return new Weapon(Resources.Load<WeaponInfo>("DefoultWeaponInfo"), Resources.Load<Bullet>("Laser"), _spawnPoint);
         }
     } 
 }

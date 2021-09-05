@@ -17,7 +17,6 @@ namespace Asteroids.Core.Teleporter
                                                    * _teleportDirection, other.transform.rotation);
         }
         
-
         protected abstract Vector3 GetTeleportPosition(Collider2D other);
     }
 }
