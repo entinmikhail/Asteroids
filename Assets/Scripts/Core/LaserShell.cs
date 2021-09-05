@@ -9,7 +9,6 @@ namespace Asteroids.Core
     public class LaserShell : BaseShell
     {
         public override event Action<BaseShell> ShellDestroyed;
-        private Rigidbody asd;
         public override void Fire(Vector2 direction)
         {
             

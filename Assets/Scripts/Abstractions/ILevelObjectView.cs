@@ -11,6 +11,8 @@ namespace Asteroids.Abstraction
         
         Collider2D Collider2D { get; }
         
+        LevelObjectType LevelObjectType { get; }
+
         event Action<ILevelObjectView, ILevelObjectView> OnLevelObjectContact;
     }
 }

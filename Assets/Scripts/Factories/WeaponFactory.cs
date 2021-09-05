@@ -18,6 +18,6 @@ namespace Asteroids.Factories
         {
             return new Weapon(Resources.Load<WeaponInfo>("DefoultWeaponInfo"), Resources.Load<Bullet>("Laser"), _spawnPoint);
         }
-    } 
+    }
 }
 

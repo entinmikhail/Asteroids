@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/WeaponInfo", fileName = "WeaponInfo")]
-    public class WeaponInfo : ScriptableObject
+    public class WeaponInfo : ScriptableObject, IWeaponInfo
     {
         public float AttackSpeed => _attackSpeed;
         [SerializeField] private float _attackSpeed;

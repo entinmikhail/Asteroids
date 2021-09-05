@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ShipInfo", fileName = "ShipInfo")]
-    public class ShipInfo : ScriptableObject, IHealth
+    public class ShipInfo : ScriptableObject, IShipInfo
     {
         public float MovementSpeed => _movementSpeed;
         [SerializeField] private float _movementSpeed;

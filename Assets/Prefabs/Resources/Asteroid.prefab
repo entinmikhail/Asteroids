@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4437745429068403749}
   - component: {fileID: 4437745429068403750}
   - component: {fileID: -5687795915326199479}
-  - component: {fileID: 2871282275413135592}
   - component: {fileID: 5277131376100059953}
   m_Layer: 0
   m_Name: Asteroid
@@ -125,19 +124,6 @@ MonoBehaviour:
   _rigidbody: {fileID: 4437745429068403750}
   _collider: {fileID: 5277131376100059953}
   levelObjectType: 1
---- !u!114 &2871282275413135592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4437745429068403744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42f096cc0af70f8478bc28e40f10f66c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyInfo: {fileID: 11400000, guid: cda8032c014b2a248ad869738abb6725, type: 2}
 --- !u!58 &5277131376100059953
 CircleCollider2D:
   m_ObjectHideFlags: 0

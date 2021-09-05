@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1976781092681260528}
   - component: {fileID: 5841071727376692360}
   - component: {fileID: 369549993659460747}
-  - component: {fileID: -6897116846434981567}
   - component: {fileID: -340132733791837378}
   m_Layer: 0
   m_Name: MiniAsteroid
@@ -124,19 +123,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &-6897116846434981567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225249267904081461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42f096cc0af70f8478bc28e40f10f66c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyInfo: {fileID: 11400000, guid: cda8032c014b2a248ad869738abb6725, type: 2}
 --- !u!114 &-340132733791837378
 MonoBehaviour:
   m_ObjectHideFlags: 0

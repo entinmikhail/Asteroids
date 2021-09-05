@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97bad2b011d24b629ac89b35bfa633b5, type: 3}
+  m_Script: {fileID: 11500000, guid: b6cc86ecb1429f64fa8258206660c370, type: 3}
   m_Name: AsteroidEnemyMoveBehavior
   m_EditorClassIdentifier: 

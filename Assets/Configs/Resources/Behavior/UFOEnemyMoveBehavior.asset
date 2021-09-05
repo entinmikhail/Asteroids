@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79ff41150242404c9f88f6f497a5b3e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 55e17c2e16d420540a5e090327fd7493, type: 3}
   m_Name: UFOEnemyMoveBehavior
   m_EditorClassIdentifier: 

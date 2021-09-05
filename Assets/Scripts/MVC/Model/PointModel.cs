@@ -3,7 +3,6 @@
 namespace Asteroids.Model
 {
     public class PointModel : ResourceModel, IPointModel
-
     {
         public PointModel(float currentResourceValue, float maxResourceValue) : base(currentResourceValue, maxResourceValue)
         {
@@ -11,6 +10,11 @@ namespace Asteroids.Model
 
         public PointModel(float currentResourceValue) : base(currentResourceValue)
         {
+        }
+
+        public void ProceedEnemyDied(IEnemy enemy)
+        {
+            ChangeResource(enemy.GetInfo().PointsForKill);
         }
     }
 }

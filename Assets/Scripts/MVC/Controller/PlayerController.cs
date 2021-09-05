@@ -26,7 +26,7 @@ public class PlayerController
     private IWeapon _firstWeapon;
     private IWeapon _secondWeapon;
 
-    public Action PlayerDead;
+    public event Action PlayerDead;
     public PlayerController(PlayerView playerView, HealthModel healthModel, GameModel gameModel)
     {
         _playerView = playerView;
