@@ -48,6 +48,7 @@ public class Main : MonoBehaviour
     {
         ModelFactory.RegisterEnemies();
         ControllerFactory.RegisterControllers();
+        ShellControllerFactory.RegisterControllers();
         
         CreatePlayer();
         _levelModel = new LevelModel(_levelInfo);

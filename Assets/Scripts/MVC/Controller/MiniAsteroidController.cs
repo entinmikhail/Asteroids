@@ -5,7 +5,7 @@ namespace Asteroids.Controller
 {
     public class MiniAsteroidController : EnemyControllerBase
     {
-        private readonly MiniAsteroid _miniAsteroid;
+        private readonly  MiniAsteroid _miniAsteroid;
         
         public MiniAsteroidController(IEnemy enemy, ILevelManager levelManager) : base(enemy, levelManager)
         {

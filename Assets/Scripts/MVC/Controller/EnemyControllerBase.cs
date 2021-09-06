@@ -1,6 +1,5 @@
 ﻿using Asteroids.Abstraction;
 using Asteroids.Model;
-using Asteroids.View;
 using UnityEngine;
 
 namespace Asteroids.Controller
@@ -17,8 +16,6 @@ namespace Asteroids.Controller
         protected IPlayerView _playerView;
         
         private IResourceModel _healthModel;
-        private Rigidbody2D _rigidbody;
-        private LevelObjectView _lastCollision;
         private readonly IEnemy _enemy;
         
         private bool _inited;
@@ -57,7 +54,7 @@ namespace Asteroids.Controller
         
         private void OnCollision(ILevelObjectView selfObject, ILevelObjectView contactObject)
         {
-            if (contactObject.Transform.gameObject.CompareTag("Shell"))
+            if (contactObject.Transform.gameObject.CompareTag("Shell")) // 
             {
                 var shellInfo = _levelManager.GetCurrentLevel().GetInfo().GetWeaponInfo(contactObject.LevelObjectType);
                 
@@ -78,7 +75,7 @@ namespace Asteroids.Controller
             View.OnLevelObjectContact -= OnCollision;
             _enemy.HealthEnded += OnEnemyDied;
 
-            Object.Destroy(View.Transform.gameObject);
+            Object.Destroy(View.Transform.gameObject); // 
         }
     }
 }

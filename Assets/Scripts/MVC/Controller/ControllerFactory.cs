@@ -20,4 +20,20 @@ namespace Asteroids.Controller
             return (T) _controllersItems[id].Invoke(buildParams);
         }
     }
+    
+    public static class ShellControllerFactory
+    {
+        private static readonly IDictionary<string, Func<object[], IShellController>> _controllersItems = new Dictionary<string, Func<object[], IShellController>>();
+
+        public static void RegisterControllers()
+        {
+            _controllersItems.Add("bullet", objects => new BulletController((IShell)objects[0], (ILevelManager)objects[1]));
+            _controllersItems.Add("laser", objects => new LaserController((IShell)objects[0], (ILevelManager)objects[1]));
+        }
+        
+        public static T Build<T>(string id, params object[] buildParams) where T : IShellController
+        {
+            return (T) _controllersItems[id].Invoke(buildParams);
+        }
+    }
 }

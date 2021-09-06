@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Asteroids.Abstraction;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Asteroids.Controller
 {

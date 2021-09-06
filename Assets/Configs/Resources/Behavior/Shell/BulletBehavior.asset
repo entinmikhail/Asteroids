@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57543ad18d1688940b08eed57f942844, type: 3}
-  m_Name: ShipInfo
+  m_Script: {fileID: 11500000, guid: ff3300f7cd6c4dc4ac06b0f12364fe0f, type: 3}
+  m_Name: BulletBehavior
   m_EditorClassIdentifier: 
-  _movementSpeed: 50
-  _maxMovementSpeed: 5
-  _rotationSpeed: 200
-  _maxHealth: 10000
-  _health: 1
