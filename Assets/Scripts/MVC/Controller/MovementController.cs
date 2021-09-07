@@ -8,22 +8,22 @@ namespace Asteroids.Controller
     public class MovementController
     {
         private PlayerView _playerView;
-        private ShipInfo _shipInfo;
+        private PlayerInfo _playerInfo;
         public MovementController(PlayerView playerView)
         {
             _playerView = playerView;
-            _shipInfo = Resources.Load<ShipInfo>("ShipInfo");
+            _playerInfo = Resources.Load<PlayerInfo>("ShipInfo");
         }
 
         public void Rotate(float inputValue)
         {
-            _playerView.Rigidbody2D.MoveRotation( _playerView.Rigidbody2D.rotation + -inputValue * _shipInfo.RotationSpeed * Time.fixedDeltaTime);
+            _playerView.Rigidbody2D.MoveRotation( _playerView.Rigidbody2D.rotation + -inputValue * _playerInfo.RotationSpeed * Time.fixedDeltaTime);
         }
 
         public void Move(float inputValue)
         {
             _playerView.Rigidbody2D.AddForce(_playerView.Rigidbody2D.transform.up *
-                                             (inputValue * _shipInfo.MovementSpeed * Time.fixedDeltaTime));
+                                             (inputValue * _playerInfo.MovementSpeed * Time.fixedDeltaTime));
 
             _playerView.Rigidbody2D.velocity = GetNormalizedVelosity();
             /*_ship.SetPosition(_playerView.Transform.position);*/
@@ -36,7 +36,7 @@ namespace Asteroids.Controller
         }
         private float GetNormalizedSpeed(float curVelocity)
         {
-           return Mathf.Min(Mathf.Abs(curVelocity), _shipInfo.MaxMovementSpeed) * Mathf.Sign(curVelocity);
+           return Mathf.Min(Mathf.Abs(curVelocity), _playerInfo.MaxMovementSpeed) * Mathf.Sign(curVelocity);
         }
     }
 }

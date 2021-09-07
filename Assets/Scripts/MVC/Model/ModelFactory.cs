@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Asteroids.Abstraction;
-using Asteroids.Controller;
-using UnityEngine;
+using Utils;
 
 namespace Asteroids.Model
 {
@@ -12,7 +11,7 @@ namespace Asteroids.Model
         public static void RegisterEnemies()
         {
             _enemyItems.Add("asteroid", (objects) => new Asteroid((IEnemyInfo)objects[0]));
-            _enemyItems.Add("mini_asteroid", (objects) => new MiniAsteroid((IEnemyInfo)objects[0], (Vector3)objects[1]));
+            _enemyItems.Add("mini_asteroid", (objects) => new MiniAsteroid((IEnemyInfo)objects[0], (CustomVector3)objects[1]));
             _enemyItems.Add("ufo", (objects) => new UFO((IEnemyInfo)objects[0]));
         }
         

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Asteroids.Abstraction;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Asteroids.Controller
 {
@@ -76,7 +75,7 @@ namespace Asteroids.Controller
                 _controllersToUpdate.Remove(updatable);
             } 
             
-            enemy.GetInfo().EnemyBehavior.DiedBehaviour(_levelModel, _enemies[enemy].View.Transform.position);
+            enemy.GetInfo().EnemyBehavior.DiedBehaviour(_levelModel, enemy.GetTransform().Position);
             controller.Dispose();       
             
             _enemies.Remove(enemy);

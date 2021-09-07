@@ -1,14 +1,14 @@
 using System;
+
 using Asteroids.Abstraction;
+
 
 namespace Asteroids.Model
 {
-    public abstract class EnemyBase: IEnemy
+    public abstract class EnemyBase : TransformModelBase, IEnemy
     {
         private readonly IEnemyInfo _enemyInfo;
         private readonly IResourceModel _healthModel;
-        
-        private float _maxSpeed;
         
         public event Action<IEnemy> HealthEnded;
 
@@ -16,6 +16,7 @@ namespace Asteroids.Model
         {
             _enemyInfo = enemyInfo;
             _healthModel = new ResourceModel(_enemyInfo.Health, _enemyInfo.MaxHealth);
+
             _healthModel.ResourceEnded += OnHeathEnded;
         }
 

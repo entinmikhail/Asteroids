@@ -139,7 +139,7 @@ MonoBehaviour:
   _transform: {fileID: 8248192369070279273}
   _rigidbody: {fileID: 7105664562267292287}
   _collider: {fileID: 8434274878058895962}
-  levelObjectType: 4
+  levelObjectType: 5
 --- !u!114 &7208725835690005251
 MonoBehaviour:
   m_ObjectHideFlags: 0

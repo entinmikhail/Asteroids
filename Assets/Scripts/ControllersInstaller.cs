@@ -10,7 +10,7 @@ public class ControllersInstaller : MonoInstaller
     [SerializeField] private PlayerView _playerView;
     public override void InstallBindings()
     {
-        var healthModel =  new HealthModel(Resources.Load<ShipInfo>("ShipInfo").Health);
+        var healthModel =  new HealthModel(Resources.Load<PlayerInfo>("ShipInfo").Health);
         Container.Bind<HealthModel>().FromInstance(healthModel).AsCached();
 
         var pointModel = new PointModel(0);
