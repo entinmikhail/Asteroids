@@ -1,6 +1,4 @@
 ﻿using System;
-using Abstractions;
-using UnityEngine;
 
 namespace Asteroids.Abstraction
 {
@@ -8,5 +6,6 @@ namespace Asteroids.Abstraction
     {
         public event Action<IShell> ShellDestroyed;
         IShellInfo GetInfo();
+        
     }
 }

@@ -1,20 +1,20 @@
-using Asteroids.Abstraction;
-using Asteroids.ScriptableObjects;
-using Asteroids.View;
+﻿using Asteroids.Abstraction;
 using UnityEngine;
 
-namespace Asteroids.Controller
+namespace Asteroids.ScriptableObjects
 {
-    public class MovementController
+    [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/Player/PlayerMoveBehavior", fileName = "PlayerMoveBehavior")]
+    public class PlayerMoveBehavior : ScriptableObject, IPlayerMoveBehavior
     {
-        private PlayerView _playerView;
-        private PlayerInfo _playerInfo;
-        public MovementController(PlayerView playerView)
+        private IPlayerView _playerView;
+        private IPlayerInfo _playerInfo;
+
+        public void Init(IPlayerView playerView, IPlayerInfo playerInfo)
         {
             _playerView = playerView;
-            _playerInfo = Resources.Load<PlayerInfo>("ShipInfo");
+            _playerInfo = playerInfo;
         }
-
+        
         public void Rotate(float inputValue)
         {
             _playerView.Rigidbody2D.MoveRotation( _playerView.Rigidbody2D.rotation + -inputValue * _playerInfo.RotationSpeed * Time.fixedDeltaTime);
@@ -26,7 +26,6 @@ namespace Asteroids.Controller
                                              (inputValue * _playerInfo.MovementSpeed * Time.fixedDeltaTime));
 
             _playerView.Rigidbody2D.velocity = GetNormalizedVelosity();
-            /*_ship.SetPosition(_playerView.Transform.position);*/
         }
 
         private Vector2 GetNormalizedVelosity()
@@ -34,9 +33,10 @@ namespace Asteroids.Controller
             return new Vector2(GetNormalizedSpeed(_playerView.Rigidbody2D.velocity.x), 
                 GetNormalizedSpeed(_playerView.Rigidbody2D.velocity.y));
         }
+        
         private float GetNormalizedSpeed(float curVelocity)
         {
-           return Mathf.Min(Mathf.Abs(curVelocity), _playerInfo.MaxMovementSpeed) * Mathf.Sign(curVelocity);
+            return Mathf.Min(Mathf.Abs(curVelocity), _playerInfo.MaxMovementSpeed) * Mathf.Sign(curVelocity);
         }
     }
 }

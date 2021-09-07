@@ -1,5 +1,7 @@
 using Asteroids.Abstraction;
 using Asteroids.Model;
+using Utils;
+
 
 namespace Asteroids.Controller
 {
@@ -10,6 +12,11 @@ namespace Asteroids.Controller
         public MiniAsteroidController(IEnemy enemy, ILevelManager levelManager) : base(enemy, levelManager)
         {
             _miniAsteroid = (MiniAsteroid) enemy;
+        }
+
+        protected override CustomVector3 GetStartPosition()
+        {
+            return _miniAsteroid.InitialPosition;
         }
 
         protected override void InitBehaviour()

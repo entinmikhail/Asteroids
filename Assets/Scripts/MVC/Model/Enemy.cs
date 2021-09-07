@@ -5,7 +5,7 @@ using Asteroids.Abstraction;
 
 namespace Asteroids.Model
 {
-    public abstract class EnemyBase : IEnemy
+    public abstract class EnemyBase : TransformModelBase, IEnemy
     {
         private readonly IEnemyInfo _enemyInfo;
         private readonly IResourceModel _healthModel;

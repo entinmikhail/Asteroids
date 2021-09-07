@@ -22,13 +22,10 @@ namespace Asteroids.Core
 
         public ILevelModel GetCurrentLevel() => _currentLevel;
 
-        public T GetObjectView<T>(string id) where T : ILevelObjectView
+        public T GetObjectView<T>(string id, Vector3 position)where T : ILevelObjectView
         {
             var levelInfo = _currentLevel.GetInfo();
-            var position = new Vector3(Random.Range(levelInfo.LevelBounds.min.x, levelInfo.LevelBounds.max.x),
-                Random.Range(levelInfo.LevelBounds.min.y, levelInfo.LevelBounds.max.y),
-                Random.Range(levelInfo.LevelBounds.min.z, levelInfo.LevelBounds.max.z));
-            
+
             var go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(id), position, Quaternion.identity);
             if (!go.TryGetComponent(out T result))
             {

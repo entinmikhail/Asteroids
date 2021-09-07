@@ -5,10 +5,8 @@ namespace Abstractions
 {
     public interface ITransformModel
     {
-        public event Action<CastomTransform, CastomTransform> TransformChanged;
-        
-        public CastomTransform GetTransform();
-        
-        public void ChangeTransform(CastomTransform newTransform);
+        public event Action<CustomTransform, CustomTransform> TransformChanged;
+        public CustomTransform GetTransform();
+        public void ChangeTransform(CustomTransform newTransform);
     }
 }

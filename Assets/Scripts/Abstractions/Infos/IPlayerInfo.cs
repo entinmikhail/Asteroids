@@ -1,6 +1,7 @@
+
 namespace Asteroids.Abstraction
 {
-    public interface IShipInfo
+    public interface IPlayerInfo 
     {
         float MovementSpeed { get; }
         
@@ -11,5 +12,7 @@ namespace Asteroids.Abstraction
         int MaxHealth { get; }
     
         int Health { get; }
+        
+        IPlayerMoveBehavior PlayerMoveBehavior { get; }
     }
 }

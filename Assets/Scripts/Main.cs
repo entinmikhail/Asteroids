@@ -10,14 +10,15 @@ using Zenject;
 public class Main : MonoBehaviour
 {
     [SerializeField] private LevelInfo _levelInfo;
-        
+    [SerializeField] private PlayerInfo _playerInfo;
+    
     [Inject] private HealthModel _healthModel;
     [Inject] private GameModel _gameModel;
     [Inject] private PointModel _pointModel;
 
     private GameObject _playerGameObject;
     private PlayerController _playerController;
-
+    private InputHandler _inputHandler;
     private GameObject[] _bulletsList;
     
     private readonly Vector3 _defaultPlayerPosition = new Vector3(0, 0);
@@ -29,19 +30,22 @@ public class Main : MonoBehaviour
 
     public void Restart()
     {
+        _gameModel.RestartGame();
+        
         _pointModel.ResetValue();
         
         _levelController.Dispose();
         _levelController.Start();
         
+        
         _playerGameObject.SetActive(true);
-
-        _playerController.OnEnable();
+        
         _healthModel.SetResourceValue(1);
         
         _playerGameObject.transform.SetPositionAndRotation(_defaultPlayerPosition, _defaultRotation);
-        
-        _gameModel.RestartGame();
+
+        _playerController.Dispose();
+        _playerController.Start();
     }
 
     private void Awake()
@@ -50,14 +54,17 @@ public class Main : MonoBehaviour
         ControllerFactory.RegisterControllers();
         ShellControllerFactory.RegisterControllers();
         
+        _inputHandler = new InputHandler();
+        _inputHandler.Awake();
         CreatePlayer();
+        
         _levelModel = new LevelModel(_levelInfo);
         _levelManger = new LevelManager(_playerGameObject.GetComponent<PlayerView>());
         _levelManger.SetLevel(_levelModel);
         
         _levelController = new LevelController(_pointModel, _levelManger);
         
-        _playerController.Awake();
+        _playerController.Start();
         _levelController.Start();
         
         _playerController.PlayerDead += OnPlayerDead;
@@ -65,9 +72,11 @@ public class Main : MonoBehaviour
     
     private void Update()
     {
-        _playerController?.Update();
+        _playerController?.Update(Time.deltaTime);
         
-        _levelController.Update(Time.deltaTime);
+        _levelController?.Update(Time.deltaTime);
+        
+        _inputHandler?.Update(Time.deltaTime);
     }
 
     private void OnPlayerDead()
@@ -78,6 +87,6 @@ public class Main : MonoBehaviour
     private void CreatePlayer()
     {
         _playerGameObject = Instantiate(Resources.Load<GameObject>("Player"), _defaultPlayerPosition, _defaultRotation);
-        _playerController = new PlayerController(_playerGameObject.GetComponent<PlayerView>(), _healthModel, _gameModel);
+        _playerController = new PlayerController(_playerGameObject.GetComponent<PlayerView>(), _healthModel, _gameModel, _playerInfo, _inputHandler);
     }
 }

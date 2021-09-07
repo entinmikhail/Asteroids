@@ -8,7 +8,7 @@ namespace Asteroids.Controller
 
     {
         public ILevelObjectView View { get; private set; }
-
+        
         private ILevelManager _levelManager;
         protected BaseShellBehavior _shellBehavior;
         private ShellBaseModel _shellBaseModel;
@@ -32,9 +32,9 @@ namespace Asteroids.Controller
             if (_inited) return;
             _inited = true;
 
-            View = _levelManager.GetObjectView<ILevelObjectView>(_shellInfo.ViewId);
             _shellBehavior = _shellInfo.ShellBehavior;
             _playerView = _levelManager.GetPlayerView();
+            View = _levelManager.GetObjectView<ILevelObjectView>(_shellInfo.ViewId, _playerView.SpawnPoint.position);
             
             _shellBaseModel.ShellDestroyed += OnShellDestroyed;
             
