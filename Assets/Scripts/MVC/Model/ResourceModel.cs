@@ -1,6 +1,5 @@
 ﻿using System;
 using Asteroids.Abstraction;
-using UnityEngine;
 
 namespace Asteroids.Model
 {

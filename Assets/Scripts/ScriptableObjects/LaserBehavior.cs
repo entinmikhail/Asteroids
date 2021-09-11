@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Asteroids.ScriptableObjects
 {
-    [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/BulletBehavior", fileName = "BulletBehavior")]
+    [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/LaserBehavior", fileName = "LaserBehavior")]
     public class LaserBehavior : BaseShellBehavior
     
     {
@@ -14,7 +14,7 @@ namespace Asteroids.ScriptableObjects
 
         public override void Init(ILevelObjectView view, IPlayerView playerView, params object[] additionalParams)
         {
-            
+            view.Transform.Rotate(playerView.Transform.rotation.eulerAngles);
         }
 
         public override void DiedBehaviour(ILevelModel levelModel, params object[] additionalParams)

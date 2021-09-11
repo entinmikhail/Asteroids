@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57543ad18d1688940b08eed57f942844, type: 3}
-  m_Name: ShipInfo
+  m_Script: {fileID: 11500000, guid: 675a9e0322fb21440a985ca19b99964d, type: 3}
+  m_Name: LaserWeaponInfo
   m_EditorClassIdentifier: 
-  _movementSpeed: 50
-  _maxMovementSpeed: 5
-  _rotationSpeed: 200
-  _maxHealth: 10000
-  _health: 2
-  _playerMoveBehavior: {fileID: 11400000, guid: f238795a59103754ab2f5556d6407791, type: 2}
+  _attackSpeed: 60
+  _cooldown: 10
+  "_max\u0421harges": 3
+  _damageValue: 1

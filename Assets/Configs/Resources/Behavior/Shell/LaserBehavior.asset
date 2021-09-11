@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 675a9e0322fb21440a985ca19b99964d, type: 3}
-  m_Name: DefoultWeaponInfo
+  m_Script: {fileID: 11500000, guid: d3455acafc1d427c8e35616a87407262, type: 3}
+  m_Name: LaserBehavior
   m_EditorClassIdentifier: 
-  _attackSpeed: 300
-  _cooldown: 0
-  "_max\u0421harges": 1
-  _damageValue: 1

@@ -2,7 +2,6 @@ using Asteroids.Abstraction;
 using Asteroids.Model;
 using Utils;
 
-
 namespace Asteroids.Controller
 {
     public class MiniAsteroidController : EnemyControllerBase

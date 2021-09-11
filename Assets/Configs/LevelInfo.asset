@@ -28,6 +28,8 @@ MonoBehaviour:
     Prefab: {fileID: 6352938943116293883, guid: 3869e915819b29f4788dd0d5d2944a70, type: 3}
   - Id: Bullet
     Prefab: {fileID: 7209129080893641747, guid: 61368caf506c9fa43aaa8dbb74a800c2, type: 3}
+  - Id: Laser
+    Prefab: {fileID: 8854302108541670517, guid: 4576f1ecb020937438ba82c1ad814f19, type: 3}
   _enemyInfos:
   - Id: Asteroid
     Info: {fileID: 11400000, guid: cda8032c014b2a248ad869738abb6725, type: 2}

@@ -53,7 +53,7 @@ namespace Asteroids.Controller
         public void Update(double deltaTime)
         {
            _shell.GetLifeTimeModel().SetLifeTime(deltaTime);
-            
+
            _shellBehavior.OnUpdate(_view, _playerView, _shellInfo.MovementSpeed);
         }
 

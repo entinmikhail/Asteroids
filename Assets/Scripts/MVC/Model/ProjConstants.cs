@@ -1,4 +1,3 @@
-
 namespace Asteroids.Model
 {
     public static class ProjConstants

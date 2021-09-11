@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: LaserInfo
   m_EditorClassIdentifier: 
   _movementSpeed: 0
-  _type: 
-  _viewId: 
-  _shellBehavior: {fileID: 0}
+  _shellLifeTime: 0.1
+  _type: laser
+  _viewId: Laser
+  _destroyable: 0
+  _shellBehavior: {fileID: 11400000, guid: 4ca0f31605a38834183f17d591e11a14, type: 2}

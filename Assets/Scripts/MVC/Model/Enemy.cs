@@ -1,7 +1,5 @@
 using System;
-
 using Asteroids.Abstraction;
-
 
 namespace Asteroids.Model
 {

@@ -1,7 +1,6 @@
 using System;
 using Asteroids.Abstraction;
 using Asteroids.Controller;
-using Asteroids.Core;
 using Asteroids.Model;
 using Asteroids.ScriptableObjects;
 using Asteroids.System;
@@ -14,7 +13,7 @@ public class PlayerController : IUpdatable, IController
     private readonly PlayerView _playerView;
     private IInputHandler _inputHandler;
     private IPlayerMoveBehavior _playerMoveBehavior;
-    private WeaponController _weaponController;
+    private WeaponController _bulletWeaponController;
     private WeaponController _laserWeponController;
     private WeaponSystem _weaponSystem;
     private WeaponModel _weaponModel;
@@ -47,13 +46,11 @@ public class PlayerController : IUpdatable, IController
 
         _playerMoveBehavior = _playerInfo.PlayerMoveBehavior;
         _playerMoveBehavior.Init(_playerView, _playerInfo);
-        
-        _weaponModel = new WeaponModel(Resources.Load<WeaponInfo>("DefoultWeaponInfo"));
-        
-        /*_weaponController = new WeaponController(_weaponSystem, _playerView, _weaponModel, 
-            Resources.Load<Bullet>("Bullet").GetComponent<BaseShell>(), _gameModel);
-        _laserWeponController = new WeaponController(_weaponSystem, _playerView, _weaponModel, 
-            Resources.Load<LaserShell>("Laser").GetComponent<BaseShell>(), _gameModel);*/
+
+        _bulletWeaponController = new WeaponController(_weaponSystem, new WeaponModel(Resources.Load<WeaponInfo>("BulletWeaponInfo")),
+            Resources.Load<ShellInfo>("ShellInfo/BulletInfo"),_levelManager);
+        _laserWeponController = new WeaponController(_weaponSystem, new WeaponModel(Resources.Load<WeaponInfo>("LaserWeaponInfo")),
+            Resources.Load<ShellInfo>("ShellInfo/LaserInfo"), _levelManager);
 
         Attach();
     }
@@ -65,31 +62,27 @@ public class PlayerController : IUpdatable, IController
     
     private void Attach()
     {
-        _inputHandler.Fire1Clicked += NehuyaVebauv;
-        // _inputHandler.Fire2Clicked += _laserWeponController.OnAttackClicked;
+        _inputHandler.Fire1Clicked += _bulletWeaponController.OnAttackClicked;
+         _inputHandler.Fire2Clicked += _laserWeponController.OnAttackClicked;
         _inputHandler.MoveClicked += _playerMoveBehavior.Move;
         _inputHandler.RotationClicked += _playerMoveBehavior.Rotate;
         
         _healthModel.ResourceEnded += OnPlayerResourceEnded;
         _playerView.OnGameObjectContact += OnCollision;
     }
-
-    private void NehuyaVebauv()
-    {
-        _levelManager.GetCurrentLevel().SpawnTypedShell(Resources.Load<ShellInfo>("ShellInfo/BulletInfo"));
-    }
+    
     public void Dispose()
     {
         Detach();
         
-        /*_weaponController.Dispose();
-        _laserWeponController.Dispose();*/
+        _bulletWeaponController.Dispose();
+        _laserWeponController.Dispose();
     }
 
     private void Detach()
     {
-        /*_inputHandler.Fire1Clicked -= _weaponController.OnAttackClicked;
-        _inputHandler.Fire2Clicked -= _laserWeponController.OnAttackClicked;*/
+        _inputHandler.Fire1Clicked -= _bulletWeaponController.OnAttackClicked;
+        _inputHandler.Fire2Clicked -= _laserWeponController.OnAttackClicked;
         _inputHandler.MoveClicked -= _playerMoveBehavior.Move;
         _inputHandler.RotationClicked -= _playerMoveBehavior.Rotate;
         

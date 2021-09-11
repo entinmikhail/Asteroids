@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+using Asteroids.Abstraction;
 
 namespace Asteroids.System
 {
-    public abstract class UpdateSystem<T>
+    public abstract class UpdateSystem<T> : IUpdateSystem<T> 
     {
         private bool _paused;
         private readonly List<T> _items = new List<T>();

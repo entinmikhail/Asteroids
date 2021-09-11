@@ -2,7 +2,7 @@
 
 namespace Asteroids.System
 {
-    public sealed class WeaponSystem : UpdateSystem<IWeapon>
+    public sealed class WeaponSystem : UpdateSystem<IWeapon>, IWeaponSystem
     {
         protected override void Update(IWeapon item, double deltaTime)
         {

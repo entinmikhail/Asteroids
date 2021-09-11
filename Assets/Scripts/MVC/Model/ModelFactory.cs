@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Asteroids.Abstraction;
-using UnityEngine;
 using Utils;
 
 namespace Asteroids.Model

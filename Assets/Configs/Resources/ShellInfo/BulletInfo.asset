@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BulletInfo
   m_EditorClassIdentifier: 
   _movementSpeed: 10
-  _shellLifeTime: 0.5
+  _shellLifeTime: 0.7
   _type: bullet
   _viewId: Bullet
   _destroyable: 1
