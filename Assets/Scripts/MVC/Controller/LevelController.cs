@@ -8,6 +8,7 @@ namespace Asteroids.Controller
         private readonly IPointModel _pointModel;
 
         private readonly IDictionary<IEnemy, IEnemyController> _enemies = new Dictionary<IEnemy, IEnemyController>();
+        private readonly IDictionary<IShell, IShellController> _shells = new Dictionary<IShell, IShellController>();
         
         private readonly ILevelModel _levelModel;
         private readonly ILevelInfo _levelInfo;
@@ -37,6 +38,8 @@ namespace Asteroids.Controller
             
             _levelModel.EnemyAdded += OnEnemyAddedToLevel;
             _levelModel.EnemyRemoved += OnEnemyRemovedFromLevel;
+            _levelModel.ShellAdded += OnShellAddedToLevel;
+            _levelModel.ShellRemoved += OnShellRemovedFromLevel;
         }
 
         public void Update(double deltaTime)
@@ -52,6 +55,11 @@ namespace Asteroids.Controller
             AddEnemyController(enemy);
         }
 
+        private void OnShellAddedToLevel(IShell shell)
+        {
+            AddShellController(shell);
+        }
+        
         private void AddEnemyController(IEnemy enemy)
         {
             var controller = ControllerFactory.Build<IEnemyController>(enemy.GetInfo().Type, enemy, _levelManager);
@@ -65,6 +73,20 @@ namespace Asteroids.Controller
             _enemies.Add(enemy, controller);
         }
 
+        private void AddShellController(IShell shell)
+        {
+            if (_shells.ContainsKey(shell)) return;  
+            var controller = ShellControllerFactory.Build<IShellController>(shell.GetInfo().Type, shell, _levelManager);
+            controller.Start();
+
+            if (controller is IUpdatable updatable)
+            {
+                _controllersToUpdate.Add(updatable);
+            }
+
+            _shells.Add(shell, controller);
+        }
+        
         private void OnEnemyRemovedFromLevel(IEnemy enemy)
         {
             _pointModel.ProceedEnemyDied(enemy);
@@ -79,6 +101,20 @@ namespace Asteroids.Controller
             controller.Dispose();       
             
             _enemies.Remove(enemy);
+        }
+
+        private void OnShellRemovedFromLevel(IShell shell)
+        {
+            var controller = _shells[shell];
+
+            if (controller is IUpdatable updatable)
+            {
+                _controllersToUpdate.Remove(updatable);
+            }
+            
+            controller.Dispose();       
+            
+            _shells.Remove(shell);
         }
 
         public void Dispose()

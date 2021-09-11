@@ -2,6 +2,6 @@
 {
     public interface IShellController : IController
     {
-        ILevelObjectView View { get; }
+
     }
 }

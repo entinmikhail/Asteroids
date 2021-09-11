@@ -18,11 +18,14 @@ namespace Asteroids.Abstraction
         
         event Action<IEnemy> EnemyAdded; 
         event Action<IEnemy> EnemyRemoved;
+        event Action<IShell> ShellAdded; 
+        event Action<IShell> ShellRemoved;
 
         ILevelInfo GetInfo();
 
         void StartLevel();
         void ClearLevel();
         void SpawnTypedEnemy(params object[] buildParams);
+        void SpawnTypedShell(params object[] buildParams);
     }
 }

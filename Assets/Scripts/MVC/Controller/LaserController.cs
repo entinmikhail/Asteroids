@@ -11,7 +11,7 @@ namespace Asteroids.Controller
 
         protected override void InitBehaviour()
         {
-            _shellBehavior.Init(View, _playerView, _shellInfo);
+            _shellBehavior.Init(_view, _playerView, _shellInfo);
         }
     }
 }

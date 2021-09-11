@@ -39,9 +39,7 @@ public class Main : MonoBehaviour
         
         
         _playerGameObject.SetActive(true);
-        
-        _healthModel.SetResourceValue(1);
-        
+
         _playerGameObject.transform.SetPositionAndRotation(_defaultPlayerPosition, _defaultRotation);
 
         _playerController.Dispose();
@@ -53,25 +51,33 @@ public class Main : MonoBehaviour
         ModelFactory.RegisterEnemies();
         ControllerFactory.RegisterControllers();
         ShellControllerFactory.RegisterControllers();
+        ShellModelFactory.RegisterEnemies();
         
         _inputHandler = new InputHandler();
         _inputHandler.Awake();
-        CreatePlayer();
+
         
+        _playerGameObject = Instantiate(Resources.Load<GameObject>("Player"), _defaultPlayerPosition, _defaultRotation);
         _levelModel = new LevelModel(_levelInfo);
         _levelManger = new LevelManager(_playerGameObject.GetComponent<PlayerView>());
         _levelManger.SetLevel(_levelModel);
         
         _levelController = new LevelController(_pointModel, _levelManger);
-        
+        _playerController = new PlayerController(_playerGameObject.GetComponent<PlayerView>(), _healthModel, _gameModel, _playerInfo, _inputHandler, _levelManger);
+
+        CreatePlayer();
         _playerController.Start();
         _levelController.Start();
-        
         _playerController.PlayerDead += OnPlayerDead;
+        
     }
     
     private void Update()
     {
+
+      
+        
+        
         _playerController?.Update(Time.deltaTime);
         
         _levelController?.Update(Time.deltaTime);
@@ -86,7 +92,6 @@ public class Main : MonoBehaviour
 
     private void CreatePlayer()
     {
-        _playerGameObject = Instantiate(Resources.Load<GameObject>("Player"), _defaultPlayerPosition, _defaultRotation);
-        _playerController = new PlayerController(_playerGameObject.GetComponent<PlayerView>(), _healthModel, _gameModel, _playerInfo, _inputHandler);
+        
     }
 }

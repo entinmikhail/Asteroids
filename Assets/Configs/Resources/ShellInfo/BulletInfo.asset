@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: BulletInfo
   m_EditorClassIdentifier: 
   _movementSpeed: 10
-  _type: Bullet
-  _viewId: bullet
+  _shellLifeTime: 0.5
+  _type: bullet
+  _viewId: Bullet
+  _destroyable: 1
   _shellBehavior: {fileID: 11400000, guid: 0d4fff0252be2534488753c251598f35, type: 2}
