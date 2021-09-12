@@ -6,9 +6,6 @@ namespace Asteroids.ScriptableObjects
     [CreateAssetMenu(menuName = "Gameplay/WeaponInfo", fileName = "WeaponInfo")]
     public class WeaponInfo : ScriptableObject, IWeaponInfo
     {
-        public float AttackSpeed => _attackSpeed;
-        [SerializeField] private float _attackSpeed;
-
         public float Cooldown => _cooldown;
         [SerializeField] private float _cooldown;
     
