@@ -17,10 +17,14 @@ namespace Asteroids.Controller
         {
             return _miniAsteroid.InitialPosition;
         }
-
-        protected override void InitBehaviour()
+        
+        protected override void OnStart()
         {
-            _enemyBehaviour.Init(View, _playerView, _enemyInfo.MovementSpeed, _miniAsteroid.InitialPosition);
+            _enemyBehaviour.Init(_view, _playerView, _enemyInfo.MovementSpeed, _miniAsteroid.InitialPosition);
+        }
+        
+        protected override void OnDispose()
+        {
         }
     }
 }

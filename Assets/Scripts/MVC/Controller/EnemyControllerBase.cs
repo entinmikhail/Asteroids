@@ -1,14 +1,12 @@
 ﻿using Asteroids.Abstraction;
 using Asteroids.Model;
-using UnityEngine;
 using Utils;
 
 namespace Asteroids.Controller
 {
-    public abstract class EnemyControllerBase : IEnemyController, IUpdatable 
+    public abstract class EnemyControllerBase : IEnemyController, IUpdatable
     {
-        public ILevelObjectView View { get; private set; }
-
+        protected ILevelObjectView _view;
         protected BaseEnemyBehavior _enemyBehaviour;
 
         protected readonly IEnemyInfo _enemyInfo;
@@ -34,29 +32,29 @@ namespace Asteroids.Controller
             _inited = true;
             var position = GetStartPosition();
             
-            View = _levelManager.GetObjectView<ILevelObjectView>(_enemyInfo.ViewId, position);
+            _view = _levelManager.CreateObjectView<ILevelObjectView>(_enemyInfo.ViewId, _enemy, position);
             _enemyBehaviour = _enemyInfo.EnemyBehavior;
             _healthModel = _enemy.GetResource(ProjConstants.HealthId);
-            _playerView = _levelManager.GetPlayerView();
+            _playerView = _levelManager.GetView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
             
-            _enemy.ChangeTransform(View.Transform);
+            _enemy.ChangeTransform(_view.Transform);
             
-            InitBehaviour();
+            OnStart();
             
-            View.OnLevelObjectContact += OnCollision;
+            _view.OnLevelObjectContact += OnCollision;
             _enemy.HealthEnded += OnEnemyDied;
         }
 
         protected abstract CustomVector3 GetStartPosition();
-
-        protected abstract void InitBehaviour();
+        protected abstract void OnDispose();
+        protected abstract void OnStart();
         
         public void Update(double deltaTime)
         {
             if(!_inited) return;
             
-            _enemyBehaviour.OnUpdate(View, _playerView, _enemyInfo.MovementSpeed);
-            _enemy.ChangeTransform(View.Transform);
+            _enemyBehaviour.OnUpdate(_view, _playerView, _enemyInfo.MovementSpeed);
+            _enemy.ChangeTransform(_view.Transform);
         }
         
         private void OnCollision(ILevelObjectView selfObject, ILevelObjectView contactObject)
@@ -69,7 +67,7 @@ namespace Asteroids.Controller
             }
         }
 
-        private void OnEnemyDied(IEnemy obj)
+        private void OnEnemyDied(IModel obj)
         {
             Dispose();
         }
@@ -78,11 +76,12 @@ namespace Asteroids.Controller
         {
             if (!_inited) return;
             _inited = false;
-            
-            View.OnLevelObjectContact -= OnCollision;
+
+            OnDispose();
+            _view.OnLevelObjectContact -= OnCollision;
             _enemy.HealthEnded += OnEnemyDied;
 
-            Object.Destroy(View.Transform.gameObject); // 
+            _levelManager.DestroyView(_enemy, _view); // 
         }
     }
 }

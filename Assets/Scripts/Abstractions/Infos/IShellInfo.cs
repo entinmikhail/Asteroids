@@ -2,10 +2,8 @@
 
 namespace Asteroids.Abstraction
 {
-    public interface IShellInfo
+    public interface IShellInfo : IModelInfo
     {
-        float MovementSpeed { get; }
-
         float ShellLifeTime { get; }
         public string Type { get; }
         

@@ -12,7 +12,7 @@ namespace Asteroids.Controller
         {
             _controllersItems.Add("asteroid", objects => new EnemyController((IEnemy)objects[0], (ILevelManager)objects[1]));
             _controllersItems.Add("mini_asteroid", objects => new MiniAsteroidController((IEnemy)objects[0], (ILevelManager)objects[1]));
-            _controllersItems.Add("ufo", objects => new EnemyController((IEnemy)objects[0], (ILevelManager)objects[1]));
+            _controllersItems.Add("ufo", objects => new UfoEnemyController((IEnemy)objects[0], (ILevelManager)objects[1]));
         }
         
         public static T Build<T>(string id, params object[] buildParams) where T : IEnemyController

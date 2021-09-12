@@ -6,7 +6,7 @@ namespace Asteroids.Model
 {
     public class WeaponModel : IWeapon, IUpdatable
     {
-        private readonly WeaponInfo _weaponInfo;
+        private readonly IWeaponInfo _weaponInfo;
 
         private int _remainingCharges;
         private int _prevCharges;
@@ -16,7 +16,7 @@ namespace Asteroids.Model
         public event Action Shoting;
         public event ChargesChangeHandler ChargesChangeHandler;
 
-        public WeaponModel(WeaponInfo weaponInfo)
+        public WeaponModel(IWeaponInfo weaponInfo)
         {
             _weaponInfo = weaponInfo;
             _remainingCharges = _weaponInfo.MaxСharges;

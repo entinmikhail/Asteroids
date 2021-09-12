@@ -16,20 +16,24 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 5, y: 10, z: 0}
   _ufosOnStart: 2
+  _defaultPlayerPosition: {x: 0, y: 0, z: 0}
+  _defaultPlayerRotation: {x: 0, y: 0, z: 0, w: 0}
   _asteroidsOnStart: 5
   _miniAsteroidsPerAsteroid: 4
   _weaponInfos: {fileID: 11400000, guid: 6cff44a5f3982ce468d0501c808eb9ce, type: 2}
   _levelObjectInfos:
   - Id: Asteroid
-    Prefab: {fileID: 4437745429068403744, guid: 741fae482a394de4e9ad389c0c43a482, type: 3}
+    Info: {fileID: 4437745429068403744, guid: 741fae482a394de4e9ad389c0c43a482, type: 3}
   - Id: MiniAsteroid
-    Prefab: {fileID: 225249267904081461, guid: 43c6c6f6fa584454888006fac3262d6a, type: 3}
+    Info: {fileID: 225249267904081461, guid: 43c6c6f6fa584454888006fac3262d6a, type: 3}
   - Id: UFO
-    Prefab: {fileID: 6352938943116293883, guid: 3869e915819b29f4788dd0d5d2944a70, type: 3}
+    Info: {fileID: 6352938943116293883, guid: 3869e915819b29f4788dd0d5d2944a70, type: 3}
   - Id: Bullet
-    Prefab: {fileID: 7209129080893641747, guid: 61368caf506c9fa43aaa8dbb74a800c2, type: 3}
+    Info: {fileID: 7209129080893641747, guid: 61368caf506c9fa43aaa8dbb74a800c2, type: 3}
   - Id: Laser
-    Prefab: {fileID: 8854302108541670517, guid: 4576f1ecb020937438ba82c1ad814f19, type: 3}
+    Info: {fileID: 8854302108541670517, guid: 4576f1ecb020937438ba82c1ad814f19, type: 3}
+  - Id: Player
+    Info: {fileID: 7009120208877503348, guid: 057516dfe8f2d824f91c718a99372b8a, type: 3}
   _enemyInfos:
   - Id: Asteroid
     Info: {fileID: 11400000, guid: cda8032c014b2a248ad869738abb6725, type: 2}
@@ -37,3 +41,9 @@ MonoBehaviour:
     Info: {fileID: 11400000, guid: 275fcad7e408f0a45841987ffb02f899, type: 2}
   - Id: UFO
     Info: {fileID: 11400000, guid: 32474b396c63ff44f916a1cae5a85548, type: 2}
+  _shellInfos:
+  - Id: Laser
+    Info: {fileID: 11400000, guid: 23c5cdf20fa03fa40ac38e34f22fd14d, type: 2}
+  - Id: Bullet
+    Info: {fileID: 11400000, guid: df825c00f2ecffc45ab3ac91eaa59c57, type: 2}
+  _playerInfo: {fileID: 11400000, guid: 8fac9b61ff0270941a153476f893363d, type: 2}

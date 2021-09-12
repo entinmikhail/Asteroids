@@ -8,6 +8,15 @@ namespace Asteroids.ScriptableObjects
     {
         [SerializeField] private float _movementSpeed;
         public float MovementSpeed => _movementSpeed;
+        
+        public float RotationSpeed => _rotationSpeed;
+        [SerializeField] private float _rotationSpeed;
+
+        public int MaxHealth => _maxHealth;
+        [SerializeField] private int _maxHealth;
+        
+        public int Health => _health;
+        [SerializeField] private int _health;
 
         [SerializeField] private float _shellLifeTime;
         public float ShellLifeTime => _shellLifeTime;

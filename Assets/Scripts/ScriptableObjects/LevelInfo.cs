@@ -12,22 +12,34 @@ namespace Asteroids.ScriptableObjects
         public int UfosOnStart => _ufosOnStart;
         public int AsteroidsOnStart => _asteroidsOnStart;
         public int MiniAsteroidsPerAsteroid => _miniAsteroidsPerAsteroid;
-        
+        public Vector3 DefaultPlayerPosition  => _defaultPlayerPosition;
+        public Quaternion DefaultPlayerRotation  => _defaultPlayerRotation;
+
         [SerializeField] private Bounds _levelBounds;
         [SerializeField] private int _ufosOnStart;
+        [SerializeField] private Vector3 _defaultPlayerPosition;
+        [SerializeField] private Quaternion _defaultPlayerRotation;
         [SerializeField] private int _asteroidsOnStart;
         [SerializeField] private int _miniAsteroidsPerAsteroid;
 
         [SerializeField] private ObjectsInfos _weaponInfos;
-        [SerializeField] private List<LevelObjectInfoSO> _levelObjectInfos;
-        [SerializeField] private List<EnemyInfoSO> _enemyInfos;
+        [SerializeField] private List<IdsInfos<GameObject>> _levelObjectInfos;
+        [SerializeField] private List<IdsInfos<EnemyInfo>> _enemyInfos;
+        [SerializeField] private List<IdsInfos<ShellInfo>> _shellInfos;
+
+        [SerializeField] private PlayerInfo _playerInfo;
+
         private IDictionary<string, GameObject> _levelObjectInfosDict;
         private IDictionary<string, EnemyInfo> _enemyInfosDict;
+        private IDictionary<string, ShellInfo> _shellInfosDict;
 
         public GameObject GetLevelObjectPrefab(string id) => _levelObjectInfosDict[id];
+        public IPlayerInfo GetPlayerInfo() => _playerInfo;
+
         public IWeaponInfo GetWeaponInfo(LevelObjectType type) => _weaponInfos.GetInfo(type);
         public IEnemyInfo GetEnemyInfo(string id) => _enemyInfosDict[id];
-        
+        public IShellInfo GetShellInfo(string id) => _shellInfosDict[id];
+
         public void OnAfterDeserialize()
         {
             if(_levelObjectInfos == null) return;
@@ -35,7 +47,7 @@ namespace Asteroids.ScriptableObjects
             _levelObjectInfosDict = new Dictionary<string, GameObject>(_levelObjectInfos.Capacity);
             foreach (var levelObject in _levelObjectInfos)
             {
-                _levelObjectInfosDict[levelObject.Id] = levelObject.Prefab;
+                _levelObjectInfosDict[levelObject.Id] = levelObject.Info;
             }
             
             if(_enemyInfos == null) return;
@@ -46,6 +58,13 @@ namespace Asteroids.ScriptableObjects
                 _enemyInfosDict[enemyInfo.Id] = enemyInfo.Info;
             }
             
+            if(_shellInfos == null) return;
+           
+            _shellInfosDict = new Dictionary<string, ShellInfo>(_enemyInfos.Capacity);
+            foreach (var shellInfo in _shellInfos)
+            {
+                _shellInfosDict[shellInfo.Id] = shellInfo.Info;
+            }
         }
         
         public void OnBeforeSerialize()
@@ -54,16 +73,9 @@ namespace Asteroids.ScriptableObjects
     }
 
     [Serializable]
-    public struct LevelObjectInfoSO
+    public struct IdsInfos<T>
     {
         public string Id;
-        public GameObject Prefab;
-    } 
-    
-    [Serializable]
-    public struct EnemyInfoSO
-    {
-        public string Id;
-        public EnemyInfo Info;
+        public T Info;
     }
 }

@@ -15,6 +15,7 @@ namespace Asteroids.Controller
         private readonly ILevelManager _levelManager;
         
         private readonly IList<IUpdatable> _controllersToUpdate = new List<IUpdatable>();
+        private readonly IList<IUpdatable> _controllersToRemoveFromUpdate = new List<IUpdatable>();
         private bool _inited;
 
         public LevelController(IPointModel pointModel, ILevelManager levelManager)
@@ -47,7 +48,16 @@ namespace Asteroids.Controller
             foreach (var updatable in _controllersToUpdate)
             {
                 updatable.Update(deltaTime);
-            }    
+            }
+
+            if (_controllersToRemoveFromUpdate.Count != 0)
+            {
+                foreach (var controller in _controllersToRemoveFromUpdate)
+                {
+                    _controllersToUpdate.Remove(controller);
+                }
+                _controllersToRemoveFromUpdate.Clear();
+            }
         }
         
         private void OnEnemyAddedToLevel(IEnemy enemy)
@@ -94,7 +104,7 @@ namespace Asteroids.Controller
             
             if (controller is IUpdatable updatable)
             {
-                _controllersToUpdate.Remove(updatable);
+                _controllersToRemoveFromUpdate.Add(updatable);
             } 
             
             enemy.GetInfo().EnemyBehavior.DiedBehaviour(_levelModel, enemy.GetTransform().Position);
@@ -109,7 +119,7 @@ namespace Asteroids.Controller
 
             if (controller is IUpdatable updatable)
             {
-                _controllersToUpdate.Remove(updatable);
+                _controllersToRemoveFromUpdate.Add(updatable);
             }
             
             controller.Dispose();       
@@ -124,6 +134,9 @@ namespace Asteroids.Controller
 
             _levelModel.EnemyAdded -= OnEnemyAddedToLevel;
             _levelModel.EnemyRemoved -= OnEnemyRemovedFromLevel;
+            
+            _levelModel.ShellAdded -= OnShellAddedToLevel;
+            _levelModel.ShellRemoved -= OnShellRemovedFromLevel;
             
             foreach (var controller in _enemies.Values)
             {

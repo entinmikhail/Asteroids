@@ -1,12 +1,14 @@
 using Asteroids.Abstraction;
+using Asteroids.ScriptableObjects;
 using UnityEngine;
 using Utils;
 
 namespace Asteroids.Controller
 {
-    public class EnemyController : EnemyControllerBase
+    public class UfoEnemyController : EnemyControllerBase
     {
-        public EnemyController(IEnemy enemy, ILevelManager levelManager) : base(enemy, levelManager)
+        private UfoEnemyBehavior _ufoBehavior;
+        public UfoEnemyController(IEnemy enemy, ILevelManager levelManager) : base(enemy, levelManager)
         {
         }
 
@@ -21,11 +23,19 @@ namespace Asteroids.Controller
 
         protected override void OnStart()
         {
-            _enemyBehaviour.Init(_view, _playerView, _enemyInfo.MovementSpeed);
+            _ufoBehavior = (UfoEnemyBehavior) _enemyBehaviour;
+            _levelManager.GetCurrentLevel().CurrentPlayer.HealthEnded += OnPlayerDead;
+            _ufoBehavior.Init(_view, _playerView);
         }
-        
+
+        private void OnPlayerDead(IModel player)
+        {
+            _ufoBehavior.Stop();
+        }
+
         protected override void OnDispose()
         {
+            _levelManager.GetCurrentLevel().CurrentPlayer.HealthEnded -= OnPlayerDead;
         }
     }
 }

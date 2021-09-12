@@ -11,5 +11,6 @@ namespace Asteroids.Abstraction
         float GetCurrentResourceValue();
         
         void ChangeResource(float changeValue);
+        void SetResourceValue(float resourceValue);
     }
 }

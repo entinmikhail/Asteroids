@@ -1,8 +1,9 @@
-using System;
 using UnityEngine;
 
 namespace Asteroids.Abstraction
 {
+    public delegate void ContactHandler(ILevelObjectView self, ILevelObjectView contact);
+    
     public interface ILevelObjectView 
     {
         Transform Transform { get; }
@@ -12,8 +13,9 @@ namespace Asteroids.Abstraction
         Collider2D Collider2D { get; }
         
         LevelObjectType LevelObjectType { get; }
+        string Tag { get; }
 
-        event Action<ILevelObjectView, ILevelObjectView> OnLevelObjectContact;
+        event ContactHandler OnLevelObjectContact;
     }
 }
 

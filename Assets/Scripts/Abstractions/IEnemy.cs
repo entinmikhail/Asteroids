@@ -4,11 +4,14 @@ using Abstractions;
 
 namespace Asteroids.Abstraction
 {
-    public interface IEnemy : ITransformModel
+    public interface IEnemy : IModel
     {
-        event Action<IEnemy> HealthEnded;
         IEnemyInfo GetInfo();
+    }
+
+    public interface IModel : ITransformModel  
+    {
+        event Action<IModel> HealthEnded;
         IResourceModel GetResource(int id);
-        
     }
 }

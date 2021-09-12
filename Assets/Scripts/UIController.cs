@@ -4,9 +4,8 @@ using UnityEngine.UI;
 using Zenject;
 
 
-public class UIController : MonoBehaviour
+    public class UIController : MonoBehaviour
     {
-        [Inject] private HealthModel _healthModel;
         [Inject] private PointModel _pointModel;
         [Inject] private GameModel _gameModel;
         
@@ -18,32 +17,36 @@ public class UIController : MonoBehaviour
         
         public void Start()
         {
-            _gameModel.GameRestarted += Attach;
-            _pointModel.ResourceValueChanged += ChangePoints;
-            _gameModel.GameEnded += OnGameEnd;
-            
+            Attach();
+
             _scoreTextCounter = _guiScore.GetComponent<Text>();
             
-            Attach();
+            GameRestarted();
         }
-        
+
         private void OnGameEnd()
         {
-            _gameModel.GameRestarted -= Attach;
+            UiSetActive(true);
+            _totalScore.GetComponent<Text>().text = $"Total score: {_pointModel.GetCurrentResourceValue()}";
+        }
+        
+        private void GameRestarted()
+        {
+            UiSetActive(false);
+        }
+
+        private void Detach()
+        {
+            _gameModel.GameRestarted -= GameRestarted;
             _pointModel.ResourceValueChanged -= ChangePoints;
             _gameModel.GameEnded -= OnGameEnd;
         }
         
         private void Attach()
         {
-            UiSetActive(false);
-            
-            _healthModel.ResourceEnded += OnPlayerDead;
-        }
-
-        private void Detach()
-        {
-            _healthModel.ResourceEnded -= OnPlayerDead;
+            _gameModel.GameRestarted += GameRestarted;
+            _pointModel.ResourceValueChanged += ChangePoints;
+            _gameModel.GameEnded += OnGameEnd;
         }
         
         private void UiSetActive(bool value)
@@ -53,17 +56,13 @@ public class UIController : MonoBehaviour
             _totalScore.SetActive(value);
         }
         
-        private void OnPlayerDead()
-        {
-            UiSetActive(true);
-            
-            _totalScore.GetComponent<Text>().text = $"Total score: {_pointModel.GetCurrentResourceValue()}";
-            
-            Detach();
-        }
-        
         private void ChangePoints(float curvalue, float prevvalue)
         {
             _scoreTextCounter.text = curvalue.ToString();
+        }
+
+        private void OnDestroy()
+        {
+            Detach();
         }
     }

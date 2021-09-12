@@ -12,15 +12,18 @@ namespace Asteroids.Model
         public event Action<IShell> ShellRemoved;
 
         public IList<IEnemy> CurrentEnemies => _enemies;
+        public IPlayer CurrentPlayer { get; }
+
         public IList<IShell> CurrentShells => _shells;
         
         private readonly ILevelInfo _levelInfo;
         private readonly IList<IEnemy> _enemies = new List<IEnemy>();
         private readonly IList<IShell> _shells = new List<IShell>();
-        
-        public LevelModel(ILevelInfo levelInfo)
+
+        public LevelModel(ILevelInfo levelInfo, IPlayer player)
         {
             _levelInfo = levelInfo;
+            CurrentPlayer = player;
         }
         
         public ILevelInfo GetInfo() => _levelInfo;
@@ -57,13 +60,15 @@ namespace Asteroids.Model
         private void AddShell(IShell shell)
         {
             _shells.Add(shell);
+            shell.ShellDestroyed += RemoveShell;
             
             ShellAdded?.Invoke(shell);
         }
         
-        private void RemoveEnemy(IShell shell)
+        private void RemoveShell(IShell shell)
         {
             _shells.Remove(shell);
+            shell.ShellDestroyed -= RemoveShell;
 
             ShellRemoved?.Invoke(shell);
         }
@@ -76,9 +81,9 @@ namespace Asteroids.Model
             EnemyAdded?.Invoke(enemy);
         }
 
-        private void OnEnemyDied(IEnemy enemy)
+        private void OnEnemyDied(IModel enemy)
         {
-            RemoveEnemy(enemy);
+            RemoveEnemy((IEnemy)enemy);
         }
 
         private void RemoveEnemy(IEnemy enemy)

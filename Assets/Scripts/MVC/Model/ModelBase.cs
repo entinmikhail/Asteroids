@@ -3,17 +3,17 @@ using Asteroids.Abstraction;
 
 namespace Asteroids.Model
 {
-    public abstract class EnemyBase : TransformModelBase, IEnemy
+    public abstract class ModelBase<TInfo> : TransformModelBase, IModel where TInfo : IModelInfo
     {
-        private readonly IEnemyInfo _enemyInfo;
+        protected readonly TInfo _info;
         private readonly IResourceModel _healthModel;
         
-        public event Action<IEnemy> HealthEnded;
+        public event Action<IModel> HealthEnded;
 
-        protected EnemyBase(IEnemyInfo enemyInfo)
+        protected ModelBase(TInfo info)
         {
-            _enemyInfo = enemyInfo;
-            _healthModel = new ResourceModel(_enemyInfo.Health, _enemyInfo.MaxHealth);
+            _info = info;
+            _healthModel = new ResourceModel(_info.Health, _info.MaxHealth);
 
             _healthModel.ResourceEnded += OnHeathEnded;
         }
@@ -22,8 +22,6 @@ namespace Asteroids.Model
         {
             HealthEnded?.Invoke(this);
         }
-        
-        public IEnemyInfo GetInfo() => _enemyInfo;
 
         public IResourceModel GetResource(int id)
         {

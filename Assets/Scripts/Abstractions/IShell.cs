@@ -2,7 +2,7 @@
 
 namespace Asteroids.Abstraction
 {
-    public interface IShell
+    public interface IShell : IModel
     {
         event Action<IShell> ShellDestroyed;
         IShellInfo GetInfo();

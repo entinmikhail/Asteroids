@@ -8,7 +8,6 @@ namespace Asteroids.Controller
         private readonly IWeaponSystem _weaponSystem;
         private IShellInfo _shellInfo;
         private ILevelManager _levelManager;
-        private InputHandler _inputHandler;
         
         public WeaponController(IWeaponSystem weaponSystem,  IWeapon weapon, IShellInfo shellInfo, ILevelManager levelManager)
         {
@@ -16,7 +15,6 @@ namespace Asteroids.Controller
             _weapon = weapon;
             _shellInfo = shellInfo;
             _levelManager = levelManager;
-            /*inputHandler = inputHandler;*/
             
             if (weapon is IWeapon updWeapon)
             {

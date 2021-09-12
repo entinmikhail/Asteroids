@@ -1,11 +1,9 @@
 ﻿using Asteroids.Abstraction;
 using Asteroids.Model;
-using UnityEngine;
 
 namespace Asteroids.Controller
 {
     public abstract class ShellControllerBase : IShellController, IUpdatable
-
     {
         protected ILevelObjectView _view;
         
@@ -31,18 +29,17 @@ namespace Asteroids.Controller
             _inited = true;
 
             _shellBehavior = _shellInfo.ShellBehavior;
-            _playerView = _levelManager.GetPlayerView();
-            _view = _levelManager.GetObjectView<ILevelObjectView>(_shellInfo.ViewId, _playerView.SpawnPoint.position);
+            _playerView = _levelManager.GetView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
+            _view = _levelManager.CreateObjectView<ILevelObjectView>(_shellInfo.ViewId, _shell, _playerView.SpawnPoint.position);
             
             _view.OnLevelObjectContact += OnCollision;
             _shell.ShellDestroyed += OnShellDestroyed;
             InitBehaviour();
         }
-        
 
         private void OnCollision(ILevelObjectView selfObject, ILevelObjectView contactObject)
         {
-            if (_shellInfo.Destroyable && contactObject.Transform.gameObject.CompareTag("Enemy")) // 
+            if (_shellInfo.Destroyable && contactObject.Tag == ProjConstants.Enemy)
             {
                 _shell.DestroyShell();
             }
@@ -52,9 +49,10 @@ namespace Asteroids.Controller
 
         public void Update(double deltaTime)
         {
-           _shell.GetLifeTimeModel().SetLifeTime(deltaTime);
-
-           _shellBehavior.OnUpdate(_view, _playerView, _shellInfo.MovementSpeed);
+            if (!_inited) return;
+            
+            _shell.GetLifeTimeModel().SetLifeTime(deltaTime);
+            _shellBehavior.OnUpdate(_view, _playerView, _shellInfo.MovementSpeed);
         }
 
         private void OnShellDestroyed(IShell obj)
@@ -69,7 +67,8 @@ namespace Asteroids.Controller
             
             _view.OnLevelObjectContact -= OnCollision;
             _shell.ShellDestroyed -= OnShellDestroyed;
-            Object.Destroy(_view.Transform.gameObject); //
+            
+            _levelManager.DestroyView(_shell, _view); 
         }
     }
 }
