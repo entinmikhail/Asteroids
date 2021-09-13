@@ -10,7 +10,7 @@ namespace Asteroids.Controller
 
         public static void RegisterControllers()
         {
-            _controllersItems.Add("asteroid", objects => new EnemyController((IEnemy)objects[0], (ILevelManager)objects[1]));
+            _controllersItems.Add("asteroid", objects => new AsteroidController((IEnemy)objects[0], (ILevelManager)objects[1]));
             _controllersItems.Add("mini_asteroid", objects => new MiniAsteroidController((IEnemy)objects[0], (ILevelManager)objects[1]));
             _controllersItems.Add("ufo", objects => new UfoEnemyController((IEnemy)objects[0], (ILevelManager)objects[1]));
         }

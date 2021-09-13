@@ -2,8 +2,8 @@ using Asteroids.Abstraction;
 
 public abstract class ControllerBase : IController
 {
-    private bool _started;
-
+    protected bool _started { get; private set; }
+    
     public void Start()
     {
         if (_started) return;

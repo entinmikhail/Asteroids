@@ -1,19 +1,18 @@
 using System;
 using Asteroids.Abstraction;
-using Asteroids.ScriptableObjects;
 
 namespace Asteroids.Model
 {
-    public class WeaponModel : IWeapon, IUpdatable
+    public class WeaponModel : IWeapon
     {
         private readonly IWeaponInfo _weaponInfo;
 
         private int _remainingCharges;
         private int _prevCharges;
-        private double _currentChargeTime = 0f;
+        private double _currentChargeTime;
         private float _nextChargeTime;
 
-        public event Action Shoting;
+        public event Action Shot;
         public event ChargesChangeHandler ChargesChangeHandler;
 
         public WeaponModel(IWeaponInfo weaponInfo)
@@ -31,15 +30,23 @@ namespace Asteroids.Model
 
         public void ProduceFire()
         {
-            var prevCharges = _remainingCharges;
+            if (!IsFireReady()) return;
+            
+            _prevCharges = _remainingCharges;
             
             _remainingCharges--;
             
             ChargesChangeHandler?.Invoke(_remainingCharges, _prevCharges);
-            Shoting?.Invoke();
+            Shot?.Invoke();
         }
 
-        public bool IsFireReady()
+        public void ClearCooldown()
+        {
+            _remainingCharges = _weaponInfo.MaxСharges;
+            _currentChargeTime = 0f;
+        }
+
+        private bool IsFireReady()
         {
             return _remainingCharges > 0;
         }

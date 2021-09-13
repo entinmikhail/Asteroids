@@ -9,10 +9,10 @@ namespace Asteroids.Abstraction
 
     }
 
-    public interface IModel<out T> : ITransformModel where T : IModelInfo
+    public interface IModel<out TInfo> : ITransformModel where TInfo : IModelInfo
     {
-        T GetInfo();
-        event Action<IModel<T>> HealthEnded;
+        TInfo GetInfo();
+        event Action<IModel<TInfo>> HealthEnded;
         IResourceModel GetResource(int id);
     }
 }

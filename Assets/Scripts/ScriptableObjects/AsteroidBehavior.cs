@@ -4,16 +4,15 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/AsteroidEnemyMoveBehavior", fileName = "AsteroidEnemyMoveBehavior")]
-    public class AsteroidEnemyBehavior : BaseEnemyBehavior
+    public class AsteroidBehavior : BaseBehavior
     {
         public override void OnUpdate (ILevelObjectView view, IPlayerView playerView, float speed)
         {
         }
-
-        public override void Init(ILevelObjectView view, IPlayerView playerView, params object[] additionalParams)
+        protected override void OnInit(params object[] additionalParams)
         {
             var speed = (float) additionalParams[0];
-            view.Rigidbody2D.AddForce(new Vector2(Random.Range(-speed, speed),
+            _viewUnity.Rigidbody2D.AddForce(new Vector2(Random.Range(-speed, speed),
                 Random.Range(-speed, speed)), ForceMode2D.Impulse);
         }
 

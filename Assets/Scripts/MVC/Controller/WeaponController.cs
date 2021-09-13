@@ -2,44 +2,41 @@
 
 namespace Asteroids.Controller
 {
-    public class WeaponController : IWeaponController
+    public class WeaponController : ControllerBase ,IWeaponController, IUpdatable 
     {
         private readonly IWeapon _weapon;
-        private readonly IWeaponSystem _weaponSystem;
-        private IShellInfo _shellInfo;
-        private ILevelManager _levelManager;
-        
-        public WeaponController(IWeaponSystem weaponSystem,  IWeapon weapon, IShellInfo shellInfo, ILevelManager levelManager)
+
+        private readonly IShellInfo _shellInfo;
+        private readonly ILevelManager _levelManager;
+
+        protected WeaponController( IWeapon weapon, IShellInfo shellInfo, ILevelManager levelManager)
         {
-            _weaponSystem = weaponSystem;
             _weapon = weapon;
             _shellInfo = shellInfo;
             _levelManager = levelManager;
-            
-            if (weapon is IWeapon updWeapon)
-            {
-                _weaponSystem.Add(updWeapon);
-            }
         }
         
-        public void OnAttackClicked()
-        {
-            if (_weapon.IsFireReady())
-            {
-                _levelManager.GetCurrentLevel().SpawnTypedShell(_shellInfo);
-                
-                _weapon.ProduceFire();
-            }
-        }
-
-        public void Dispose()
-        {
-            _weaponSystem.Remove(_weapon);
-        }
-
-        public void Start()
+        protected override void OnStart()
         {
             
+            _weapon.Shot += OnWeaponShot;
+        }
+        
+        public void Update(double deltaTime)
+        {
+            if (!_started) return;
+
+            _weapon.Update(deltaTime);
+        }
+        
+        private void OnWeaponShot()
+        {
+            _levelManager.GetCurrentLevel().SpawnTypedShell(_shellInfo);
+        }
+        
+        protected override void OnDispose()
+        {
+            _weapon.Shot -= OnWeaponShot;
         }
     }
 }

@@ -1,7 +1,7 @@
 using Asteroids.Abstraction;
 using Asteroids.Model;
-using Asteroids.System;
-using UnityEngine;
+using Utils;
+
 
 namespace Asteroids.Controller
 {
@@ -10,15 +10,15 @@ namespace Asteroids.Controller
         private readonly IPlayer _playerModel;
         private readonly IInputHandler _inputHandler;
         private readonly ILevelManager _levelManager;
-
+        
         private IPlayerView _playerView;
     
         private IPlayerMoveBehavior _playerMoveBehavior;
-        private BulletWeaponController _bulletWeaponController;
-        private LaserWeaponController _laserWeaponController;
-    
-        private WeaponSystem _weaponSystem;
-        private WeaponModel _weaponModel;
+        private readonly BulletWeaponController _bulletWeaponController;
+        private readonly LaserWeaponController _laserWeaponController;
+        
+        private IWeapon _bulletWeapon;
+        private IWeapon _laserWeapon;
         private IPlayerInfo _playerInfo;
 
         public PlayerController(IPlayer playerModel, IInputHandler inputHandler, ILevelManager levelManager)
@@ -26,33 +26,37 @@ namespace Asteroids.Controller
             _playerModel = playerModel;
             _inputHandler = inputHandler;
             _levelManager = levelManager;
+            
+            var levelInfo = _levelManager.GetCurrentLevel().GetInfo();
+            
+            _bulletWeapon = new WeaponModel(levelInfo.GetWeaponInfo(LevelObjectType.Bullet));
+            _laserWeapon = new WeaponModel(levelInfo.GetWeaponInfo(LevelObjectType.Laser));
+            
+            _bulletWeaponController = new BulletWeaponController(_bulletWeapon, levelInfo.GetShellInfo(ProjConstants.Bullet),_levelManager);
+            _laserWeaponController = new LaserWeaponController( _laserWeapon, levelInfo.GetShellInfo(ProjConstants.Laser), _levelManager);
         }
     
         protected override void OnStart()
         {
             var levelInfo = _levelManager.GetCurrentLevel().GetInfo();
             _playerInfo = levelInfo.GetPlayerInfo();
-        
+
             _playerModel.GetResource(ProjConstants.HealthId).SetResourceValue(_playerInfo.Health);
 
-            _playerView = _levelManager.CreateObjectView<IPlayerView>( _playerModel, Vector3.zero); 
-            _playerView.Transform.position = levelInfo.DefaultPlayerPosition;
-            _playerView.Transform.rotation = levelInfo.DefaultPlayerRotation;
-        
-            _weaponSystem = new WeaponSystem();
+            _playerView = _levelManager.CreateObjectView<IPlayerView>( _playerModel, CustomVector3.zero);
 
-            _playerMoveBehavior = _playerInfo.PlayerMoveBehavior;
-            _playerMoveBehavior.Init(_playerView, _playerInfo);
-         
-            _bulletWeaponController = new BulletWeaponController(_weaponSystem, new WeaponModel(levelInfo.GetWeaponInfo(LevelObjectType.Bullet)), levelInfo.GetShellInfo(ProjConstants.Bullet),_levelManager);
-            _laserWeaponController = new LaserWeaponController(_weaponSystem, new WeaponModel(levelInfo.GetWeaponInfo(LevelObjectType.Laser)), levelInfo.GetShellInfo(ProjConstants.Laser), _levelManager);
-
+            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior();
+            _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, levelInfo);
+            
+            _bulletWeaponController.Start();
+            _laserWeaponController.Start();
             Attach();
         }
 
         public void Update(double deltaTime)
         { 
-            _weaponSystem.Update(deltaTime);
+            _bulletWeaponController.Update(deltaTime);
+            _laserWeaponController.Update(deltaTime);
         }
     
         private void OnPlayerContact(ILevelObjectView self, ILevelObjectView contact)
@@ -67,25 +71,44 @@ namespace Asteroids.Controller
         {
             Dispose();
         }
-    
+        
+        private void OnBulletFireClicked()
+        {
+            _bulletWeapon.ProduceFire();
+        }    
+        
+        private void OnLaserFireClicked()
+        {
+            _laserWeapon.ProduceFire();
+        }
+        
         private void Attach()
         {
-            _inputHandler.Fire1Clicked += _bulletWeaponController.OnAttackClicked;
-            _inputHandler.Fire2Clicked += _laserWeaponController.OnAttackClicked;
-            _inputHandler.MoveClicked += _playerMoveBehavior.Move;
-            _inputHandler.RotationClicked += _playerMoveBehavior.Rotate;
+            _inputHandler.Fire1Clicked += OnBulletFireClicked;
+            _inputHandler.Fire2Clicked += OnLaserFireClicked;
+            _inputHandler.MoveClicked += OnMove;
+            _inputHandler.RotationClicked += OnRotate;
         
             _playerModel.HealthEnded += OnPlayerResourceEnded;
-        
             _playerView.OnLevelObjectContact += OnPlayerContact;
+        }
+
+        private void OnRotate(float value)
+        {
+             _playerMoveBehavior.Rotate(value);
+        }
+
+        private void OnMove(float value)
+        {
+            _playerMoveBehavior.Move(value);
         }
 
         private void Detach()
         {
-            _inputHandler.Fire1Clicked -= _bulletWeaponController.OnAttackClicked;
-            _inputHandler.Fire2Clicked -= _laserWeaponController.OnAttackClicked;
-            _inputHandler.MoveClicked -= _playerMoveBehavior.Move;
-            _inputHandler.RotationClicked -= _playerMoveBehavior.Rotate;
+            _inputHandler.Fire1Clicked -= OnBulletFireClicked;
+            _inputHandler.Fire2Clicked -= OnLaserFireClicked;
+            _inputHandler.MoveClicked -= OnMove;
+            _inputHandler.RotationClicked -= OnRotate;
         
             _playerModel.HealthEnded  -= OnPlayerResourceEnded;
             _playerView.OnLevelObjectContact -= OnPlayerContact;
@@ -98,7 +121,8 @@ namespace Asteroids.Controller
             _bulletWeaponController.Dispose();
             _laserWeaponController.Dispose();
         
-           _levelManager.DestroyView(_playerModel, _playerView);
+           _levelManager.DestroyView(_playerModel);
+           _levelManager.DestroyBehaviour((BaseBehavior)_playerMoveBehavior);
         }
     }
 }

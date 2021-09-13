@@ -23,12 +23,17 @@ namespace Asteroids.ScriptableObjects
         [SerializeField] private string _viewId;
 
         public string Type => _type;
+
         [SerializeField] private string _type;
 
         public int PointsForKill => _pointsForKill;
         [SerializeField] private int _pointsForKill;
         
-        public BaseEnemyBehavior EnemyBehavior => _enemyBehavior;
-        [SerializeField] private BaseEnemyBehavior _enemyBehavior;
+        [SerializeField] private BaseBehavior behavior;
+        
+        public BaseBehavior CreateEnemyBehavior()
+        {
+            return Instantiate(behavior);
+        }
     }   
 }

@@ -1,21 +1,27 @@
 using UnityEngine;
+using Utils;
 
 namespace Asteroids.Abstraction
 {
     public delegate void ContactHandler(ILevelObjectView self, ILevelObjectView contact);
-    
     public interface ILevelObjectView 
     {
-        Transform Transform { get; }
-        
-        Rigidbody2D Rigidbody2D { get; }
-        
-        Collider2D Collider2D { get; }
-        
+        CustomTransform Transform { get; }
         LevelObjectType LevelObjectType { get; }
         string Tag { get; }
-
         event ContactHandler OnLevelObjectContact;
+    }
+
+    public interface ILevelObjectViewUnity 
+    {
+          Transform UnityTransfom { get; }
+          Rigidbody2D Rigidbody2D { get; }
+    }
+
+    public interface IPlayerViewUnity : ILevelObjectViewUnity
+
+    {
+    Transform SpawnPoint { get; }
     }
 }
 

@@ -13,6 +13,7 @@ namespace Asteroids.ScriptableObjects
         [SerializeField] private float _movementSpeed;
         
         public float MaxMovementSpeed => _maxMovementSpeed;
+
         [SerializeField] private float _maxMovementSpeed;
     
         public float RotationSpeed => _rotationSpeed;
@@ -23,8 +24,12 @@ namespace Asteroids.ScriptableObjects
     
         public int Health => _health;
         [SerializeField] private int _health;
-
-        public IPlayerMoveBehavior PlayerMoveBehavior => _playerMoveBehavior; 
+        
         [SerializeField] private PlayerMoveBehavior _playerMoveBehavior;
+        
+        public IPlayerMoveBehavior CreatePlayerMoveBehavior()
+        {
+            return Instantiate(_playerMoveBehavior);
+        }
     }
 }

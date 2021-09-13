@@ -2,7 +2,7 @@
 
 namespace Asteroids.Model
 {
-    public class HealthModel : ResourceModel, IHealthModel
+    public class HealthModel : ResourceModel
 
     {
         private readonly bool _isPlayerLife;

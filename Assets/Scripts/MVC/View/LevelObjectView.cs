@@ -1,27 +1,24 @@
 using Asteroids.Abstraction;
 using UnityEngine;
+using Utils;
 
 namespace Asteroids.View
 {
-    public class LevelObjectView : MonoBehaviour, ILevelObjectView
+    public class LevelObjectView : MonoBehaviour, ILevelObjectView, ILevelObjectViewUnity
     {
-        public Transform Transform => _transform;
-        [SerializeField] private Transform _transform;
-        
+        public CustomTransform Transform => _transform;
         public Rigidbody2D Rigidbody2D => _rigidbody;
-        [SerializeField] private Rigidbody2D _rigidbody;
-        
-        public Collider2D Collider2D => _collider;
-        [SerializeField] private Collider2D _collider;
-
+        public Transform UnityTransfom => _transform;
         public LevelObjectType LevelObjectType => levelObjectType;
-        
         public string Tag => gameObject.tag;
         
+        [SerializeField] private Transform _transform;
         [SerializeField] private LevelObjectType levelObjectType;
-        
+        [SerializeField] private Rigidbody2D _rigidbody;
         public event ContactHandler OnLevelObjectContact;
+        
 
+        
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if(collision.gameObject == null) return;

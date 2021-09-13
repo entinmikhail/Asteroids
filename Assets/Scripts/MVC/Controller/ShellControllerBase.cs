@@ -8,7 +8,7 @@ namespace Asteroids.Controller
         protected ILevelObjectView _view;
         
         private ILevelManager _levelManager;
-        protected BaseShellBehavior _shellBehavior;
+        protected BaseBehavior _shellBehavior;
         private ShellBaseModel _shellBaseModel;
         protected readonly IShellInfo _shellInfo;
         protected IPlayerView _playerView;
@@ -28,8 +28,8 @@ namespace Asteroids.Controller
             if (_inited) return;
             _inited = true;
 
-            _shellBehavior = _shellInfo.ShellBehavior;
-            _playerView = _levelManager.GetView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
+            _shellBehavior = _shellInfo.CreateShellBehavior();
+            _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
             _view = _levelManager.CreateObjectView<ILevelObjectView>(_shell, _playerView.SpawnPoint.position);
             
             _view.OnLevelObjectContact += OnCollision;
@@ -68,7 +68,8 @@ namespace Asteroids.Controller
             _view.OnLevelObjectContact -= OnCollision;
             _shell.ShellDestroyed -= OnShellDestroyed;
             
-            _levelManager.DestroyView(_shell, _view); 
+            _levelManager.DestroyView(_shell); 
+            _levelManager.DestroyBehaviour(_shellBehavior); 
         }
     }
 }

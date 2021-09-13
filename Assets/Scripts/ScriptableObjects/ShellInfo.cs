@@ -30,7 +30,12 @@ namespace Asteroids.ScriptableObjects
         [SerializeField] private bool _destroyable;
         public bool Destroyable => _destroyable;
 
-        [SerializeField] private BaseShellBehavior _shellBehavior;
-        public BaseShellBehavior ShellBehavior => _shellBehavior;
+        [SerializeField] private BaseBehavior _shellBehavior;
+        
+        public BaseBehavior CreateShellBehavior()
+        {
+            return Instantiate(_shellBehavior);
+        }
+
     }
 }

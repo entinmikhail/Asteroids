@@ -20,7 +20,7 @@ namespace Asteroids.Controller
         
         protected override void OnStart()
         {
-            _enemyBehaviour.Init(_view, _playerView, _enemyInfo.MovementSpeed, _miniAsteroid.InitialPosition);
+            _behaviour.Init(_view, _playerView, _enemyInfo.MovementSpeed, _miniAsteroid.InitialPosition);
         }
         
         protected override void OnDispose()

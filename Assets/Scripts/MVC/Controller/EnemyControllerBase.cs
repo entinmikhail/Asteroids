@@ -6,8 +6,10 @@ namespace Asteroids.Controller
 {
     public abstract class EnemyControllerBase : IEnemyController, IUpdatable
     {
+        public BaseBehavior CurrentBehavior => _behaviour;
+        
         protected ILevelObjectView _view;
-        protected BaseEnemyBehavior _enemyBehaviour;
+        protected BaseBehavior _behaviour;
 
         protected readonly IEnemyInfo _enemyInfo;
         protected readonly ILevelManager _levelManager;
@@ -30,12 +32,12 @@ namespace Asteroids.Controller
         {
             if (_inited) return;
             _inited = true;
-            var position = GetStartPosition();
+            var position = GetStartPosition(); //todo: перенести инит позиции в бехевер 
             
             _view = _levelManager.CreateObjectView<ILevelObjectView>(_enemy, position);
-            _enemyBehaviour = _enemyInfo.EnemyBehavior;
+            _behaviour = _enemyInfo.CreateEnemyBehavior();
             _healthModel = _enemy.GetResource(ProjConstants.HealthId);
-            _playerView = _levelManager.GetView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
+            _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
             
             _enemy.ChangeTransform(_view.Transform);
             
@@ -53,13 +55,13 @@ namespace Asteroids.Controller
         {
             if(!_inited) return;
             
-            _enemyBehaviour.OnUpdate(_view, _playerView, _enemyInfo.MovementSpeed);
+            _behaviour.OnUpdate(_view, _playerView, _enemyInfo.MovementSpeed);
             _enemy.ChangeTransform(_view.Transform);
         }
         
         private void OnCollision(ILevelObjectView selfObject, ILevelObjectView contactObject)
         {
-            if (contactObject.Transform.gameObject.CompareTag("Shell")) // 
+            if (contactObject.Tag == ProjConstants.Shell) 
             {
                 var shellInfo = _levelManager.GetCurrentLevel().GetInfo().GetWeaponInfo(contactObject.LevelObjectType);
                 
@@ -81,7 +83,8 @@ namespace Asteroids.Controller
             _view.OnLevelObjectContact -= OnCollision;
             _enemy.HealthEnded += OnEnemyDied;
 
-            _levelManager.DestroyView(_enemy, _view);
+            _levelManager.DestroyView(_enemy);
+            _levelManager.DestroyBehaviour(_behaviour);
         }
     }
 }

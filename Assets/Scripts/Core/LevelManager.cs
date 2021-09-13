@@ -30,15 +30,42 @@ namespace Asteroids.Core
             
             return result;
         }
-        
-        public TView GetView<TView>(IModel<IModelInfo> model) where  TView : ILevelObjectView => (TView) _modelViews[model];
 
-        
-        public void DestroyView(IModel<IModelInfo> model, ILevelObjectView view)
+        public TView GetOrCreateView<TView>(IModel<IModelInfo> model) where TView : ILevelObjectView
         {
+            if (!_modelViews.TryGetValue(model, out var view))
+            {
+                Debug.LogAssertion($"Model {model.GetInfo().ViewId} doesnt have view");
+                return CreateObjectView<TView>(model, Vector3.zero); // todo remove position declaration
+            }
+
+            if (view is TView tView) return tView;
+     
             _modelViews.Remove(model);
+                
+            return CreateObjectView<TView>(model, Vector3.zero);
+        }
+
+
+        public void DestroyView(IModel<IModelInfo> model)
+        {
+            if (!_modelViews.TryGetValue(model, out var view))
+            {
+                Debug.LogAssertion($"Model {model.GetInfo().ViewId} doesnt have view");
+                return;
+            }
+
+            if (view is ILevelObjectViewUnity viewUnity)
+            {
+                Object.Destroy(viewUnity.UnityTransfom.gameObject);
+            }
             
-            Object.Destroy(view.Transform.gameObject);
+            _modelViews.Remove(model);
+        }
+
+        public void DestroyBehaviour(BaseBehavior behavior)
+        {
+            Object.Destroy(behavior);
         }
     }
 }

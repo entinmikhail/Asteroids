@@ -7,7 +7,7 @@ namespace Asteroids.Controller
 {
     public class UfoEnemyController : EnemyControllerBase
     {
-        private UfoEnemyBehavior _ufoBehavior;
+        private UfoBehavior _ufoBehavior;
         public UfoEnemyController(IEnemy enemy, ILevelManager levelManager) : base(enemy, levelManager)
         {
         }
@@ -23,7 +23,7 @@ namespace Asteroids.Controller
 
         protected override void OnStart()
         {
-            _ufoBehavior = (UfoEnemyBehavior) _enemyBehaviour;
+            _ufoBehavior = (UfoBehavior) _behaviour;
             _levelManager.GetCurrentLevel().CurrentPlayer.HealthEnded += OnPlayerDead;
             _ufoBehavior.Init(_view, _playerView);
         }

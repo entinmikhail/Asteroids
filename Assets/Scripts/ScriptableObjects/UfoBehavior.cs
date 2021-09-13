@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/UFOEnemyMoveBehavior", fileName = "UFOEnemyMoveBehavior")]
-    public class UfoEnemyBehavior : BaseEnemyBehavior, ISerializationCallbackReceiver
+    public class UfoBehavior : BaseBehavior
     {
         private bool _stopped = false;
         public void Stop()
@@ -15,12 +15,10 @@ namespace Asteroids.ScriptableObjects
         public override void OnUpdate (ILevelObjectView view, IPlayerView playerView, float speed)
         {
             if(_stopped) return;
-            
-            view.Transform.position = Vector2.MoveTowards(view.Transform.position,
-                playerView.Transform.position, speed * Time.deltaTime); 
+            if (view is ILevelObjectViewUnity viewUnity &&  playerView is IPlayerViewUnity playerViewUnity)
+                DoSomeThing(viewUnity, playerViewUnity, speed);
         }
-
-        public override void Init(ILevelObjectView view, IPlayerView playerView, params object[] additionalParams)
+        protected override void OnInit(params object[] additionalParams)
         {
             _stopped = false;
         }
@@ -29,15 +27,12 @@ namespace Asteroids.ScriptableObjects
         {
             levelModel.SpawnTypedEnemy(levelModel.GetInfo().GetEnemyInfo("UFO"));
         }
+        
 
-        public void OnBeforeSerialize()
+        private void DoSomeThing(ILevelObjectViewUnity unityView, IPlayerViewUnity playerUnityView, float speed)
         {
-            _stopped = false;
-        }
-
-        public void OnAfterDeserialize()
-        {
-            _stopped = false;
+            unityView.UnityTransfom.position = Vector2.MoveTowards(unityView.UnityTransfom.position,
+                playerUnityView.UnityTransfom.position, speed * Time.deltaTime);
         }
     }
 }

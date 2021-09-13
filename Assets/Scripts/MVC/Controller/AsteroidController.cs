@@ -4,9 +4,9 @@ using Utils;
 
 namespace Asteroids.Controller
 {
-    public class EnemyController : EnemyControllerBase
+    public class AsteroidController : EnemyControllerBase
     {
-        public EnemyController(IEnemy enemy, ILevelManager levelManager) : base(enemy, levelManager)
+        public AsteroidController(IEnemy enemy, ILevelManager levelManager) : base(enemy, levelManager)
         {
         }
 
@@ -21,7 +21,7 @@ namespace Asteroids.Controller
 
         protected override void OnStart()
         {
-            _enemyBehaviour.Init(_view, _playerView, _enemyInfo.MovementSpeed);
+            _behaviour.Init(_view, _playerView, _enemyInfo.MovementSpeed);
         }
         
         protected override void OnDispose()

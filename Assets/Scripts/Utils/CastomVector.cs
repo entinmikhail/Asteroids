@@ -27,6 +27,7 @@ namespace Utils
         public readonly float X;
         public readonly float Y;
         public readonly float Z;
+        public static CustomVector3 zero = new CustomVector3(0,0,0);
 
         public CustomVector3(float x, float y, float z)
         {
@@ -46,6 +47,7 @@ namespace Utils
         
         public readonly CustomVector3 Rotation;
         public readonly CustomVector3 Position;
+
 
         private CustomTransform(Transform transform)
         {               
