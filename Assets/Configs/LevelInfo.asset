@@ -42,8 +42,8 @@ MonoBehaviour:
   - Id: UFO
     Info: {fileID: 11400000, guid: 32474b396c63ff44f916a1cae5a85548, type: 2}
   _shellInfos:
-  - Id: Laser
-    Info: {fileID: 11400000, guid: 23c5cdf20fa03fa40ac38e34f22fd14d, type: 2}
   - Id: Bullet
     Info: {fileID: 11400000, guid: df825c00f2ecffc45ab3ac91eaa59c57, type: 2}
+  - Id: Laser
+    Info: {fileID: 11400000, guid: 23c5cdf20fa03fa40ac38e34f22fd14d, type: 2}
   _playerInfo: {fileID: 11400000, guid: 8fac9b61ff0270941a153476f893363d, type: 2}

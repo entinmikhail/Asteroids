@@ -6,6 +6,7 @@ namespace Asteroids.ScriptableObjects
     [CreateAssetMenu(menuName = "Gameplay/EnemyInfo", fileName = "EnemyInfo")]
     public class EnemyInfo : ScriptableObject, IEnemyInfo
     {
+        
         public float MovementSpeed => _movementSpeed;
         [SerializeField] private float _movementSpeed;
 

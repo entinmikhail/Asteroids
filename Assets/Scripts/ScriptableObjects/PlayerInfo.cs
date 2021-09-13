@@ -7,6 +7,8 @@ namespace Asteroids.ScriptableObjects
     [CreateAssetMenu(menuName = "Gameplay/ShipInfo", fileName = "ShipInfo")]
     public class PlayerInfo : ScriptableObject, IPlayerInfo
     {
+        public string ViewId => _viewId;
+        [SerializeField] private string _viewId;
         public float MovementSpeed => _movementSpeed;
         [SerializeField] private float _movementSpeed;
         

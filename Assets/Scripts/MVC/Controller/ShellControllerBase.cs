@@ -30,7 +30,7 @@ namespace Asteroids.Controller
 
             _shellBehavior = _shellInfo.ShellBehavior;
             _playerView = _levelManager.GetView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
-            _view = _levelManager.CreateObjectView<ILevelObjectView>(_shellInfo.ViewId, _shell, _playerView.SpawnPoint.position);
+            _view = _levelManager.CreateObjectView<ILevelObjectView>(_shell, _playerView.SpawnPoint.position);
             
             _view.OnLevelObjectContact += OnCollision;
             _shell.ShellDestroyed += OnShellDestroyed;

@@ -35,7 +35,7 @@ namespace Asteroids.Controller
         
             _playerModel.GetResource(ProjConstants.HealthId).SetResourceValue(_playerInfo.Health);
 
-            _playerView = _levelManager.CreateObjectView<IPlayerView>(ProjConstants.Player, _playerModel, Vector3.zero); 
+            _playerView = _levelManager.CreateObjectView<IPlayerView>( _playerModel, Vector3.zero); 
             _playerView.Transform.position = levelInfo.DefaultPlayerPosition;
             _playerView.Transform.rotation = levelInfo.DefaultPlayerRotation;
         

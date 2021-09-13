@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 675a9e0322fb21440a985ca19b99964d, type: 3}
   m_Name: LaserWeaponInfo
   m_EditorClassIdentifier: 
-  _attackSpeed: 60
-  _cooldown: 10
+  _cooldown: 2
   "_max\u0421harges": 3
   _damageValue: 1

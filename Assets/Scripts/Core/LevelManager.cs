@@ -16,11 +16,11 @@ namespace Asteroids.Core
 
         public ILevelModel GetCurrentLevel() => _currentLevel;
 
-        public T CreateObjectView<T>(string id, IModel<IModelInfo> model, Vector3 position) where T : ILevelObjectView
+        public T CreateObjectView<T>(IModel<IModelInfo> model, Vector3 position) where T : ILevelObjectView
         {
             var levelInfo = _currentLevel.GetInfo();
 
-            var go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(id), position, Quaternion.identity);
+            var go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), position, Quaternion.identity);
             if (!go.TryGetComponent(out T result))
             {
                 Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");

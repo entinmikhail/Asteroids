@@ -32,7 +32,7 @@ namespace Asteroids.Controller
             _inited = true;
             var position = GetStartPosition();
             
-            _view = _levelManager.CreateObjectView<ILevelObjectView>(_enemyInfo.ViewId, _enemy, position);
+            _view = _levelManager.CreateObjectView<ILevelObjectView>(_enemy, position);
             _enemyBehaviour = _enemyInfo.EnemyBehavior;
             _healthModel = _enemy.GetResource(ProjConstants.HealthId);
             _playerView = _levelManager.GetView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
@@ -81,7 +81,7 @@ namespace Asteroids.Controller
             _view.OnLevelObjectContact -= OnCollision;
             _enemy.HealthEnded += OnEnemyDied;
 
-            _levelManager.DestroyView(_enemy, _view); // 
+            _levelManager.DestroyView(_enemy, _view);
         }
     }
 }
