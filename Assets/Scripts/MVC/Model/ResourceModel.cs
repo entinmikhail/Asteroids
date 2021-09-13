@@ -37,8 +37,7 @@ namespace Asteroids.Model
 
             _currentResourceValue = Math.Min(_currentResourceValue + changeValue, _maxResourceValue);
             
-            if (_currentResourceValue <= 0)
-                ResourceEnded?.Invoke();
+            if (_currentResourceValue <= 0) ResourceEnded?.Invoke();  
             
             ResourceValueChanged?.Invoke(_currentResourceValue, prevValue);
         }

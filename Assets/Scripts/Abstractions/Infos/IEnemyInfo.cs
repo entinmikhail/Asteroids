@@ -1,6 +1,6 @@
 namespace Asteroids.Abstraction
 {
-    public interface IEnemyInfo : IModelInfo
+    public interface IEnemyInfo : IModelInfo 
     {
         public string ViewId { get; }
         int PointsForKill { get; }

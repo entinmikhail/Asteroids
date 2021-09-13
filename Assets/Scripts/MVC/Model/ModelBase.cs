@@ -1,14 +1,17 @@
 using System;
 using Asteroids.Abstraction;
+using UnityEngine;
 
 namespace Asteroids.Model
 {
-    public abstract class ModelBase<TInfo> : TransformModelBase, IModel where TInfo : IModelInfo
+    public abstract class ModelBase<TInfo> : TransformModelBase, IModel<TInfo> where TInfo : IModelInfo
     {
         protected readonly TInfo _info;
         private readonly IResourceModel _healthModel;
+
+        public abstract TInfo GetInfo();
         
-        public event Action<IModel> HealthEnded;
+        public event Action<IModel<TInfo>> HealthEnded;
 
         protected ModelBase(TInfo info)
         {

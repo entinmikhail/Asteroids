@@ -1,3 +1,4 @@
+
 using Asteroids.Abstraction;
 
 namespace Asteroids.Model
@@ -8,9 +9,10 @@ namespace Asteroids.Model
         {
         }
 
-        public IEnemyInfo GetInfo()
+        public override IEnemyInfo GetInfo()
         {
             return _info;
         }
+        
     }
 }

@@ -28,7 +28,7 @@ namespace Asteroids.Controller
             _ufoBehavior.Init(_view, _playerView);
         }
 
-        private void OnPlayerDead(IModel player)
+        private void OnPlayerDead(IModel<IPlayerInfo> player)
         {
             _ufoBehavior.Stop();
         }

@@ -45,7 +45,6 @@ public class Main : MonoBehaviour
         
         _inputHandler = new InputHandler();
         _inputHandler.Awake();
-
         _player = new Player(_levelInfo.GetPlayerInfo());
 
         _levelModel = new LevelModel(_levelInfo, _player);
@@ -61,7 +60,7 @@ public class Main : MonoBehaviour
         _player.HealthEnded += OnPlayerDead;
     }
 
-    private void OnPlayerDead(IModel player)
+    private void OnPlayerDead(IModel<IPlayerInfo> player)
     { 
         _gameModel.EndGame();
     }

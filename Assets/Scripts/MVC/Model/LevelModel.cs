@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Asteroids.Abstraction;
+using UnityEngine;
 
 namespace Asteroids.Model
 {
@@ -81,9 +82,9 @@ namespace Asteroids.Model
             EnemyAdded?.Invoke(enemy);
         }
 
-        private void OnEnemyDied(IModel enemy)
+        private void OnEnemyDied(IModel<IEnemyInfo> enemy)
         {
-            RemoveEnemy((IEnemy)enemy);
+            RemoveEnemy((IEnemy) enemy);
         }
 
         private void RemoveEnemy(IEnemy enemy)

@@ -67,7 +67,7 @@ namespace Asteroids.Controller
             }
         }
 
-        private void OnEnemyDied(IModel obj)
+        private void OnEnemyDied(IModel<IEnemyInfo> obj)
         {
             Dispose();
         }

@@ -2,12 +2,11 @@
 
 namespace Asteroids.Abstraction
 {
-    public interface IShell : IModel
+    public interface IShell : IModel<IShellInfo>
     {
         event Action<IShell> ShellDestroyed;
-        IShellInfo GetInfo();
         ILifeTimeModel GetLifeTimeModel();
-        void DestroyShell();
+        void DestroyShell(); 
     }
 
     public interface ILifeTimeModel

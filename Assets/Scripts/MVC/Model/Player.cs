@@ -8,7 +8,7 @@ namespace Asteroids.Model
         {
         }
 
-        public IPlayerInfo GetInfo()
+        public override IPlayerInfo GetInfo()
         {
             return _info;
         }

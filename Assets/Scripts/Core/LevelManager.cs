@@ -7,7 +7,7 @@ namespace Asteroids.Core
     public class LevelManager : ILevelManager
     {
         private ILevelModel _currentLevel;
-        private readonly IDictionary<IModel, ILevelObjectView> _modelViews = new Dictionary<IModel, ILevelObjectView>();
+        private readonly IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViews = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
         
         public void SetLevel(ILevelModel levelModel)
         {
@@ -16,7 +16,7 @@ namespace Asteroids.Core
 
         public ILevelModel GetCurrentLevel() => _currentLevel;
 
-        public T CreateObjectView<T>(string id, IModel model, Vector3 position) where T : ILevelObjectView
+        public T CreateObjectView<T>(string id, IModel<IModelInfo> model, Vector3 position) where T : ILevelObjectView
         {
             var levelInfo = _currentLevel.GetInfo();
 
@@ -31,10 +31,10 @@ namespace Asteroids.Core
             return result;
         }
         
-        public TView GetView<TView>(IModel model) where  TView : ILevelObjectView => (TView) _modelViews[model];
+        public TView GetView<TView>(IModel<IModelInfo> model) where  TView : ILevelObjectView => (TView) _modelViews[model];
 
         
-        public void DestroyView(IModel model, ILevelObjectView view)
+        public void DestroyView(IModel<IModelInfo> model, ILevelObjectView view)
         {
             _modelViews.Remove(model);
             

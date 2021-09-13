@@ -63,7 +63,7 @@ namespace Asteroids.Controller
             }
         }
 
-        private void OnPlayerResourceEnded(IModel model)
+        private void OnPlayerResourceEnded(IModel<IPlayerInfo> model)
         {
             Dispose();
         }

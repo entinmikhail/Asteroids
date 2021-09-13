@@ -1,8 +1,8 @@
 
 namespace Asteroids.Abstraction
 {
-    public interface IPlayer : IModel
+    public interface IPlayer : IModel<IPlayerInfo>
     {
-        IPlayerInfo GetInfo();
+
     }
 }

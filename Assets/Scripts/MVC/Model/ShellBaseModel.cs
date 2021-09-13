@@ -11,7 +11,7 @@ namespace Asteroids.Model
         
         public event Action<IShell> ShellDestroyed;
 
-        public IShellInfo GetInfo() => _shellInfo;
+        public override IShellInfo GetInfo() => _shellInfo;
         public ILifeTimeModel GetLifeTimeModel() => LifeTimeModel;
 
         protected ShellBaseModel(IShellInfo shellInfo): base(shellInfo)
