@@ -32,14 +32,15 @@ namespace Asteroids.ScriptableObjects
         [SerializeField] private PlayerMoveBehavior _playerMoveBehavior;
         [SerializeField] private PlayerMoveBehavior3D _playerMoveBehavior3D;
         
-        public  IPlayerMoveBehavior CreatePlayerMoveBehavior(bool isCurView3d)
+        public  IPlayerMoveBehavior CreatePlayerMoveBehavior(ViewMode viewMode)
         {
-            if (isCurView3d)
+            switch (viewMode)
             {
-                return Instantiate(_playerMoveBehavior3D);
+              case  ViewMode.Poligone:
+                  return Instantiate(_playerMoveBehavior3D);
+              default:
+                  return Instantiate(_playerMoveBehavior);
             }
-
-            return Instantiate(_playerMoveBehavior);
         }
     }
 }

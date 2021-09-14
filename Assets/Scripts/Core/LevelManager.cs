@@ -8,7 +8,8 @@ namespace Asteroids.Core
     {
         private ILevelModel _currentLevel;
         private readonly IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViews = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
-        
+        private readonly IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViewsTmp = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
+
         public void SetLevel(ILevelModel levelModel)
         {
             _currentLevel = levelModel;
@@ -22,7 +23,7 @@ namespace Asteroids.Core
             
             GameObject go;
             
-            if (model.IsCurView3d)
+            if (_currentLevel.GameModel.CurViewMode == ViewMode.Poligone)
             {
                  go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D), position,
                     Quaternion.identity);
@@ -42,42 +43,59 @@ namespace Asteroids.Core
             
             return result;
         }
-        
+
+        public void ChangeAllView()
+        {
+            foreach (var modelView in _modelViews)
+            {
+                _modelViewsTmp.Add(modelView);
+            }
+
+            foreach (var modelView in _modelViewsTmp)
+            {
+                ChangeView<ILevelObjectView>(modelView.Key);
+            }
+        }
         public T ChangeView<T>(IModel<IModelInfo> model) where T : ILevelObjectView
         {
+            
             var levelInfo = _currentLevel.GetInfo();
-            
-            
             var transform = model.GetTransform();
             
             DestroyView(model);
-            
             GameObject go;
             
-            if (model.IsCurView3d)
+            if (_currentLevel.GameModel.CurViewMode == ViewMode.Poligone)
             {
                  go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D), transform.position, 
                     Quaternion.Euler(transform.rotation));
                  go.GetComponent<Rigidbody>().velocity = transform.velocity;
+                 
+                 if (!go.TryGetComponent(out T result))
+                 {
+                     Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");
+                 }
+            
+                 _modelViews.Add(model, result);
+                 
+                 return result;
             }
+            
             else
             {
                  go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), transform.position , 
                     Quaternion.Euler(transform.rotation));
                  go.GetComponent<Rigidbody2D>().velocity = transform.velocity;
+                 
+                 if (!go.TryGetComponent(out T result))
+                 {
+                     Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");
+                 }
+            
+                 _modelViews.Add(model, result);
+                 
+                 return result;
             }
-            
-            
-            model.ChangeView(!model.IsCurView3d);
-            
-            if (!go.TryGetComponent(out T result))
-            {
-                Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");
-            }
-            
-            _modelViews.Add(model, result);
-            
-            return result;
         }
         
         

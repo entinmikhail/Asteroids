@@ -9,6 +9,5 @@ namespace Asteroids.View
         public CustomTransform CustomSpawnPoint => _spawnPoint;
         public Transform SpawnPoint => _spawnPoint;
         [SerializeField] private Transform _spawnPoint;
-
     }
 }

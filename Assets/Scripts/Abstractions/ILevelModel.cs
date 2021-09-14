@@ -7,7 +7,7 @@ namespace Asteroids.Abstraction
     {
         IList<IEnemy> CurrentEnemies { get; }
         IPlayer CurrentPlayer { get; }
-        
+        IGameModel GameModel { get; }
         event Action<IEnemy> EnemyAdded; 
         event Action<IEnemy> EnemyRemoved;
         event Action<IShell> ShellAdded; 

@@ -11,5 +11,7 @@ namespace Asteroids.Abstraction
         T ChangeView<T>(IModel<IModelInfo> model) where T : ILevelObjectView;
         void DestroyView(IModel<IModelInfo> model);
         void DestroyBehaviour(BaseBehavior behavior);
+
+        void ChangeAllView();
     }
 }

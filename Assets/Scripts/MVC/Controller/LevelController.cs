@@ -37,8 +37,8 @@ namespace Asteroids.Controller
                 AddEnemyController(enemy);
             }
             
-            _levelModel.EnemyAdded += OnEnemyAddedToLevel;
-            _levelModel.EnemyRemoved += OnEnemyRemovedFromLevel;
+            /*_levelModel.EnemyAdded += OnEnemyAddedToLevel;
+            _levelModel.EnemyRemoved += OnEnemyRemovedFromLevel;*/
             _levelModel.ShellAdded += OnShellAddedToLevel;
             _levelModel.ShellRemoved += OnShellRemovedFromLevel;
         }

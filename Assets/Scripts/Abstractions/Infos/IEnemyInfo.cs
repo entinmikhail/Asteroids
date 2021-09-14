@@ -4,6 +4,6 @@ namespace Asteroids.Abstraction
     {
         int PointsForKill { get; }
         public string Type { get; }
-        public BaseBehavior CreateEnemyBehavior();
+        public BaseBehavior CreateEnemyBehavior(ViewMode viewMode);
     }
 }

@@ -31,11 +31,19 @@ namespace Asteroids.ScriptableObjects
         public int PointsForKill => _pointsForKill;
         [SerializeField] private int _pointsForKill;
         
-        [SerializeField] private BaseBehavior behavior;
+        [SerializeField] private BaseBehavior _enemyBehavior;
         
-        public BaseBehavior CreateEnemyBehavior()
+        [SerializeField] private BaseBehavior _enemyBehavior3D;
+        
+        public  BaseBehavior CreateEnemyBehavior(ViewMode viewMode)
         {
-            return Instantiate(behavior);
+            switch (viewMode)
+            {
+                case  ViewMode.Poligone:
+                    return Instantiate(_enemyBehavior3D);
+                default:
+                    return Instantiate(_enemyBehavior);
+            }
         }
     }   
 }

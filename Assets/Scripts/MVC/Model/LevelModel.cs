@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Asteroids.Abstraction;
-using UnityEngine;
 
 namespace Asteroids.Model
 {
     public sealed class LevelModel : ILevelModel
     {
+        
         public event Action<IEnemy> EnemyAdded;
         public event Action<IEnemy> EnemyRemoved;
         public event Action<IShell> ShellAdded;
@@ -14,7 +14,7 @@ namespace Asteroids.Model
 
         public IList<IEnemy> CurrentEnemies => _enemies;
         public IPlayer CurrentPlayer { get; }
-
+        public IGameModel GameModel { get; }
         public IList<IShell> CurrentShells => _shells;
         
         private readonly ILevelInfo _levelInfo;
@@ -25,6 +25,7 @@ namespace Asteroids.Model
         {
             _levelInfo = levelInfo;
             CurrentPlayer = player;
+            GameModel = new GameModel();
         }
         
         public ILevelInfo GetInfo() => _levelInfo;

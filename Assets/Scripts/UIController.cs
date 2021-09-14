@@ -1,4 +1,5 @@
-﻿using Asteroids.Model;
+﻿using Asteroids.Abstraction;
+using Asteroids.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,11 +11,11 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _guiScore;
     
     private PointModel _pointModel;
-    private GameModel _gameModel;
+    private IGameModel _gameModel;
     
     private Text _scoreTextCounter;
 
-    public void Init(PointModel pointModel, GameModel gameModel )
+    public void Init(PointModel pointModel, IGameModel gameModel )
     {
         _pointModel = pointModel;
         _gameModel = gameModel;

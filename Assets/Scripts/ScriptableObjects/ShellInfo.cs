@@ -35,10 +35,17 @@ namespace Asteroids.ScriptableObjects
 
         [SerializeField] private BaseBehavior _shellBehavior;
         
-        public BaseBehavior CreateShellBehavior()
+        [SerializeField] private BaseBehavior _shellBehavior3D;
+        
+        public  BaseBehavior CreateShellBehavior(ViewMode viewMode)
         {
-            return Instantiate(_shellBehavior);
+            switch (viewMode)
+            {
+                case  ViewMode.Poligone:
+                    return Instantiate(_shellBehavior3D);
+                default:
+                    return Instantiate(_shellBehavior);
+            }
         }
-
     }
 }

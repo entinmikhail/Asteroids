@@ -1,8 +1,5 @@
 using Asteroids.Abstraction;
 using Asteroids.Model;
-using Asteroids.View;
-using ModestTree;
-using UnityEngine;
 using Utils;
 
 
@@ -13,13 +10,12 @@ namespace Asteroids.Controller
         private readonly IPlayer _playerModel;
         private readonly IInputHandler _inputHandler;
         private readonly ILevelManager _levelManager;
-        
-        private IPlayerView _playerView;
-    
-        private IPlayerMoveBehavior _playerMoveBehavior;
         private readonly BulletWeaponController _bulletWeaponController;
         private readonly LaserWeaponController _laserWeaponController;
-        
+
+        private IGameModel _gameModel;
+        private IPlayerView _playerView;
+        private IPlayerMoveBehavior _playerMoveBehavior;
         private IWeapon _bulletWeapon;
         private IWeapon _laserWeapon;
         private IPlayerInfo _playerInfo;
@@ -31,6 +27,7 @@ namespace Asteroids.Controller
             _levelManager = levelManager;
             
             var levelInfo = _levelManager.GetCurrentLevel().GetInfo();
+            _gameModel = _levelManager.GetCurrentLevel().GameModel;
             
             _bulletWeapon = new WeaponModel(levelInfo.GetWeaponInfo(LevelObjectType.Bullet));
             _laserWeapon = new WeaponModel(levelInfo.GetWeaponInfo(LevelObjectType.Laser));
@@ -48,7 +45,7 @@ namespace Asteroids.Controller
 
             _playerView = _levelManager.CreateObjectView<IPlayerView>( _playerModel, CustomVector3.zero);
 
-            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior(_playerModel.IsCurView3d);
+            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior(_gameModel.CurViewMode);
             
             _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, levelInfo);
 
@@ -57,24 +54,21 @@ namespace Asteroids.Controller
             Attach();
         }
 
-        public void OnChange(IPlayerView playerView)
+        private void OnViewChange(ViewMode viewMode)
         {
+            _playerView = _levelManager.ChangeView<IPlayerView>(_playerModel);
             
             var levelInfo = _levelManager.GetCurrentLevel().GetInfo();
-            
-            _playerView = playerView;
 
-            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior(!_playerModel.IsCurView3d);
+            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior(viewMode); 
             
-            _playerMoveBehavior.Init(playerView, playerView, _playerInfo, levelInfo);
+            _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, levelInfo);
         }
         
         public void Update(double deltaTime)
         { 
             _bulletWeaponController.Update(deltaTime);
             _laserWeaponController.Update(deltaTime);
-            
-            
         }
     
         private void OnPlayerContact(ILevelObjectView self, ILevelObjectView contact)
@@ -122,6 +116,7 @@ namespace Asteroids.Controller
         
             _playerModel.HealthEnded += OnPlayerResourceEnded;
             _playerView.OnLevelObjectContact += OnPlayerContact;
+            _gameModel.ViewModeChanged += OnViewChange;
         }
         private void Detach()
         {
@@ -132,6 +127,7 @@ namespace Asteroids.Controller
         
             _playerModel.HealthEnded  -= OnPlayerResourceEnded;
             _playerView.OnLevelObjectContact -= OnPlayerContact;
+            _gameModel.ViewModeChanged -= OnViewChange;
         }
     
         protected override void OnDispose()

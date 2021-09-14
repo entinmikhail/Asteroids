@@ -35,7 +35,7 @@ MonoBehaviour:
   - Id: Player
     Info: {fileID: 7009120208877503348, guid: 057516dfe8f2d824f91c718a99372b8a, type: 3}
   - Id: Player3D
-    Info: {fileID: 2078216924747961174, guid: c48077e03a765314aa90ae7983ca9aa0, type: 3}
+    Info: {fileID: 4711403644279690211, guid: d208076dcb43061418c1d8b58a93587d, type: 3}
   _enemyInfos:
   - Id: Asteroid
     Info: {fileID: 11400000, guid: cda8032c014b2a248ad869738abb6725, type: 2}

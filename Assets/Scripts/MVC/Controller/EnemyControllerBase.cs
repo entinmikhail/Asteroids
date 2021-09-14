@@ -14,6 +14,7 @@ namespace Asteroids.Controller
         protected readonly IEnemyInfo _enemyInfo;
         protected readonly ILevelManager _levelManager;
 
+        protected IGameModel _gameModel;
         protected IPlayerView _playerView;
         
         private IResourceModel _healthModel;
@@ -26,6 +27,7 @@ namespace Asteroids.Controller
             _enemy = enemy;
             _enemyInfo = enemy.GetInfo();
             _levelManager = levelManager;
+            _gameModel = _levelManager.GetCurrentLevel().GameModel;
         }
         
         public void Start()
@@ -35,7 +37,7 @@ namespace Asteroids.Controller
             var position = GetStartPosition(); //todo: перенести инит позиции в бехевер 
             
             _view = _levelManager.CreateObjectView<ILevelObjectView>(_enemy, position);
-            _behaviour = _enemyInfo.CreateEnemyBehavior();
+            _behaviour = _enemyInfo.CreateEnemyBehavior(_gameModel.CurViewMode);
             _healthModel = _enemy.GetResource(ProjConstants.HealthId);
             _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
             

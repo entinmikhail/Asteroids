@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: LaserInfo
   m_EditorClassIdentifier: 
   _movementSpeed: 0
+  _viewId3D: Laser3D
+  _rotationSpeed: 0
+  _maxHealth: 0
+  _health: 0
   _shellLifeTime: 0.1
   _type: laser
   _viewId: Laser

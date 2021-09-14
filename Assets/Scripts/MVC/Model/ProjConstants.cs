@@ -8,5 +8,6 @@ namespace Asteroids.Model
         public const string Bullet = "Bullet";
         public const string Laser = "Laser";
         public const string Shell = "Shell";
+        public const int CountOfViews = 2;
     }
 }
