@@ -7,7 +7,11 @@ namespace Asteroids.ScriptableObjects
     [CreateAssetMenu(menuName = "Gameplay/ShipInfo", fileName = "ShipInfo")]
     public class PlayerInfo : ScriptableObject, IPlayerInfo
     {
+        public string ViewId3D => _viewId3D;
+
+        [SerializeField] private string _viewId3D;
         public string ViewId => _viewId;
+
         [SerializeField] private string _viewId;
         public float MovementSpeed => _movementSpeed;
         [SerializeField] private float _movementSpeed;
@@ -26,9 +30,15 @@ namespace Asteroids.ScriptableObjects
         [SerializeField] private int _health;
         
         [SerializeField] private PlayerMoveBehavior _playerMoveBehavior;
+        [SerializeField] private PlayerMoveBehavior3D _playerMoveBehavior3D;
         
-        public IPlayerMoveBehavior CreatePlayerMoveBehavior()
+        public  IPlayerMoveBehavior CreatePlayerMoveBehavior(bool isCurView3d)
         {
+            if (isCurView3d)
+            {
+                return Instantiate(_playerMoveBehavior3D);
+            }
+
             return Instantiate(_playerMoveBehavior);
         }
     }

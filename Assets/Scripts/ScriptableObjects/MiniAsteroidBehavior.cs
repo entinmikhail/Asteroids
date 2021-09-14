@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/MiniAsteroidEnemyMoveBehavior", fileName = "MiniAsteroidEnemyMoveBehavior")]
-    public class MiniAsteroidBehavior : BaseBehavior
+    public class MiniAsteroidBehavior : BaseBehaviorUnity
     {
         public override void OnUpdate (ILevelObjectView view, IPlayerView playerView, float speed)
         {

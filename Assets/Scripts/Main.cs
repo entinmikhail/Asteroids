@@ -4,24 +4,25 @@ using Asteroids.Core;
 using Asteroids.Model;
 using Asteroids.ScriptableObjects;
 using UnityEngine;
-using Zenject;
 
 public class Main : MonoBehaviour
 {
     [SerializeField] private LevelInfo _levelInfo;
+    [SerializeField] private UIController _uiController;
     
-    [Inject] private GameModel _gameModel;
-    [Inject] private PointModel _pointModel;
+    private GameModel _gameModel;
+    private PointModel _pointModel;
 
     private GameObject _playerGameObject;
     private PlayerController _playerController;
     private InputHandler _inputHandler;
     private GameObject[] _bulletsList;
     
-    private ILevelManager _levelManger;
+    private ILevelManager _levelManager;
     private LevelController _levelController;
     private ILevelModel _levelModel;
     private IPlayer _player;
+
 
     public void Restart()
     {
@@ -36,26 +37,43 @@ public class Main : MonoBehaviour
         _gameModel.RestartGame();
     }
 
+    public void ChancheView()
+    {
+        
+        _playerController.OnChange(_levelManager.ChangeView<IPlayerView>(_levelModel.CurrentPlayer));
+        /*_playerController.Dispose();
+        _playerController.Start();*/
+        
+        
+        /*_levelController.Dispose();
+        _levelController.Start();*/
+    }
+
     private void Awake()
     {
         ModelFactory.RegisterEnemies();
         ControllerFactory.RegisterControllers();
         ShellControllerFactory.RegisterControllers();
         ShellModelFactory.RegisterEnemies();
+
+        _gameModel = new GameModel();
+        _pointModel = new PointModel(0);
+        
+        _uiController.Init(_pointModel, _gameModel);
         
         _inputHandler = new InputHandler();
         _inputHandler.Awake();
         _player = new Player(_levelInfo.GetPlayerInfo());
 
         _levelModel = new LevelModel(_levelInfo, _player);
-        _levelManger = new LevelManager();
-        _levelManger.SetLevel(_levelModel);
+        _levelManager = new LevelManager();
+        _levelManager.SetLevel(_levelModel);
         
-        _levelController = new LevelController(_pointModel, _levelManger);
-        _playerController = new PlayerController(_levelModel.CurrentPlayer, _inputHandler, _levelManger);
+        _levelController = new LevelController(_pointModel, _levelManager);
+        _playerController = new PlayerController(_levelModel.CurrentPlayer, _inputHandler, _levelManager);
         
         _playerController.Start();
-        _levelController.Start();
+        /*_levelController.Start();*/
         
         _player.HealthEnded += OnPlayerDead;
     }

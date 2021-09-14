@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57543ad18d1688940b08eed57f942844, type: 3}
   m_Name: ShipInfo
   m_EditorClassIdentifier: 
+  _viewId3D: Player3D
   _viewId: Player
   _movementSpeed: 50
   _maxMovementSpeed: 5

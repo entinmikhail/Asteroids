@@ -7,6 +7,6 @@ namespace Abstractions
     {
         public event Action<CustomTransform, CustomTransform> TransformChanged;
         public CustomTransform GetTransform();
-        public void ChangeTransform(CustomTransform newTransform);
+        public void SetTransform(CustomTransform newTransform);
     }
 }

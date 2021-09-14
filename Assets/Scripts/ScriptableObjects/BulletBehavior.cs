@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/BulletBehavior", fileName = "BulletBehavior")]
-    public class BulletBehavior : BaseBehavior
+    public class BulletBehavior : BaseBehaviorUnity
     
     {
         public override void OnUpdate (ILevelObjectView view, IPlayerView playerView, float speed)

@@ -6,13 +6,16 @@ namespace Asteroids.Model
 {
     public abstract class ModelBase<TInfo> : TransformModelBase, IModel<TInfo> where TInfo : IModelInfo
     {
+        
+        
         protected readonly TInfo _info;
         private readonly IResourceModel _healthModel;
 
-        public abstract TInfo GetInfo();
-        
-        public event Action<IModel<TInfo>> HealthEnded;
+        public bool IsCurView3d { get; set; } = false;
 
+        public abstract TInfo GetInfo();
+        public event Action<IModel<TInfo>> HealthEnded;
+        
         protected ModelBase(TInfo info)
         {
             _info = info;
@@ -21,6 +24,10 @@ namespace Asteroids.Model
             _healthModel.ResourceEnded += OnHeathEnded;
         }
 
+        public void ChangeView(bool View)
+        {
+            IsCurView3d = View;
+        }
         private void OnHeathEnded()
         {
             HealthEnded?.Invoke(this);

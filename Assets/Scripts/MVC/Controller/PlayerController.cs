@@ -1,5 +1,8 @@
 using Asteroids.Abstraction;
 using Asteroids.Model;
+using Asteroids.View;
+using ModestTree;
+using UnityEngine;
 using Utils;
 
 
@@ -45,18 +48,33 @@ namespace Asteroids.Controller
 
             _playerView = _levelManager.CreateObjectView<IPlayerView>( _playerModel, CustomVector3.zero);
 
-            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior();
-            _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, levelInfo);
+            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior(_playerModel.IsCurView3d);
             
+            _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, levelInfo);
+
             _bulletWeaponController.Start();
             _laserWeaponController.Start();
             Attach();
         }
 
+        public void OnChange(IPlayerView playerView)
+        {
+            
+            var levelInfo = _levelManager.GetCurrentLevel().GetInfo();
+            
+            _playerView = playerView;
+
+            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior(!_playerModel.IsCurView3d);
+            
+            _playerMoveBehavior.Init(playerView, playerView, _playerInfo, levelInfo);
+        }
+        
         public void Update(double deltaTime)
         { 
             _bulletWeaponController.Update(deltaTime);
             _laserWeaponController.Update(deltaTime);
+            
+            
         }
     
         private void OnPlayerContact(ILevelObjectView self, ILevelObjectView contact)
@@ -79,7 +97,20 @@ namespace Asteroids.Controller
         
         private void OnLaserFireClicked()
         {
+            
             _laserWeapon.ProduceFire();
+        }
+        
+        private void OnRotate(float value)
+        {
+            _playerMoveBehavior.Rotate(value);
+            _playerModel.SetTransform(_playerView.Transform);
+        }
+
+        private void OnMove(float value)
+        {
+            _playerMoveBehavior.Move(value);
+            _playerModel.SetTransform(_playerView.Transform);
         }
         
         private void Attach()
@@ -92,17 +123,6 @@ namespace Asteroids.Controller
             _playerModel.HealthEnded += OnPlayerResourceEnded;
             _playerView.OnLevelObjectContact += OnPlayerContact;
         }
-
-        private void OnRotate(float value)
-        {
-             _playerMoveBehavior.Rotate(value);
-        }
-
-        private void OnMove(float value)
-        {
-            _playerMoveBehavior.Move(value);
-        }
-
         private void Detach()
         {
             _inputHandler.Fire1Clicked -= OnBulletFireClicked;

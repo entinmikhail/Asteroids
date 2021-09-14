@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/UFOEnemyMoveBehavior", fileName = "UFOEnemyMoveBehavior")]
-    public class UfoBehavior : BaseBehavior
+    public class UfoBehavior : BaseBehaviorUnity
     {
         private bool _stopped = false;
         public void Stop()
@@ -15,7 +15,7 @@ namespace Asteroids.ScriptableObjects
         public override void OnUpdate (ILevelObjectView view, IPlayerView playerView, float speed)
         {
             if(_stopped) return;
-            if (view is ILevelObjectViewUnity viewUnity &&  playerView is IPlayerViewUnity playerViewUnity)
+            if (view is ILevelObjectViewUnity viewUnity &&  playerView is IPlayerViewUnity2D playerViewUnity)
                 DoSomeThing(viewUnity, playerViewUnity, speed);
         }
         protected override void OnInit(params object[] additionalParams)
@@ -29,10 +29,10 @@ namespace Asteroids.ScriptableObjects
         }
         
 
-        private void DoSomeThing(ILevelObjectViewUnity unityView, IPlayerViewUnity playerUnityView, float speed)
+        private void DoSomeThing(ILevelObjectViewUnity unityView, IPlayerViewUnity2D playerUnity2DView, float speed)
         {
-            unityView.UnityTransfom.position = Vector2.MoveTowards(unityView.UnityTransfom.position,
-                playerUnityView.UnityTransfom.position, speed * Time.deltaTime);
+            unityView.UnityTransform.position = Vector2.MoveTowards(unityView.UnityTransform.position,
+                playerUnity2DView.UnityTransform.position, speed * Time.deltaTime);
         }
     }
 }

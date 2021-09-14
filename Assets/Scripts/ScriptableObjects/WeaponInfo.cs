@@ -8,7 +8,6 @@ namespace Asteroids.ScriptableObjects
     {
         public float Cooldown => _cooldown;
         [SerializeField] private float _cooldown;
-    
         public int MaxСharges => _maxСharges;
         [SerializeField] private int _maxСharges;
         

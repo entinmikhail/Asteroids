@@ -7,6 +7,9 @@ namespace Asteroids.ScriptableObjects
     public class ShellInfo : ScriptableObject, IShellInfo
     {
         [SerializeField] private float _movementSpeed;
+        public string ViewId3D => _viewId3D;
+
+        [SerializeField] private string _viewId3D;
         public float MovementSpeed => _movementSpeed;
         
         public float RotationSpeed => _rotationSpeed;

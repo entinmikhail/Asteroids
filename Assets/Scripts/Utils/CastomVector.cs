@@ -27,7 +27,8 @@ namespace Utils
         public readonly float X;
         public readonly float Y;
         public readonly float Z;
-        public static CustomVector3 zero = new CustomVector3(0,0,0);
+        
+        public static CustomVector3 zero = new CustomVector3(0.0f,0.0f,0.0f);
 
         public CustomVector3(float x, float y, float z)
         {
@@ -45,14 +46,22 @@ namespace Utils
             return new CustomTransform(transform);
         }
         
-        public readonly CustomVector3 Rotation;
-        public readonly CustomVector3 Position;
+        public readonly CustomVector3 rotation;
+        public readonly CustomVector3 position;
+        public readonly CustomVector3 velocity => _velocity;
+        private CustomVector3 _velocity;
 
 
         private CustomTransform(Transform transform)
         {               
-            Rotation = transform.rotation.eulerAngles;
-            Position = transform.position;
+            rotation = transform.rotation.eulerAngles;
+            position = transform.position;
+            _velocity = new CustomVector3(0.0f, 0.0f, 0.0f);
+        }
+
+        public void SetVelocity(Vector3 velocity)
+        {
+            _velocity = velocity;
         }
     }
 }

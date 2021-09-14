@@ -4,20 +4,27 @@ using Utils;
 
 namespace Asteroids.View
 {
-    public class LevelObjectView : MonoBehaviour, ILevelObjectView, ILevelObjectViewUnity
+    public class LevelObjectView : MonoBehaviour, ILevelObjectView, ILevelObjectViewUnity2D
     {
-        public CustomTransform Transform => _transform;
+        public CustomTransform Transform => GetTransform( );
         public Rigidbody2D Rigidbody2D => _rigidbody;
-        public Transform UnityTransfom => _transform;
+        public Transform UnityTransform => _transform;
         public LevelObjectType LevelObjectType => levelObjectType;
         public string Tag => gameObject.tag;
         
         [SerializeField] private Transform _transform;
         [SerializeField] private LevelObjectType levelObjectType;
         [SerializeField] private Rigidbody2D _rigidbody;
+        
         public event ContactHandler OnLevelObjectContact;
         
-
+        
+        private CustomTransform GetTransform( )
+        {
+            CustomTransform customTransform = _transform;
+            customTransform.SetVelocity(_rigidbody.velocity);
+            return customTransform;
+        }
         
         private void OnTriggerEnter2D(Collider2D collision)
         {

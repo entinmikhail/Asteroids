@@ -9,13 +9,12 @@ namespace Asteroids.Model
     {
         private CustomTransform _curTransform;
         private CustomTransform _prevTransform;
-        
         public event Action<CustomTransform, CustomTransform> TransformChanged;
 
         public CustomTransform GetTransform() => _curTransform;
 
 
-        public void ChangeTransform(CustomTransform newTransform)
+        public void SetTransform(CustomTransform newTransform)
         {
             _prevTransform = _curTransform;
             _curTransform = newTransform;

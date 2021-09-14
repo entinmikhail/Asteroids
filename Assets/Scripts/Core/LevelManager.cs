@@ -19,8 +19,20 @@ namespace Asteroids.Core
         public T CreateObjectView<T>(IModel<IModelInfo> model, Vector3 position) where T : ILevelObjectView
         {
             var levelInfo = _currentLevel.GetInfo();
+            
+            GameObject go;
+            
+            if (model.IsCurView3d)
+            {
+                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D), position,
+                    Quaternion.identity);
+            }
+            else
+            {
+                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), position,
+                    Quaternion.identity);
+            }
 
-            var go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), position, Quaternion.identity);
             if (!go.TryGetComponent(out T result))
             {
                 Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");
@@ -30,7 +42,45 @@ namespace Asteroids.Core
             
             return result;
         }
-
+        
+        public T ChangeView<T>(IModel<IModelInfo> model) where T : ILevelObjectView
+        {
+            var levelInfo = _currentLevel.GetInfo();
+            
+            
+            var transform = model.GetTransform();
+            
+            DestroyView(model);
+            
+            GameObject go;
+            
+            if (model.IsCurView3d)
+            {
+                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D), transform.position, 
+                    Quaternion.Euler(transform.rotation));
+                 go.GetComponent<Rigidbody>().velocity = transform.velocity;
+            }
+            else
+            {
+                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), transform.position , 
+                    Quaternion.Euler(transform.rotation));
+                 go.GetComponent<Rigidbody2D>().velocity = transform.velocity;
+            }
+            
+            
+            model.ChangeView(!model.IsCurView3d);
+            
+            if (!go.TryGetComponent(out T result))
+            {
+                Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");
+            }
+            
+            _modelViews.Add(model, result);
+            
+            return result;
+        }
+        
+        
         public TView GetOrCreateView<TView>(IModel<IModelInfo> model) where TView : ILevelObjectView
         {
             if (!_modelViews.TryGetValue(model, out var view))
@@ -57,7 +107,7 @@ namespace Asteroids.Core
 
             if (view is ILevelObjectViewUnity viewUnity)
             {
-                Object.Destroy(viewUnity.UnityTransfom.gameObject);
+                Object.Destroy(viewUnity.UnityTransform.gameObject);
             }
             
             _modelViews.Remove(model);

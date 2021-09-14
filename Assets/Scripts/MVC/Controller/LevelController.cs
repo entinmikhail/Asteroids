@@ -107,7 +107,7 @@ namespace Asteroids.Controller
                 _controllersToRemoveFromUpdate.Add(updatable);
             } 
             
-            controller.CurrentBehavior.DiedBehaviour(_levelModel, enemy.GetTransform().Position); 
+            controller.CurrentBehavior.DiedBehaviour(_levelModel, enemy.GetTransform().position); 
             controller.Dispose();       
             
             _enemies.Remove(enemy);

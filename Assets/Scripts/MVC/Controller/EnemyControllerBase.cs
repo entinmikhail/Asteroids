@@ -39,7 +39,7 @@ namespace Asteroids.Controller
             _healthModel = _enemy.GetResource(ProjConstants.HealthId);
             _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
             
-            _enemy.ChangeTransform(_view.Transform);
+            _enemy.SetTransform(_view.Transform);
             
             OnStart();
             
@@ -56,7 +56,7 @@ namespace Asteroids.Controller
             if(!_inited) return;
             
             _behaviour.OnUpdate(_view, _playerView, _enemyInfo.MovementSpeed);
-            _enemy.ChangeTransform(_view.Transform);
+            _enemy.SetTransform(_view.Transform);
         }
         
         private void OnCollision(ILevelObjectView selfObject, ILevelObjectView contactObject)

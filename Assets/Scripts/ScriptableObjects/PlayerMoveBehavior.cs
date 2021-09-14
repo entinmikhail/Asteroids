@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/Player/PlayerMoveBehavior", fileName = "PlayerMoveBehavior")]
-    public class PlayerMoveBehavior :  BaseBehavior, IPlayerMoveBehavior
+    public class PlayerMoveBehavior : BaseBehaviorUnity, IPlayerMoveBehavior
     {
         private IPlayerInfo _playerInfo;
         
@@ -12,8 +12,6 @@ namespace Asteroids.ScriptableObjects
         {
             _playerInfo = (IPlayerInfo)additionalParams[0];
             var levelInfo = (ILevelInfo)additionalParams[1];
-            _playerViewUnity.UnityTransfom.position = levelInfo.DefaultPlayerPosition;
-            _playerViewUnity.UnityTransfom.rotation = levelInfo.DefaultPlayerRotation;
         }
 
         public void Rotate(float inputValue)
