@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/UFOEnemyMoveBehavior", fileName = "UFOEnemyMoveBehavior")]
-    public class UfoBehavior : BaseBehaviorUnity
+    public class UfoBehavior : BaseBehaviorUnity, IUfoBehaviour
     {
         private bool _stopped = false;
         public void Stop()
@@ -28,7 +28,6 @@ namespace Asteroids.ScriptableObjects
             levelModel.SpawnTypedEnemy(levelModel.GetInfo().GetEnemyInfo("UFO"));
         }
         
-
         private void DoSomeThing(ILevelObjectViewUnity unityView, IPlayerViewUnity2D playerUnity2DView, float speed)
         {
             unityView.UnityTransform.position = Vector2.MoveTowards(unityView.UnityTransform.position,

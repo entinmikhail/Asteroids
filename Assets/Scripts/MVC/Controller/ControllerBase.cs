@@ -11,7 +11,12 @@ public abstract class ControllerBase : IController
 
         OnStart();
     }
-    
+
+    public void ResetView()
+    {
+        OnViewReset();
+    }
+
     public void Dispose()
     {
         if (!_started) return;
@@ -20,6 +25,7 @@ public abstract class ControllerBase : IController
         OnDispose();
     }
 
+    protected abstract void OnViewReset();
     protected abstract void OnDispose();
     protected abstract void OnStart();
 }

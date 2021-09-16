@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 namespace Asteroids.Abstraction
 {
     public interface ILevelManager
     {
+        event Action<IModel<IModelInfo>> ViewChanged;
         ILevelModel GetCurrentLevel();
         T CreateObjectView<T>(IModel<IModelInfo> model, Vector3 position)  where T : ILevelObjectView;
         void SetLevel(ILevelModel levelModel);

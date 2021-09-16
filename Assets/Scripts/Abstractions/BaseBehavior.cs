@@ -2,7 +2,7 @@
 
 namespace Asteroids.Abstraction
 {
-    public abstract class BaseBehavior : ScriptableObject
+    public abstract class BaseBehavior : ScriptableObject, IBaseBehavior
     {
         public abstract void OnUpdate(ILevelObjectView view, IPlayerView playerView, float speed);
 

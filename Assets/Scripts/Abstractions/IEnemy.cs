@@ -11,7 +11,6 @@ namespace Asteroids.Abstraction
 
     public interface IModel<out TInfo> : ITransformModel where TInfo : IModelInfo
     {
-        bool IsCurView3d { get; set; }
         TInfo GetInfo();
         event Action<IModel<TInfo>> HealthEnded;
         IResourceModel GetResource(int id);

@@ -36,6 +36,16 @@ MonoBehaviour:
     Info: {fileID: 7009120208877503348, guid: 057516dfe8f2d824f91c718a99372b8a, type: 3}
   - Id: Player3D
     Info: {fileID: 4711403644279690211, guid: d208076dcb43061418c1d8b58a93587d, type: 3}
+  - Id: Asteroid3D
+    Info: {fileID: 4437745429068403744, guid: 4f4f3697f49a42d43a0f1312cc7dd734, type: 3}
+  - Id: UFO3D
+    Info: {fileID: 4437745429068403744, guid: f8b5ac80f4775434b88551c396dfed40, type: 3}
+  - Id: MiniAsteroid3D
+    Info: {fileID: 4437745429068403744, guid: 210a05b9e196f854a88a12de54145cca, type: 3}
+  - Id: Bullet3D
+    Info: {fileID: 9074902539578999469, guid: 206ed4ec2f277ea40a2cef7b792724d7, type: 3}
+  - Id: Laser3D
+    Info: {fileID: 720389542564819758, guid: 6a7b19c6b5e68184b8435d7fe2bb1df8, type: 3}
   _enemyInfos:
   - Id: Asteroid
     Info: {fileID: 11400000, guid: cda8032c014b2a248ad869738abb6725, type: 2}

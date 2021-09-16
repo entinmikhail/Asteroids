@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b51f4cb96e6414d963d8a3c3f5b920, type: 3}
   m_Name: UFOEnemyInfo
   m_EditorClassIdentifier: 
+  _viewId3D: UFO3D
   _movementSpeed: 1
   _rotationSpeed: 0
   _maxHealth: 1
@@ -19,4 +20,5 @@ MonoBehaviour:
   _viewId: UFO
   _type: ufo
   _pointsForKill: 20
-  behavior: {fileID: 11400000, guid: 8f9d80ee0366fa9458ba1abbb6679fe5, type: 2}
+  _enemyBehavior: {fileID: 11400000, guid: 8f9d80ee0366fa9458ba1abbb6679fe5, type: 2}
+  _enemyBehavior3D: {fileID: 11400000, guid: 4eb14561463211647ac79535f4282678, type: 2}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b51f4cb96e6414d963d8a3c3f5b920, type: 3}
   m_Name: MiniAsteroidInfo
   m_EditorClassIdentifier: 
+  _viewId3D: MiniAsteroid3D
   _movementSpeed: 0.3
   _rotationSpeed: 0
   _maxHealth: 1
@@ -19,4 +20,5 @@ MonoBehaviour:
   _viewId: MiniAsteroid
   _type: mini_asteroid
   _pointsForKill: 2
-  behavior: {fileID: 11400000, guid: 2cce96104b9ba7c4d995a29077e83d84, type: 2}
+  _enemyBehavior: {fileID: 11400000, guid: 2cce96104b9ba7c4d995a29077e83d84, type: 2}
+  _enemyBehavior3D: {fileID: 11400000, guid: a369f4add8931f145b689ba90d7b3720, type: 2}

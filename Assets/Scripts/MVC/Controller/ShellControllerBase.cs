@@ -6,15 +6,15 @@ namespace Asteroids.Controller
     public abstract class ShellControllerBase : IShellController, IUpdatable
     {
         protected ILevelObjectView _view;
-        
-        private ILevelManager _levelManager;
-        protected BaseBehavior _shellBehavior;
-        private ShellBaseModel _shellBaseModel;
         protected readonly IShellInfo _shellInfo;
-        protected IPlayerView _playerView;
-        private readonly IShell _shell;
-        private IGameModel _gameModel;
 
+        private readonly ILevelManager _levelManager;
+        private readonly IShell _shell;
+        private readonly IGameModel _gameModel;
+
+        protected BaseBehavior _shellBehavior;
+        protected IPlayerView _playerView;
+        
         private bool _inited;
         
         protected ShellControllerBase(IShell shell, ILevelManager levelManager)
@@ -34,22 +34,12 @@ namespace Asteroids.Controller
             _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
             _view = _levelManager.CreateObjectView<ILevelObjectView>(_shell, _playerView.CustomSpawnPoint.position);
 
-            _gameModel.ViewModeChanged += OnViewChange;
             _view.OnLevelObjectContact += OnCollision;
             _shell.ShellDestroyed += OnShellDestroyed;
             
             InitBehaviour();
         }
 
-        private void OnViewChange(ViewMode viewMode)
-        {
-            _view = _levelManager.ChangeView<ILevelObjectView>(_shell);
-            
-            _shellBehavior = _shellInfo.CreateShellBehavior(viewMode); 
-            
-            _shellBehavior.Init(_view, _playerView, _shellInfo);
-        }
-        
         private void OnCollision(ILevelObjectView selfObject, ILevelObjectView contactObject)
         {
             if (_shellInfo.Destroyable && contactObject.Tag == ProjConstants.Enemy)
@@ -59,6 +49,17 @@ namespace Asteroids.Controller
         }
         
         protected abstract void InitBehaviour();
+
+        public void ResetView()
+        {
+            _view = _levelManager.GetOrCreateView<ILevelObjectView>(_shell);
+            
+            _levelManager.DestroyBehaviour(_shellBehavior);
+            _shellBehavior = _shellInfo.CreateShellBehavior(_gameModel.CurViewMode);
+            _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
+
+            InitBehaviour();
+        }
 
         public void Update(double deltaTime)
         {
@@ -79,7 +80,6 @@ namespace Asteroids.Controller
             if (!_inited) return;
             _inited = false;
             
-            _gameModel.ViewModeChanged -= OnViewChange;
             _view.OnLevelObjectContact -= OnCollision;
             _shell.ShellDestroyed -= OnShellDestroyed;
             

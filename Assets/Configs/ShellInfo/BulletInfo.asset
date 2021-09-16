@@ -22,3 +22,4 @@ MonoBehaviour:
   _viewId: Bullet
   _destroyable: 1
   _shellBehavior: {fileID: 11400000, guid: 0d4fff0252be2534488753c251598f35, type: 2}
+  _shellBehavior3D: {fileID: 11400000, guid: 45b3d1a1f09300f4cb3984531fe5ecd6, type: 2}

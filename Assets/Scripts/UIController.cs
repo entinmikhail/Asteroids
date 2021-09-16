@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _restartButton;
     [SerializeField] private GameObject _totalScore;
     [SerializeField] private GameObject _guiScore;
+    [SerializeField] private Button _changeViewClick;
     
     private PointModel _pointModel;
     private IGameModel _gameModel;
@@ -53,8 +54,14 @@ public class UIController : MonoBehaviour
         _scoreTextCounter.text = curvalue.ToString();
     }
     
+    private void OnChangeViewClick()
+    {
+        _gameModel.ChangeViewMode();
+    }
+    
     private void Detach()
     {
+        _changeViewClick.onClick.RemoveListener(OnChangeViewClick);
         _gameModel.GameRestarted -= GameRestarted;
         _pointModel.ResourceValueChanged -= ChangePoints;
         _gameModel.GameEnded -= OnGameEnd;
@@ -62,6 +69,7 @@ public class UIController : MonoBehaviour
     
     private void Attach()
     {
+        _changeViewClick.onClick.AddListener(OnChangeViewClick);
         _gameModel.GameRestarted += GameRestarted;
         _pointModel.ResourceValueChanged += ChangePoints;
         _gameModel.GameEnded += OnGameEnd;

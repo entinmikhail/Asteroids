@@ -14,7 +14,7 @@ namespace Asteroids.Controller
         protected readonly IEnemyInfo _enemyInfo;
         protected readonly ILevelManager _levelManager;
 
-        protected IGameModel _gameModel;
+        private readonly IGameModel _gameModel;
         protected IPlayerView _playerView;
         
         private IResourceModel _healthModel;
@@ -43,15 +43,27 @@ namespace Asteroids.Controller
             
             _enemy.SetTransform(_view.Transform);
             
+            InitBehaviour();
             OnStart();
             
             _view.OnLevelObjectContact += OnCollision;
             _enemy.HealthEnded += OnEnemyDied;
         }
 
+        public void ResetView()
+        {
+            _levelManager.DestroyBehaviour(_behaviour);
+            _view = _levelManager.GetOrCreateView<ILevelObjectView>(_enemy);
+            
+            _behaviour = _enemyInfo.CreateEnemyBehavior(_gameModel.CurViewMode);
+            _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
+            InitBehaviour();
+        }
+
         protected abstract CustomVector3 GetStartPosition();
         protected abstract void OnDispose();
         protected abstract void OnStart();
+        protected abstract void InitBehaviour();
         
         public void Update(double deltaTime)
         {

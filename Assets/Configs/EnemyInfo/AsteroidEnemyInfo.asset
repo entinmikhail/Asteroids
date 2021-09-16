@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b51f4cb96e6414d963d8a3c3f5b920, type: 3}
   m_Name: AsteroidEnemyInfo
   m_EditorClassIdentifier: 
+  _viewId3D: Asteroid3D
   _movementSpeed: 1
   _rotationSpeed: 0
   _maxHealth: 1
@@ -19,4 +20,5 @@ MonoBehaviour:
   _viewId: Asteroid
   _type: asteroid
   _pointsForKill: 10
-  behavior: {fileID: 11400000, guid: cdab5eef890fc2a40b678239b88bd162, type: 2}
+  _enemyBehavior: {fileID: 11400000, guid: cdab5eef890fc2a40b678239b88bd162, type: 2}
+  _enemyBehavior3D: {fileID: 11400000, guid: 7ca9625f727401a4280e3bf8de197a8e, type: 2}

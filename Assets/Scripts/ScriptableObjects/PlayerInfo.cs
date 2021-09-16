@@ -36,7 +36,7 @@ namespace Asteroids.ScriptableObjects
         {
             switch (viewMode)
             {
-              case  ViewMode.Poligone:
+              case ViewMode.Poligone:
                   return Instantiate(_playerMoveBehavior3D);
               default:
                   return Instantiate(_playerMoveBehavior);

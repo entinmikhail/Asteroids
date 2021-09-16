@@ -13,12 +13,14 @@ namespace Asteroids.Controller
         private readonly BulletWeaponController _bulletWeaponController;
         private readonly LaserWeaponController _laserWeaponController;
 
-        private IGameModel _gameModel;
+        private readonly IGameModel _gameModel;
+        private readonly IWeapon _bulletWeapon;
+        private readonly IWeapon _laserWeapon;
+        
         private IPlayerView _playerView;
         private IPlayerMoveBehavior _playerMoveBehavior;
-        private IWeapon _bulletWeapon;
-        private IWeapon _laserWeapon;
         private IPlayerInfo _playerInfo;
+        private bool _viewReady;
 
         public PlayerController(IPlayer playerModel, IInputHandler inputHandler, ILevelManager levelManager)
         {
@@ -46,27 +48,28 @@ namespace Asteroids.Controller
             _playerView = _levelManager.CreateObjectView<IPlayerView>( _playerModel, CustomVector3.zero);
 
             _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior(_gameModel.CurViewMode);
-            
             _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, levelInfo);
-
+            _viewReady = true;
             _bulletWeaponController.Start();
             _laserWeaponController.Start();
             Attach();
         }
-
-        private void OnViewChange(ViewMode viewMode)
+        
+        protected override void OnViewReset()
         {
+            _viewReady = false;
+            _levelManager.DestroyBehaviour((BaseBehavior)_playerMoveBehavior);
             _playerView = _levelManager.ChangeView<IPlayerView>(_playerModel);
             
-            var levelInfo = _levelManager.GetCurrentLevel().GetInfo();
-
-            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior(viewMode); 
-            
-            _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, levelInfo);
+            _playerMoveBehavior = _playerInfo.CreatePlayerMoveBehavior(_gameModel.CurViewMode);
+            _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, _levelManager.GetCurrentLevel().GetInfo());
+            _viewReady = true;
         }
-        
+
         public void Update(double deltaTime)
         { 
+            if(!_viewReady) return;
+
             _bulletWeaponController.Update(deltaTime);
             _laserWeaponController.Update(deltaTime);
         }
@@ -97,12 +100,16 @@ namespace Asteroids.Controller
         
         private void OnRotate(float value)
         {
+            if(!_viewReady) return;
+            
             _playerMoveBehavior.Rotate(value);
             _playerModel.SetTransform(_playerView.Transform);
         }
 
         private void OnMove(float value)
         {
+            if(!_viewReady) return;
+
             _playerMoveBehavior.Move(value);
             _playerModel.SetTransform(_playerView.Transform);
         }
@@ -116,7 +123,6 @@ namespace Asteroids.Controller
         
             _playerModel.HealthEnded += OnPlayerResourceEnded;
             _playerView.OnLevelObjectContact += OnPlayerContact;
-            _gameModel.ViewModeChanged += OnViewChange;
         }
         private void Detach()
         {
@@ -127,9 +133,8 @@ namespace Asteroids.Controller
         
             _playerModel.HealthEnded  -= OnPlayerResourceEnded;
             _playerView.OnLevelObjectContact -= OnPlayerContact;
-            _gameModel.ViewModeChanged -= OnViewChange;
         }
-    
+
         protected override void OnDispose()
         {
             Detach();

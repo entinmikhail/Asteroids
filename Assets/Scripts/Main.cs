@@ -38,10 +38,10 @@ public class Main : MonoBehaviour
         _gameModel.RestartGame();
     }
 
-    public void ChancheView()
+    private void OnViewChanged(ViewMode viewMode)
     {
-        /*_levelManager.ChangeAllView();*/
-        _gameModel.ChangeViewMode();
+        _playerController.ResetView();
+        _levelManager.ChangeAllView();
     }
 
     private void Awake()
@@ -67,7 +67,7 @@ public class Main : MonoBehaviour
         _playerController.Start();
         _levelController.Start();
         _uiController.Init(_pointModel, _gameModel);
-        
+        _gameModel.ViewModeChanged += OnViewChanged;
         _player.HealthEnded += OnPlayerDead;
     }
 

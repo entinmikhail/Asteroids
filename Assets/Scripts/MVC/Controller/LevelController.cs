@@ -37,10 +37,16 @@ namespace Asteroids.Controller
                 AddEnemyController(enemy);
             }
             
-            /*_levelModel.EnemyAdded += OnEnemyAddedToLevel;
-            _levelModel.EnemyRemoved += OnEnemyRemovedFromLevel;*/
+            _levelModel.EnemyAdded += OnEnemyAddedToLevel;
+            _levelModel.EnemyRemoved += OnEnemyRemovedFromLevel;
             _levelModel.ShellAdded += OnShellAddedToLevel;
             _levelModel.ShellRemoved += OnShellRemovedFromLevel;
+            _levelManager.ViewChanged += OnViewChanged;
+        }
+
+        public void ResetView() 
+        {
+            //todo : добавить изменение левел вьюхи с 2д на 3д (добавить свет на сцену, сделать наклон камеры и прочие эффекты 3Д) 
         }
 
         public void Update(double deltaTime)
@@ -126,6 +132,19 @@ namespace Asteroids.Controller
             
             _shells.Remove(shell);
         }
+        
+        private void OnViewChanged(IModel<IModelInfo> model)
+        {
+            if (model is IEnemy enemy && _enemies.TryGetValue(enemy, out var controller))
+            {
+                controller.ResetView();
+            }
+            
+            if (model is IShell shell && _shells.TryGetValue(shell, out var shellController))
+            {
+                shellController.ResetView();
+            }
+        }
 
         public void Dispose()
         {
@@ -137,7 +156,8 @@ namespace Asteroids.Controller
             
             _levelModel.ShellAdded -= OnShellAddedToLevel;
             _levelModel.ShellRemoved -= OnShellRemovedFromLevel;
-            
+            _levelManager.ViewChanged -= OnViewChanged;
+
             foreach (var controller in _enemies.Values)
             {
                 controller.Dispose();

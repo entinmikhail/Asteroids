@@ -1,11 +1,15 @@
+using System;
 using System.Collections.Generic;
 using Asteroids.Abstraction;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Asteroids.Core
 {
     public class LevelManager : ILevelManager
     {
+        public event Action<IModel<IModelInfo>> ViewChanged;
+
         private ILevelModel _currentLevel;
         private readonly IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViews = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
         private readonly IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViewsTmp = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
@@ -53,52 +57,52 @@ namespace Asteroids.Core
 
             foreach (var modelView in _modelViewsTmp)
             {
+                if(modelView.Key is IPlayer) continue;
                 ChangeView<ILevelObjectView>(modelView.Key);
             }
         }
+        
         public T ChangeView<T>(IModel<IModelInfo> model) where T : ILevelObjectView
         {
-            
             var levelInfo = _currentLevel.GetInfo();
             var transform = model.GetTransform();
             
             DestroyView(model);
             GameObject go;
-            
+            T result;
             if (_currentLevel.GameModel.CurViewMode == ViewMode.Poligone)
             {
                  go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D), transform.position, 
                     Quaternion.Euler(transform.rotation));
-                 go.GetComponent<Rigidbody>().velocity = transform.velocity;
+                 if(go.TryGetComponent<Rigidbody>(out var rigidbody))
+                 {
+                     rigidbody.velocity = transform.velocity;
+                 }
                  
-                 if (!go.TryGetComponent(out T result))
+                 if (!go.TryGetComponent(out result))
                  {
                      Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");
                  }
             
                  _modelViews.Add(model, result);
-                 
-                 return result;
             }
-            
             else
             {
                  go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), transform.position , 
                     Quaternion.Euler(transform.rotation));
                  go.GetComponent<Rigidbody2D>().velocity = transform.velocity;
                  
-                 if (!go.TryGetComponent(out T result))
+                 if (!go.TryGetComponent(out result))
                  {
                      Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");
                  }
-            
                  _modelViews.Add(model, result);
-                 
-                 return result;
             }
+
+            ViewChanged?.Invoke(model);
+            return result;
         }
-        
-        
+
         public TView GetOrCreateView<TView>(IModel<IModelInfo> model) where TView : ILevelObjectView
         {
             if (!_modelViews.TryGetValue(model, out var view))

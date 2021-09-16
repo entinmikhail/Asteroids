@@ -19,10 +19,12 @@ namespace Asteroids.View
         public event ContactHandler OnLevelObjectContact;
         
         
-        private CustomTransform GetTransform( )
+        private CustomTransform GetTransform()
         {
             CustomTransform customTransform = _transform;
-            customTransform.SetVelocity(_rigidbody.velocity);
+            if(_rigidbody != null)
+                customTransform.SetVelocity(_rigidbody.velocity);
+            
             return customTransform;
         }
         

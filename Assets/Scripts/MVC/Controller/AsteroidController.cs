@@ -19,13 +19,12 @@ namespace Asteroids.Controller
                 Random.Range(levelInfo.LevelBounds.min.z, levelInfo.LevelBounds.max.z));
         }
 
-        protected override void OnStart()
+        protected override void InitBehaviour()
         {
             _behaviour.Init(_view, _playerView, _enemyInfo.MovementSpeed);
         }
         
-        protected override void OnDispose()
-        {
-        }
+        protected override void OnStart() { }
+        protected override void OnDispose() { }
     }
 }

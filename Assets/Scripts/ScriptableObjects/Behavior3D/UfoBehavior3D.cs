@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior3D/UFOEnemyMoveBehavior3D", fileName = "UFOEnemyMoveBehavior3D")]
-    public class UfoBehavior3D : BaseBehaviorUnity3D
+    public class UfoBehavior3D : BaseBehaviorUnity3D, IUfoBehaviour
     {
         private bool _stopped = false;
         public void Stop()

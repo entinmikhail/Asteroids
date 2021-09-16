@@ -2,7 +2,7 @@
 
 namespace Asteroids.Controller
 {
-    public class WeaponController : ControllerBase ,IWeaponController, IUpdatable 
+    public class WeaponController : ControllerBase, IWeaponController, IUpdatable 
     {
         private readonly IWeapon _weapon;
 
@@ -18,7 +18,6 @@ namespace Asteroids.Controller
         
         protected override void OnStart()
         {
-            
             _weapon.Shot += OnWeaponShot;
         }
         
@@ -33,7 +32,9 @@ namespace Asteroids.Controller
         {
             _levelManager.GetCurrentLevel().SpawnTypedShell(_shellInfo);
         }
-        
+
+        protected override void OnViewReset() { }
+
         protected override void OnDispose()
         {
             _weapon.Shot -= OnWeaponShot;

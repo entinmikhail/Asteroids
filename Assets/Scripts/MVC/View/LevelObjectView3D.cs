@@ -21,7 +21,8 @@ namespace Asteroids.View
         private CustomTransform GetTransform( )
         {
             CustomTransform customTransform = _transform;
-            customTransform.SetVelocity(_rigidbody.velocity);
+            if(_rigidbody != null) 
+                customTransform.SetVelocity(_rigidbody.velocity);
             return customTransform;
         }
         

@@ -22,3 +22,4 @@ MonoBehaviour:
   _viewId: Laser
   _destroyable: 0
   _shellBehavior: {fileID: 11400000, guid: 4ca0f31605a38834183f17d591e11a14, type: 2}
+  _shellBehavior3D: {fileID: 11400000, guid: 09e3f88d12e56cb4cbd2fee4e94e432a, type: 2}

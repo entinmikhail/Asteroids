@@ -12,14 +12,11 @@ namespace Asteroids.ScriptableObjects
         protected override void OnInit(params object[] additionalParams)
         {
             _playerInfo = (IPlayerInfo)additionalParams[0];
-            var levelInfo = (ILevelInfo)additionalParams[1];
             _vector3 =  new Vector3(0, 0, 1);
         }
 
         public void Rotate(float inputValue)
         {
-            
-            
             _playerViewUnity.Rigidbody.MoveRotation(Quaternion.Euler(_playerViewUnity.Rigidbody.rotation.eulerAngles +
                                                                      _vector3 * -inputValue * _playerInfo.RotationSpeed * Time.deltaTime));
         }

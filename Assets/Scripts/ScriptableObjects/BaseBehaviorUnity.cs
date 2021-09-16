@@ -1,7 +1,7 @@
 ﻿using Asteroids.Abstraction;
 
 namespace Asteroids.ScriptableObjects
-{
+{       
     public abstract class BaseBehaviorUnity : BaseBehavior
     {
         protected ILevelObjectViewUnity2D _viewUnity;
