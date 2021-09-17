@@ -8,5 +8,6 @@ namespace Asteroids.Abstraction
         public float RotationSpeed  { get; }
         public int MaxHealth  { get; }
         int Health { get; }
+        BaseBehavior GetBehavior(ViewMode viewMode);
     }
 }

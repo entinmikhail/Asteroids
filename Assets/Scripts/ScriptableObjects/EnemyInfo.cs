@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Asteroids.Abstraction;
 using UnityEngine;
 
@@ -25,24 +26,24 @@ namespace Asteroids.ScriptableObjects
         [SerializeField] private string _viewId;
 
         public string Type => _type;
-
+        
         [SerializeField] private string _type;
 
         public int PointsForKill => _pointsForKill;
         [SerializeField] private int _pointsForKill;
         
         [SerializeField] private BaseBehavior _enemyBehavior;
-        
         [SerializeField] private BaseBehavior _enemyBehavior3D;
         
-        public  BaseBehavior CreateEnemyBehavior(ViewMode viewMode)
+        public BaseBehavior GetBehavior(ViewMode viewMode)
         {
             switch (viewMode)
             {
                 case  ViewMode.Poligone:
-                    return Instantiate(_enemyBehavior3D);
+                    return _enemyBehavior3D;
+
                 default:
-                    return Instantiate(_enemyBehavior);
+                    return _enemyBehavior;
             }
         }
     }   

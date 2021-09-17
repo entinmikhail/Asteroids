@@ -37,7 +37,7 @@ namespace Asteroids.ScriptableObjects
         
         [SerializeField] private BaseBehavior _shellBehavior3D;
         
-        public  BaseBehavior CreateShellBehavior(ViewMode viewMode)
+        public  BaseBehavior GetBehavior(ViewMode viewMode)
         {
             switch (viewMode)
             {

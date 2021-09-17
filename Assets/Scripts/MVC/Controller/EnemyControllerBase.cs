@@ -1,6 +1,5 @@
 ﻿using Asteroids.Abstraction;
 using Asteroids.Model;
-using Utils;
 
 namespace Asteroids.Controller
 {
@@ -34,10 +33,10 @@ namespace Asteroids.Controller
         {
             if (_inited) return;
             _inited = true;
-            var position = GetStartPosition(); //todo: перенести инит позиции в бехевер 
             
-            _view = _levelManager.CreateObjectView<ILevelObjectView>(_enemy, position);
-            _behaviour = _enemyInfo.CreateEnemyBehavior(_gameModel.CurViewMode);
+            _behaviour = _levelManager.CreateBehavior(_gameModel.CurViewMode, _enemy);
+            _view = _levelManager.CreateObjectView<ILevelObjectView>(_enemy);
+            
             _healthModel = _enemy.GetResource(ProjConstants.HealthId);
             _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
             
@@ -55,12 +54,11 @@ namespace Asteroids.Controller
             _levelManager.DestroyBehaviour(_behaviour);
             _view = _levelManager.GetOrCreateView<ILevelObjectView>(_enemy);
             
-            _behaviour = _enemyInfo.CreateEnemyBehavior(_gameModel.CurViewMode);
+            _behaviour = _levelManager.CreateBehavior(_gameModel.CurViewMode, _enemy);
             _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
             InitBehaviour();
         }
-
-        protected abstract CustomVector3 GetStartPosition();
+        
         protected abstract void OnDispose();
         protected abstract void OnStart();
         protected abstract void InitBehaviour();

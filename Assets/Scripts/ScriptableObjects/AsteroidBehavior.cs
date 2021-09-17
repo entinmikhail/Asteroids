@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/AsteroidEnemyMoveBehavior", fileName = "AsteroidEnemyMoveBehavior")]
-    public class AsteroidBehavior : BaseBehaviorUnity
+    public class AsteroidBehavior : BaseBehaviorUnity2D
     {
         public override void OnUpdate (ILevelObjectView view, IPlayerView playerView, float speed)
         {
@@ -24,6 +24,14 @@ namespace Asteroids.ScriptableObjects
             }
 
             levelModel.SpawnTypedEnemy(levelModel.GetInfo().GetEnemyInfo("Asteroid"));
+        }
+        public override Vector3 GetStartPosition(ILevelManager levelManager, IModel<IModelInfo> enemy)
+        {
+            var levelInfo = levelManager.GetCurrentLevel().GetInfo();
+            
+            return new Vector3(Random.Range(levelInfo.LevelBounds.min.x, levelInfo.LevelBounds.max.x),
+                Random.Range(levelInfo.LevelBounds.min.y, levelInfo.LevelBounds.max.y),
+                Random.Range(levelInfo.LevelBounds.min.z, levelInfo.LevelBounds.max.z));
         }
     }
 }

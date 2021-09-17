@@ -7,6 +7,5 @@ namespace Asteroids.Abstraction
         float ShellLifeTime { get; }
         public string Type { get; }
         public bool Destroyable { get; }
-        public BaseBehavior CreateShellBehavior(ViewMode viewMode);
     }
 }

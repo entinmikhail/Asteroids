@@ -22,5 +22,10 @@ namespace Asteroids.ScriptableObjects
         {
 
         }
+
+        public override Vector3 GetStartPosition(ILevelManager levelManager, IModel<IModelInfo> enemy)
+        {
+            return _playerViewUnity.SpawnPoint.position;
+        }
     }
 }

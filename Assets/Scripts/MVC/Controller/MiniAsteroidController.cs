@@ -1,6 +1,5 @@
 using Asteroids.Abstraction;
 using Asteroids.Model;
-using Utils;
 
 namespace Asteroids.Controller
 {
@@ -13,11 +12,6 @@ namespace Asteroids.Controller
             _miniAsteroid = (MiniAsteroid) enemy;
         }
 
-        protected override CustomVector3 GetStartPosition()
-        {
-            return _miniAsteroid.InitialPosition;
-        }
-        
         protected override void InitBehaviour()
         {
             _behaviour.Init(_view, _playerView, _enemyInfo.MovementSpeed, _miniAsteroid.InitialPosition);

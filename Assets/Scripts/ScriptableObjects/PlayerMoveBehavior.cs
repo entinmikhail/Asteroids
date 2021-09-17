@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/Player/PlayerMoveBehavior", fileName = "PlayerMoveBehavior")]
-    public class PlayerMoveBehavior : BaseBehaviorUnity, IPlayerMoveBehavior
+    public class PlayerMoveBehavior : BaseBehaviorUnity2D, IPlayerMoveBehavior
     {
         private IPlayerInfo _playerInfo;
         
@@ -44,6 +44,11 @@ namespace Asteroids.ScriptableObjects
         public override void DiedBehaviour(ILevelModel levelModel, params object[] additionalParams)
         {
 
+        }
+
+        public override Vector3 GetStartPosition(ILevelManager _levelManager, IModel<IModelInfo> enemy)
+        {
+            return Vector3.zero;
         }
     }
 }

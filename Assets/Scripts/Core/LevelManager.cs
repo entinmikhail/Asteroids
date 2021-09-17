@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Asteroids.Abstraction;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -12,8 +13,9 @@ namespace Asteroids.Core
 
         private ILevelModel _currentLevel;
         private readonly IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViews = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
-        private readonly IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViewsTmp = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
-
+        private IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViewsTmp = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
+        
+        private Dictionary<IModel<IModelInfo>, BaseBehavior> _behaviors = new Dictionary<IModel<IModelInfo>, BaseBehavior>();
         public void SetLevel(ILevelModel levelModel)
         {
             _currentLevel = levelModel;
@@ -21,21 +23,24 @@ namespace Asteroids.Core
 
         public ILevelModel GetCurrentLevel() => _currentLevel;
 
-        public T CreateObjectView<T>(IModel<IModelInfo> model, Vector3 position) where T : ILevelObjectView
+        public T CreateObjectView<T>(IModel<IModelInfo> model) where T : ILevelObjectView
         {
             var levelInfo = _currentLevel.GetInfo();
+
+            Vector3 position;
+
+                position = _behaviors[model].GetStartPosition(this, model);
+            
             
             GameObject go;
             
             if (_currentLevel.GameModel.CurViewMode == ViewMode.Poligone)
             {
-                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D), position,
-                    Quaternion.identity);
+                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D), position, Quaternion.identity);
             }
             else
             {
-                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), position,
-                    Quaternion.identity);
+                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), position, Quaternion.identity);
             }
 
             if (!go.TryGetComponent(out T result))
@@ -52,6 +57,7 @@ namespace Asteroids.Core
         {
             foreach (var modelView in _modelViews)
             {
+                if(modelView.Key is IPlayer) continue;
                 _modelViewsTmp.Add(modelView);
             }
 
@@ -60,6 +66,8 @@ namespace Asteroids.Core
                 if(modelView.Key is IPlayer) continue;
                 ChangeView<ILevelObjectView>(modelView.Key);
             }
+
+            _modelViewsTmp = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
         }
         
         public T ChangeView<T>(IModel<IModelInfo> model) where T : ILevelObjectView
@@ -108,14 +116,14 @@ namespace Asteroids.Core
             if (!_modelViews.TryGetValue(model, out var view))
             {
                 Debug.LogAssertion($"Model {model.GetInfo().ViewId} doesnt have view");
-                return CreateObjectView<TView>(model, Vector3.zero); // todo remove position declaration
+                return CreateObjectView<TView>(model);
             }
 
             if (view is TView tView) return tView;
      
             _modelViews.Remove(model);
                 
-            return CreateObjectView<TView>(model, Vector3.zero);
+            return CreateObjectView<TView>(model);
         }
 
 
@@ -135,8 +143,16 @@ namespace Asteroids.Core
             _modelViews.Remove(model);
         }
 
+        public BaseBehavior CreateBehavior(ViewMode viewMode, IModel<IModelInfo> model)
+        {
+            var beh = Object.Instantiate(model.GetInfo().GetBehavior(viewMode));
+            _behaviors.Add(model, beh);
+            return beh;
+        }
+        
         public void DestroyBehaviour(BaseBehavior behavior)
         {
+            _behaviors.Remove(_behaviors.FirstOrDefault(x => x.Value == behavior).Key);
             Object.Destroy(behavior);
         }
     }

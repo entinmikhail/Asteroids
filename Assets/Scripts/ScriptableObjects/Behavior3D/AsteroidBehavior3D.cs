@@ -9,6 +9,7 @@ namespace Asteroids.ScriptableObjects
         public override void OnUpdate (ILevelObjectView view, IPlayerView playerView, float speed)
         {
         }
+        
         protected override void OnInit(params object[] additionalParams)
         {
             var speed = (float) additionalParams[0];
@@ -24,6 +25,15 @@ namespace Asteroids.ScriptableObjects
             }
 
             levelModel.SpawnTypedEnemy(levelModel.GetInfo().GetEnemyInfo("Asteroid"));
+        }
+
+        public override Vector3 GetStartPosition(ILevelManager levelManager, IModel<IModelInfo> enemy)
+        {
+            var levelInfo = levelManager.GetCurrentLevel().GetInfo();
+            
+            return new Vector3(Random.Range(levelInfo.LevelBounds.min.x, levelInfo.LevelBounds.max.x),
+                Random.Range(levelInfo.LevelBounds.min.y, levelInfo.LevelBounds.max.y),
+                Random.Range(levelInfo.LevelBounds.min.z, levelInfo.LevelBounds.max.z));
         }
     }
 }

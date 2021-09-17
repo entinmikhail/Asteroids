@@ -2,7 +2,7 @@
 
 namespace Asteroids.ScriptableObjects
 {       
-    public abstract class BaseBehaviorUnity : BaseBehavior
+    public abstract class BaseBehaviorUnity2D : BaseBehavior
     {
         protected ILevelObjectViewUnity2D _viewUnity;
         protected IPlayerViewUnity2D _playerViewUnity;
@@ -14,6 +14,10 @@ namespace Asteroids.ScriptableObjects
 
                 OnInit(additionalParams);
             }
+        }
+        public override void SetPlayerView(IPlayerView playerView)
+        {
+            _playerViewUnity = (IPlayerViewUnity2D) playerView;
         }
     }
     
@@ -29,6 +33,10 @@ namespace Asteroids.ScriptableObjects
 
                 OnInit(additionalParams);
             }
+        }
+        public override void SetPlayerView(IPlayerView playerView)
+        {
+            _playerViewUnity = (IPlayerViewUnity3D) playerView;
         }
     }
 }

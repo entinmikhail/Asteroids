@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Asteroids.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Gameplay/ObjectsBehavior/BulletBehavior", fileName = "BulletBehavior")]
-    public class BulletBehavior : BaseBehaviorUnity
+    public class BulletBehavior : BaseBehaviorUnity2D
     
     {
         public override void OnUpdate (ILevelObjectView view, IPlayerView playerView, float speed)
@@ -21,6 +21,11 @@ namespace Asteroids.ScriptableObjects
         public override void DiedBehaviour(ILevelModel levelModel, params object[] additionalParams)
         {
 
+        }
+
+        public override Vector3 GetStartPosition(ILevelManager levelManager, IModel<IModelInfo> enemy)
+        {
+            return _playerViewUnity.SpawnPoint.position;
         }
     }
 }

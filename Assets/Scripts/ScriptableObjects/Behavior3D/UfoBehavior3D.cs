@@ -27,7 +27,16 @@ namespace Asteroids.ScriptableObjects
         {
             levelModel.SpawnTypedEnemy(levelModel.GetInfo().GetEnemyInfo("UFO"));
         }
-        
+
+        public override Vector3 GetStartPosition(ILevelManager levelManager, IModel<IModelInfo> enemy)
+        {
+            var levelInfo = levelManager.GetCurrentLevel().GetInfo();
+            
+            return new Vector3(Random.Range(levelInfo.LevelBounds.min.x, levelInfo.LevelBounds.max.x),
+                Random.Range(levelInfo.LevelBounds.min.y, levelInfo.LevelBounds.max.y),
+                Random.Range(levelInfo.LevelBounds.min.z, levelInfo.LevelBounds.max.z));
+        }
+
 
         private void DoSomeThing(ILevelObjectViewUnity unityView, IPlayerViewUnity2D playerUnity2DView, float speed)
         {

@@ -20,5 +20,11 @@ namespace Asteroids.ScriptableObjects
         public override void DiedBehaviour(ILevelModel levelModel, params object[] additionalParams)
         {
         }
+
+        public override Vector3 GetStartPosition(ILevelManager _levelManager, IModel<IModelInfo> _miniAsteroid)
+        {
+            var mini = (IMiniAsteroid) _miniAsteroid;
+            return mini.InitialPosition;
+        }
     }
 }
