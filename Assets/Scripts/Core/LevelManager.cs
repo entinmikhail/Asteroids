@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Asteroids.Abstraction;
+
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -9,31 +10,27 @@ namespace Asteroids.Core
 {
     public class LevelManager : ILevelManager
     {
-        public event Action<IModel<IModelInfo>> ViewChanged;
-
         private ILevelModel _currentLevel;
+        
         private readonly IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViews = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
         private IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViewsTmp = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
-        
         private Dictionary<IModel<IModelInfo>, BaseBehavior> _behaviors = new Dictionary<IModel<IModelInfo>, BaseBehavior>();
         public void SetLevel(ILevelModel levelModel)
         {
             _currentLevel = levelModel;
         }
 
+        public event Action<IModel<IModelInfo>> ViewChanged;
         public ILevelModel GetCurrentLevel() => _currentLevel;
 
         public T CreateObjectView<T>(IModel<IModelInfo> model) where T : ILevelObjectView
         {
-            var levelInfo = _currentLevel.GetInfo();
-
-            Vector3 position;
-
-                position = _behaviors[model].GetStartPosition(this, model);
-            
-            
             GameObject go;
+
+            var levelInfo = _currentLevel.GetInfo();
             
+            Vector3 position = _behaviors[model].GetStartPosition(this, model);
+
             if (_currentLevel.GameModel.CurViewMode == ViewMode.Poligone)
             {
                  go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D), position, Quaternion.identity);
@@ -47,6 +44,7 @@ namespace Asteroids.Core
             {
                 Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");
             }
+            
             
             _modelViews.Add(model, result);
             

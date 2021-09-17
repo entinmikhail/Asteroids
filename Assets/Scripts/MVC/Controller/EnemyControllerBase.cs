@@ -51,12 +51,14 @@ namespace Asteroids.Controller
 
         public void ResetView()
         {
+            _view.OnLevelObjectContact -= OnCollision;
             _levelManager.DestroyBehaviour(_behaviour);
             _view = _levelManager.GetOrCreateView<ILevelObjectView>(_enemy);
             
             _behaviour = _levelManager.CreateBehavior(_gameModel.CurViewMode, _enemy);
             _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
             InitBehaviour();
+            _view.OnLevelObjectContact += OnCollision;
         }
         
         protected abstract void OnDispose();

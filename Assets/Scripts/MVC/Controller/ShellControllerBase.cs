@@ -55,6 +55,7 @@ namespace Asteroids.Controller
 
         public void ResetView()
         {
+            _view.OnLevelObjectContact -= OnCollision;
             _view = _levelManager.GetOrCreateView<ILevelObjectView>(_shell);
             
             _levelManager.DestroyBehaviour(_shellBehavior);
@@ -62,6 +63,7 @@ namespace Asteroids.Controller
             _playerView = _levelManager.GetOrCreateView<IPlayerView>(_levelManager.GetCurrentLevel().CurrentPlayer);
 
             InitBehaviour();
+            _view.OnLevelObjectContact += OnCollision;
         }
 
         public void Update(double deltaTime)

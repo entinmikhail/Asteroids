@@ -5,7 +5,7 @@ namespace Asteroids.Abstraction
 {
     public delegate void ContactHandler(ILevelObjectView self, ILevelObjectView contact);
     
-    public interface ILevelObjectView 
+    public interface ILevelObjectView
     {
         CustomTransform Transform { get; }
         LevelObjectType LevelObjectType { get; }

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4437745429068403748}
   - component: {fileID: 945685301138790758}
+  - component: {fileID: -5328635192350634682}
+  - component: {fileID: 5713124771396428706}
   m_Layer: 0
   m_Name: MiniAsteroid3D
   m_TagString: Enemy
@@ -25,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4437745429068403744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0.008, y: 0.002, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2767020674436039722}
@@ -46,7 +48,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 4437745429068403748}
   levelObjectType: 2
-  _rigidbody: {fileID: 8681990210456645498}
+  _rigidbody: {fileID: -5328635192350634682}
+--- !u!54 &-5328635192350634682
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4437745429068403744}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &5713124771396428706
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4437745429068403744}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.21650666
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0.28349334}
 --- !u!1 &5894965071713568834
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,8 +90,6 @@ GameObject:
   - component: {fileID: 2767020674436039722}
   - component: {fileID: 1250446682018458882}
   - component: {fileID: 7874626529266572151}
-  - component: {fileID: 8681990210456645498}
-  - component: {fileID: 3845738194215528359}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -131,33 +161,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &8681990210456645498
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5894965071713568834}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!136 &3845738194215528359
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5894965071713568834}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}

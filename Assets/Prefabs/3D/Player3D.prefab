@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 1012225546047959898}
   m_Layer: 0
   m_Name: Player3D
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,8 +142,8 @@ Rigidbody:
   m_GameObject: {fileID: 4711403644279690211}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0

@@ -26,7 +26,7 @@ namespace Asteroids.View
             return customTransform;
         }
         
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter(Collider collision)
         {
             if(collision.gameObject == null) return;
             

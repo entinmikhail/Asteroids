@@ -1,6 +1,5 @@
 using Asteroids.Abstraction;
 using Asteroids.Model;
-using Utils;
 
 
 namespace Asteroids.Controller
@@ -46,8 +45,8 @@ namespace Asteroids.Controller
             _playerModel.GetResource(ProjConstants.HealthId).SetResourceValue(_playerInfo.Health);
             
             _playerMoveBehavior = (IPlayerMoveBehavior) _levelManager.CreateBehavior(_gameModel.CurViewMode, _playerModel);
-            _playerView = _levelManager.CreateObjectView<IPlayerView>( _playerModel);
-
+            _playerView = _levelManager.CreateObjectView<IPlayerView>(_playerModel);
+            
             _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, levelInfo);
             _viewReady = true;
             _bulletWeaponController.Start();
@@ -57,6 +56,7 @@ namespace Asteroids.Controller
         
         protected override void OnViewReset()
         {
+            _playerView.OnLevelObjectContact -= OnPlayerContact;
             _viewReady = false;
             _levelManager.DestroyBehaviour((BaseBehavior)_playerMoveBehavior);
             _playerView = _levelManager.ChangeView<IPlayerView>(_playerModel);
@@ -64,6 +64,7 @@ namespace Asteroids.Controller
             _playerMoveBehavior = (IPlayerMoveBehavior) _levelManager.CreateBehavior(_gameModel.CurViewMode, _playerModel);
             _playerMoveBehavior.Init(_playerView, _playerView, _playerInfo, _levelManager.GetCurrentLevel().GetInfo());
             _viewReady = true;
+            _playerView.OnLevelObjectContact += OnPlayerContact;
         }
 
         public void Update(double deltaTime)

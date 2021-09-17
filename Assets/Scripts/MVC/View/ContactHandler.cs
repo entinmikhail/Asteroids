@@ -2,7 +2,7 @@
 
 namespace Asteroids.View
 {
-    public class LevelObjectContactHandler
+    public class LevelObjectContactVm 
     {
         public event ContactHandler OnLevelObjectContact;
 

@@ -15,7 +15,7 @@ namespace Asteroids.ScriptableObjects
         public override void OnUpdate (ILevelObjectView view, IPlayerView playerView, float speed)
         {
             if(_stopped) return;
-            if (view is ILevelObjectViewUnity viewUnity &&  playerView is IPlayerViewUnity2D playerViewUnity)
+            if (view is ILevelObjectViewUnity viewUnity &&  playerView is IPlayerViewUnity3D playerViewUnity)
                 DoSomeThing(viewUnity, playerViewUnity, speed);
         }
         protected override void OnInit(params object[] additionalParams)
@@ -38,9 +38,9 @@ namespace Asteroids.ScriptableObjects
         }
 
 
-        private void DoSomeThing(ILevelObjectViewUnity unityView, IPlayerViewUnity2D playerUnity2DView, float speed)
+        private void DoSomeThing(ILevelObjectViewUnity unityView, IPlayerViewUnity3D playerUnity2DView, float speed)
         {
-            unityView.UnityTransform.position = Vector2.MoveTowards(unityView.UnityTransform.position,
+            unityView.UnityTransform.position = Vector3.MoveTowards(unityView.UnityTransform.position,
                 playerUnity2DView.UnityTransform.position, speed * Time.deltaTime);
         }
     }

@@ -21,9 +21,9 @@ namespace Asteroids.ScriptableObjects
         {
         }
 
-        public override Vector3 GetStartPosition(ILevelManager _levelManager, IModel<IModelInfo> _miniAsteroid)
+        public override Vector3 GetStartPosition(ILevelManager _levelManager, IModel<IModelInfo> model)
         {
-            var mini = (IMiniAsteroid) _miniAsteroid;
+            var mini = (IMiniAsteroid) model;
             return mini.InitialPosition;
         }
     }

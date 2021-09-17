@@ -6,7 +6,7 @@ using Utils;
 namespace Asteroids.View
 {
     public class LevelObjectView : MonoBehaviour, ILevelObjectView, ILevelObjectViewUnity2D
-    {
+    { 
         public CustomTransform Transform => GetTransform( );
         public Rigidbody2D Rigidbody2D => _rigidbody;
         public Transform UnityTransform => _transform;
