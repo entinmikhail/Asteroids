@@ -16,7 +16,8 @@ namespace Asteroids.ScriptableObjects
 
         public void Rotate(float inputValue)
         {
-            _playerViewUnity.Rigidbody2D.MoveRotation( _playerViewUnity.Rigidbody2D.rotation + -inputValue * _playerInfo.RotationSpeed * Time.fixedDeltaTime);
+            _playerViewUnity.Rigidbody2D.MoveRotation( _playerViewUnity.Rigidbody2D.rotation + -inputValue * 
+                _playerInfo.RotationSpeed * Time.fixedDeltaTime);
         }
 
         public void Move(float inputValue)

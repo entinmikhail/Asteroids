@@ -11,6 +11,7 @@ namespace Asteroids.Controller
 
         protected WeaponController( IWeapon weapon, IShellInfo shellInfo, ILevelManager levelManager)
         {
+            
             _weapon = weapon;
             _shellInfo = shellInfo;
             _levelManager = levelManager;

@@ -34,11 +34,13 @@ namespace Asteroids.Core
 
             if (_currentLevel.GameModel.CurViewMode == ViewMode.Poligone)
             {
-                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D), position, Quaternion.identity);
+                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId3D),
+                     position, Quaternion.identity);
             }
             else
             {
-                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), position, Quaternion.identity);
+                 go = Object.Instantiate(levelInfo.GetLevelObjectPrefab(model.GetInfo().ViewId), 
+                     position, Quaternion.identity);
             }
 
             if (!go.TryGetComponent(out T result))
