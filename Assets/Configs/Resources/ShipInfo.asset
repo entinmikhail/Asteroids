@@ -18,6 +18,6 @@ MonoBehaviour:
   _maxMovementSpeed: 5
   _rotationSpeed: 200
   _maxHealth: 10000
-  _health: 2
+  _health: 494
   _playerMoveBehavior: {fileID: 11400000, guid: f238795a59103754ab2f5556d6407791, type: 2}
   _playerMoveBehavior3D: {fileID: 11400000, guid: f66ffcdbcc7210d41a27c75fad73eb59, type: 2}

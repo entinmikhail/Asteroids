@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Asteroids.Abstraction;
-
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -15,13 +14,15 @@ namespace Asteroids.Core
         private readonly IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViews = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
         private IDictionary<IModel<IModelInfo>, ILevelObjectView> _modelViewsTmp = new Dictionary<IModel<IModelInfo> , ILevelObjectView>();
         private Dictionary<IModel<IModelInfo>, BaseBehavior> _behaviors = new Dictionary<IModel<IModelInfo>, BaseBehavior>();
+        
+        public event Action<IModel<IModelInfo>> ViewChanged;
+        
+        public ILevelModel GetCurrentLevel() => _currentLevel;
+        
         public void SetLevel(ILevelModel levelModel)
         {
             _currentLevel = levelModel;
         }
-
-        public event Action<IModel<IModelInfo>> ViewChanged;
-        public ILevelModel GetCurrentLevel() => _currentLevel;
 
         public T CreateObjectView<T>(IModel<IModelInfo> model) where T : ILevelObjectView
         {
@@ -44,8 +45,7 @@ namespace Asteroids.Core
             {
                 Debug.LogAssertion($"GameObjet {go.name} doesnt have {typeof(T)} component");
             }
-            
-            
+
             _modelViews.Add(model, result);
             
             return result;
@@ -106,6 +106,7 @@ namespace Asteroids.Core
             }
 
             ViewChanged?.Invoke(model);
+            
             return result;
         }
 
@@ -118,7 +119,7 @@ namespace Asteroids.Core
             }
 
             if (view is TView tView) return tView;
-     
+            
             _modelViews.Remove(model);
                 
             return CreateObjectView<TView>(model);
@@ -145,6 +146,7 @@ namespace Asteroids.Core
         {
             var beh = Object.Instantiate(model.GetInfo().GetBehavior(viewMode));
             _behaviors.Add(model, beh);
+            
             return beh;
         }
         

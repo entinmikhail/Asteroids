@@ -7,7 +7,6 @@ namespace Asteroids.Core.Teleporter
         protected Vector2 _teleportDirection;
         protected Vector3 _teleportIndent;
         
-
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.transform == null)

@@ -15,7 +15,8 @@ namespace Asteroids.ScriptableObjects
         protected override void OnInit(params object[] additionalParams)
         {
             var shellInfo = (IShellInfo) additionalParams[0];
-            _viewUnity.Rigidbody2D.AddForce(_playerViewUnity.SpawnPoint.transform.up * shellInfo.MovementSpeed, ForceMode2D.Impulse);
+            _viewUnity.Rigidbody2D.AddForce(_playerViewUnity.SpawnPoint.transform.up * shellInfo.MovementSpeed,
+                ForceMode2D.Impulse);
         }
 
         public override void DiedBehaviour(ILevelModel levelModel, params object[] additionalParams)

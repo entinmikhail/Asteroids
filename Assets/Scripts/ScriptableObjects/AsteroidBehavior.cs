@@ -20,7 +20,8 @@ namespace Asteroids.ScriptableObjects
         {
             for (int i = 0; i < levelModel.GetInfo().MiniAsteroidsPerAsteroid; i++)
             {
-                levelModel.SpawnTypedEnemy(levelModel.GetInfo().GetEnemyInfo("MiniAsteroid"), additionalParams[0]);
+                levelModel.SpawnTypedEnemy(levelModel.GetInfo().GetEnemyInfo("MiniAsteroid"),
+                    additionalParams[0]);
             }
 
             levelModel.SpawnTypedEnemy(levelModel.GetInfo().GetEnemyInfo("Asteroid"));

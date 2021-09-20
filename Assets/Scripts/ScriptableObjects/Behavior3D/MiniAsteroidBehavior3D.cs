@@ -12,9 +12,11 @@ namespace Asteroids.ScriptableObjects
         protected override void OnInit(params object[] additionalParams)
         {
             var speed = (float) additionalParams[0];
+            var force = new Vector3(Random.Range(speed, -speed), Random.Range(speed, -speed), 0) ;
             
-            _viewUnity.Rigidbody.AddForce(new Vector2(Random.Range(-speed, speed),
-                Random.Range(-speed, speed)), ForceMode.Impulse);
+            _viewUnity.UnityTransform.SetPositionAndRotation(_viewUnity.UnityTransform.position +
+                                                             force, Quaternion.identity);
+            _viewUnity.Rigidbody.AddForce(force, ForceMode.Impulse);
         }
 
         public override void DiedBehaviour(ILevelModel levelModel, params object[] additionalParams)
